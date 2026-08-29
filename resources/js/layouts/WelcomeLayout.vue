@@ -66,12 +66,12 @@ const canNavigateTo = (stepNumber: number): boolean =>
                     >
                         <img
                             src="/images/trypost/logo-light.png"
-                            alt="TryPost"
+                            alt="Posta Studio"
                             class="h-8 w-auto dark:hidden"
                         />
                         <img
                             src="/images/trypost/logo-dark.png"
-                            alt="TryPost"
+                            alt="Posta Studio"
                             class="hidden h-8 w-auto dark:block"
                         />
                     </Link>

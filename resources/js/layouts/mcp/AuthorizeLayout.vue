@@ -18,7 +18,7 @@ defineProps<{
             <div class="flex flex-col items-center gap-4 text-center">
                 <img
                     src="/images/trypost/logo-light.png"
-                    alt="TryPost"
+                    alt="Posta Studio"
                     class="h-10 w-auto"
                 />
                 <div class="space-y-2">

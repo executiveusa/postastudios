@@ -13,7 +13,7 @@ import { syncContentTypeMediaRules } from './lib/contentTypeMediaRules';
 import { capturePageview, initializePostHog, syncPostHogContext } from './posthog';
 import type { Auth } from './types';
 
-const appName = import.meta.env.VITE_APP_NAME || 'TryPost.it';
+const appName = import.meta.env.VITE_APP_NAME || 'Posta Studio';
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),

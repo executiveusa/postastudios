@@ -14,8 +14,8 @@ const currentYear = dayjs().year();
         <header class="border-b">
             <div class="mx-auto max-w-5xl px-6 py-4 flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <img src="/images/trypost/logo-light.png" alt="TryPost" class="dark:hidden h-7 w-auto" />
-                    <img src="/images/trypost/logo-dark.png" alt="TryPost" class="hidden dark:block h-7 w-auto" />
+                    <img src="/images/trypost/logo-light.png" alt="Posta Studio" class="dark:hidden h-7 w-auto" />
+                    <img src="/images/trypost/logo-dark.png" alt="Posta Studio" class="hidden dark:block h-7 w-auto" />
                 </div>
             </div>
         </header>
@@ -30,7 +30,7 @@ const currentYear = dayjs().year();
         <footer class="border-t mt-auto">
             <div class="mx-auto max-w-5xl px-6 py-8">
                 <p class="text-sm text-muted-foreground text-center">
-                    &copy; {{ currentYear }} TryPost. All rights reserved.
+                    &copy; {{ currentYear }} Posta Studio. All rights reserved.
                 </p>
             </div>
         </footer>

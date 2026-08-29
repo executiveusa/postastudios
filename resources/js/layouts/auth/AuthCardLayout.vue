@@ -21,8 +21,8 @@ defineProps<{
         <div class="flex w-full max-w-md flex-col gap-6">
             <Link :href="home()" class="flex items-center gap-2 self-center font-medium">
                 <div class="flex h-9 w-9 items-center justify-center">
-                    <img src="/images/trypost/logo-light.png" alt="TryPost" class="dark:hidden h-8 w-auto" />
-                    <img src="/images/trypost/logo-dark.png" alt="TryPost" class="hidden dark:block h-8 w-auto" />
+                    <img src="/images/trypost/logo-light.png" alt="Posta Studio" class="dark:hidden h-8 w-auto" />
+                    <img src="/images/trypost/logo-dark.png" alt="Posta Studio" class="hidden dark:block h-8 w-auto" />
                 </div>
             </Link>
 
