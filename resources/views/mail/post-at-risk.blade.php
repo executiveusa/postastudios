@@ -150,7 +150,7 @@
               </tr>
             </table>
             <p style="margin: 12px 0 0">
-              &copy; {{ date(\'Y\') }} Posta Studio
+              &copy; {{ date('Y') }} Posta Studio
             </p>
           </td>
         </tr>
