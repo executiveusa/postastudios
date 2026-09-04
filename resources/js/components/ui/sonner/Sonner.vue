@@ -12,29 +12,28 @@ const props = defineProps<ToasterProps>()
     :style="{
       '--normal-bg': 'var(--card)',
       '--normal-text': 'var(--foreground)',
-      '--normal-border': 'var(--foreground)',
-      '--success-bg': '#d1fae5',
+      '--normal-border': 'var(--border)',
+      '--success-bg': '#f0fbf6',
       '--success-text': 'var(--foreground)',
-      '--success-border': 'var(--foreground)',
-      '--error-bg': '#fee2e2',
+      '--success-border': '#cfeee0',
+      '--error-bg': '#fff4f4',
       '--error-text': 'var(--foreground)',
-      '--error-border': 'var(--foreground)',
-      '--warning-bg': '#fef3c7',
+      '--error-border': '#f3d0d0',
+      '--warning-bg': '#fff9ed',
       '--warning-text': 'var(--foreground)',
-      '--warning-border': 'var(--foreground)',
-      '--info-bg': '#ede9fe',
+      '--warning-border': '#f4dfb3',
+      '--info-bg': '#f5f5ff',
       '--info-text': 'var(--foreground)',
-      '--info-border': 'var(--foreground)',
+      '--info-border': '#ddddff',
     }"
   />
 </template>
 
 <style>
-/* Indies sticker toast — ink 2px border + solid offset ink shadow, no blur. */
 [data-sonner-toast] {
-  border-width: 2px !important;
+  border-width: 1px !important;
   border-radius: var(--radius-lg) !important;
-  box-shadow: 4px 4px 0 0 #0a0a0a !important;
+  box-shadow: var(--shadow-md) !important;
   font-weight: 500;
 }
 
@@ -43,25 +42,24 @@ const props = defineProps<ToasterProps>()
 }
 
 [data-sonner-toast][data-type="success"] [data-icon] {
-  color: #047857 !important;
+  color: var(--success) !important;
 }
 
 [data-sonner-toast][data-type="error"] [data-icon] {
-  color: #b91c1c !important;
+  color: var(--error) !important;
 }
 
 [data-sonner-toast][data-type="warning"] [data-icon] {
-  color: #b45309 !important;
+  color: var(--warning) !important;
 }
 
 [data-sonner-toast][data-type="info"] [data-icon] {
-  color: #5b21b6 !important;
+  color: var(--info) !important;
 }
 
-/* Action / cancel buttons inside a toast pick up the indies button look. */
 [data-sonner-toast] [data-button] {
-  border: 2px solid #0a0a0a !important;
-  box-shadow: 1px 1px 0 0 #0a0a0a !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: none !important;
   font-weight: 600;
 }
 </style>
