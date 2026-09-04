@@ -1,13 +1,1 @@
-<svg width="175" height="164" viewBox="0 0 175 164" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_2011_294)">
-<path d="M174.58 43.75V163.46H54.8701L174.58 43.75Z" fill="#3660E0"/>
-<path d="M174.58 0H119.71L87.29 32.42L174.58 119.71V0Z" fill="#855ED4"/>
-<path d="M0 0V119.71L87.29 32.42L119.71 0H0Z" fill="#FFCC33"/>
-<path d="M0 43.75V163.46H54.87L87.29 131.04L0 43.75Z" fill="#F39200"/>
-</g>
-<defs>
-<clipPath id="clip0_2011_294">
-<rect width="174.58" height="163.46" rx="28" fill="white"/>
-</clipPath>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title"><title id="title">Posta Studio</title><rect x="2" y="2" width="60" height="60" rx="18" fill="#17181B"/><path d="M18 45V19h17.5C45.4 19 52 24.1 52 32s-6.6 13-16.5 13H18Zm11-9h6.1c3.8 0 5.9-1.5 5.9-4s-2.1-4-5.9-4H29v8Z" fill="#fff"/><circle cx="51" cy="14" r="6" fill="#5B5CE2"/></svg>
