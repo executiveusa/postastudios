@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 72" role="img" aria-labelledby="title desc">
+  <title id="title">Posta Studio</title>
+  <desc id="desc">Posta Studio wordmark</desc>
+  <g fill="none" fill-rule="evenodd">
+    <rect x="2" y="2" width="68" height="68" rx="20" fill="#17181B"/>
+    <path d="M22 49V23h17.5c9.9 0 16.5 5.1 16.5 13s-6.6 13-16.5 13H22Zm11-9h6.1c3.8 0 5.9-1.5 5.9-4s-2.1-4-5.9-4H33v8Z" fill="#FFFFFF"/>
+    <circle cx="56" cy="17" r="7" fill="#5B5CE2"/>
+    <text x="92" y="44" fill="#17181B" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="34" font-weight="700" letter-spacing="-1.2">Posta Studio</text>
+  </g>
+</svg>
