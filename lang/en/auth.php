@@ -18,36 +18,36 @@ return [
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
     'flash' => [
-        'welcome' => 'Welcome to TryPost!',
-        'welcome_trial' => 'Welcome to TryPost! Your trial has started.',
+        'welcome' => 'Welcome to Posta Studio.',
+        'welcome_trial' => 'Welcome to Posta Studio. Your trial has started.',
     ],
 
     'legal' => 'By continuing, you agree to our <a href="https://trypost.it/terms" target="_blank">Terms of Service</a> and <a href="https://trypost.it/privacy" target="_blank">Privacy Policy</a>.',
 
     'slides' => [
         'calendar' => [
-            'title' => 'Visual Calendar',
-            'description' => 'Plan and schedule your content with an intuitive drag-and-drop calendar across all your social accounts.',
+            'title' => 'Plan the work',
+            'description' => 'See every post, channel, and publish date in one calendar. Drag to reschedule without leaving the workspace.',
         ],
         'scheduling' => [
-            'title' => 'Smart Scheduling',
-            'description' => 'Schedule posts across LinkedIn, X, Instagram, TikTok, YouTube, and more — all from one place.',
+            'title' => 'Publish from one place',
+            'description' => 'Schedule content across LinkedIn, X, Instagram, TikTok, YouTube, and more from one workspace.',
         ],
         'media' => [
-            'title' => 'Rich Media',
-            'description' => 'Publish images, carousels, stories, and reels. Each platform gets the right format automatically.',
+            'title' => 'Keep creative close',
+            'description' => 'Publish images, carousels, stories, and reels with the right format for each supported network.',
         ],
         'video' => [
-            'title' => 'Video Publishing',
-            'description' => 'Upload videos once and publish to TikTok, YouTube Shorts, Instagram Reels, and Facebook Reels.',
+            'title' => 'Video for every feed',
+            'description' => 'Upload once and publish to TikTok, YouTube Shorts, Instagram Reels, and Facebook Reels.',
         ],
         'team' => [
-            'title' => 'Team Workspaces',
-            'description' => 'Invite your team, assign roles, and manage multiple brands from separate workspaces.',
+            'title' => 'One workspace per brand',
+            'description' => 'Invite your team, assign roles, and keep each client or brand in its own workspace.',
         ],
         'signatures' => [
-            'title' => 'Signatures',
-            'description' => 'Save reusable signatures (hashtags, links, signoffs) and append them to posts with one click.',
+            'title' => 'Reuse what works',
+            'description' => 'Save hashtags, links, and signoffs once, then add them to posts when you need them.',
         ],
     ],
 
@@ -60,8 +60,8 @@ return [
     'github_email_unavailable' => 'Unable to retrieve your email from GitHub. Make your GitHub email public or grant the email scope, then try again.',
 
     'login' => [
-        'title' => 'Log in to your account',
-        'description' => 'Enter your email and password below to log in',
+        'title' => 'Welcome back',
+        'description' => 'Pick up where your content team left off.',
         'page_title' => 'Log in',
         'email' => 'Email address',
         'password' => 'Password',
@@ -75,8 +75,8 @@ return [
     ],
 
     'register' => [
-        'title' => 'Your whole social calendar, in one place',
-        'description' => 'Create your account and start scheduling posts across every network.',
+        'title' => 'Run the work behind every post',
+        'description' => 'Plan, publish, collaborate, and automate social content from one workspace.',
         'page_title' => 'Register',
         'signup_with_email' => 'Sign up with email',
         'name' => 'Name',
