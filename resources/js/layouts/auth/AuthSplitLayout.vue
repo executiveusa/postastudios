@@ -8,7 +8,7 @@ import {
     IconVideo,
 } from '@tabler/icons-vue';
 import { trans } from 'laravel-vue-i18n';
-import { onBeforeUnmount, onMounted, ref, computed } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
 defineProps<{
     title?: string;
@@ -85,22 +85,30 @@ const platforms = [
 </script>
 
 <template>
-    <div class="grid min-h-svh grid-cols-1 lg:grid-cols-2">
-        <div class="flex min-w-0 flex-col gap-4 p-6 md:p-10">
+    <div class="grid min-h-svh grid-cols-1 bg-background lg:grid-cols-2">
+        <div class="flex min-w-0 flex-col gap-4 p-6 md:p-10 lg:p-12">
             <div class="flex items-start">
                 <img
-                    src="/images/trypost/logo-light.png"
+                    src="/images/posta/wordmark.svg"
                     alt="Posta Studio"
-                    class="h-7"
+                    class="h-8 w-auto"
                 />
             </div>
 
             <div class="flex flex-1 items-center justify-center">
-                <div class="w-full max-w-lg">
-                    <div class="flex flex-col gap-6">
+                <div class="w-full max-w-md">
+                    <div class="flex flex-col gap-7">
                         <div class="flex flex-col items-center gap-2 text-center">
-                            <h1 v-if="title" class="text-2xl font-bold">{{ title }}</h1>
-                            <p v-if="description" class="text-sm text-balance text-muted-foreground">
+                            <h1
+                                v-if="title"
+                                class="text-3xl font-semibold tracking-[-0.035em] text-foreground"
+                            >
+                                {{ title }}
+                            </h1>
+                            <p
+                                v-if="description"
+                                class="max-w-sm text-sm leading-6 text-balance text-muted-foreground"
+                            >
                                 {{ description }}
                             </p>
                         </div>
@@ -112,71 +120,78 @@ const platforms = [
         </div>
 
         <div
-            class="relative hidden overflow-hidden border-l-2 border-foreground bg-accent lg:sticky lg:top-0 lg:block lg:h-svh lg:self-start"
+            class="relative hidden overflow-hidden border-l border-border bg-muted/35 lg:sticky lg:top-0 lg:block lg:h-svh lg:self-start"
             @mouseenter="isPaused = true"
             @mouseleave="isPaused = false"
         >
-            <!-- Soft violet glow blobs for ambient depth (off-canvas). -->
-            <div class="pointer-events-none absolute -top-24 -right-24 size-[440px] rounded-full bg-violet-200/50 blur-3xl" />
-            <div class="pointer-events-none absolute -bottom-32 -left-32 size-[440px] rounded-full bg-fuchsia-200/40 blur-3xl" />
-
-            <!-- Dot pattern overlay (subtle). -->
-            <div
-                class="pointer-events-none absolute inset-0 opacity-[0.06]"
-                style="background-image: radial-gradient(circle, #0a0a0a 1px, transparent 1px); background-size: 28px 28px;"
-            />
+            <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(91,92,226,0.10),transparent_36%)]" />
 
             <div class="relative flex h-full flex-col items-center justify-center px-12 xl:px-16">
-                <!-- Mockup card carousel -->
                 <div class="relative h-[280px] w-full max-w-md">
                     <template v-for="(slide, index) in slides" :key="index">
                         <Transition
-                            enter-active-class="transition-all duration-500 ease-out"
-                            leave-active-class="transition-all duration-500 ease-out"
-                            enter-from-class="opacity-0 translate-y-4"
+                            enter-active-class="transition-[opacity,transform] duration-250 ease-out"
+                            leave-active-class="transition-[opacity,transform] duration-200 ease-out"
+                            enter-from-class="opacity-0 translate-y-3"
                             enter-to-class="opacity-100 translate-y-0"
                             leave-from-class="opacity-100 translate-y-0"
-                            leave-to-class="opacity-0 -translate-y-4"
+                            leave-to-class="opacity-0 -translate-y-2"
                         >
                             <div
                                 v-if="activeIndex === index"
                                 class="absolute inset-0 flex items-center justify-center"
                             >
-                                <div class="w-full overflow-hidden rounded-xl border-2 border-foreground bg-card shadow-xl -rotate-1">
-                                    <!-- Title bar with traffic lights + live badge -->
-                                    <div class="flex items-center gap-3 border-b-2 border-foreground bg-muted px-4 py-2.5">
+                                <div
+                                    class="w-full overflow-hidden rounded-2xl border border-border bg-card shadow-xl"
+                                >
+                                    <div
+                                        class="flex items-center gap-3 border-b border-border bg-muted/50 px-4 py-2.5"
+                                    >
                                         <div class="flex gap-1.5">
-                                            <span class="size-3 rounded-full border border-foreground bg-rose-300" />
-                                            <span class="size-3 rounded-full border border-foreground bg-amber-300" />
-                                            <span class="size-3 rounded-full border border-foreground bg-emerald-300" />
+                                            <span class="size-2.5 rounded-full bg-rose-300" />
+                                            <span class="size-2.5 rounded-full bg-amber-300" />
+                                            <span class="size-2.5 rounded-full bg-emerald-300" />
                                         </div>
-                                        <div class="ml-2 truncate text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                                        <div
+                                            class="ml-2 truncate text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground"
+                                        >
                                             Posta Studio
                                         </div>
-                                        <span class="ml-auto inline-flex items-center gap-1.5 rounded-md border-2 border-foreground bg-foreground px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-background shadow-2xs">
+                                        <span
+                                            class="ml-auto inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground"
+                                        >
                                             <span class="relative flex size-1.5">
-                                                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/80" />
-                                                <span class="relative inline-flex size-1.5 rounded-full bg-emerald-400" />
+                                                <span
+                                                    class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/70"
+                                                />
+                                                <span
+                                                    class="relative inline-flex size-1.5 rounded-full bg-emerald-500"
+                                                />
                                             </span>
                                             Live
                                         </span>
                                     </div>
 
-                                    <!-- Body: feature icon -->
-                                    <div class="flex items-center justify-center bg-card py-8">
-                                        <div class="flex size-20 items-center justify-center rounded-2xl border-2 border-foreground bg-violet-200 shadow-sm -rotate-2">
-                                            <component :is="slide.icon" class="size-10 text-foreground" />
+                                    <div class="flex items-center justify-center bg-card py-9">
+                                        <div
+                                            class="flex size-20 items-center justify-center rounded-2xl border border-border bg-accent/80 shadow-sm"
+                                        >
+                                            <component
+                                                :is="slide.icon"
+                                                class="size-9 text-accent-foreground"
+                                            />
                                         </div>
                                     </div>
 
-                                    <!-- Platform strip -->
-                                    <div class="flex flex-wrap justify-center gap-1.5 border-t-2 border-foreground/15 bg-card px-4 py-3">
+                                    <div
+                                        class="flex flex-wrap justify-center gap-2 border-t border-border bg-card px-4 py-3.5"
+                                    >
                                         <img
                                             v-for="platform in platforms"
                                             :key="platform.name"
                                             :src="platform.icon"
                                             :alt="platform.name"
-                                            class="size-7 rounded-full border-2 border-foreground bg-card p-0.5 shadow-2xs"
+                                            class="size-7 rounded-full border border-border bg-card p-0.5 shadow-2xs"
                                         />
                                     </div>
                                 </div>
@@ -185,29 +200,29 @@ const platforms = [
                     </template>
                 </div>
 
-                <!-- Text content -->
                 <div class="mt-10 w-full max-w-md text-center">
                     <div class="relative h-[100px]">
                         <TransitionGroup
-                            enter-active-class="transition-all duration-400 ease-out"
-                            leave-active-class="transition-all duration-300 ease-in"
+                            enter-active-class="transition-[opacity,transform] duration-250 ease-out"
+                            leave-active-class="transition-opacity duration-180 ease-out"
                             enter-from-class="opacity-0 translate-y-2"
                             enter-to-class="opacity-100 translate-y-0"
                             leave-from-class="opacity-100"
                             leave-to-class="opacity-0"
                         >
                             <div :key="activeIndex" class="absolute inset-x-0 top-0">
-                                <h3 class="h3 text-foreground">
+                                <h3 class="text-2xl font-semibold tracking-[-0.025em] text-foreground">
                                     {{ activeSlide.title }}
                                 </h3>
-                                <p class="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-foreground/70">
+                                <p
+                                    class="mx-auto mt-2 max-w-sm text-sm leading-6 text-muted-foreground"
+                                >
                                     {{ activeSlide.description }}
                                 </p>
                             </div>
                         </TransitionGroup>
                     </div>
 
-                    <!-- Dots -->
                     <div class="flex items-center justify-center gap-2">
                         <button
                             v-for="(_, index) in slides"
@@ -216,10 +231,11 @@ const platforms = [
                             @click="goTo(index)"
                         >
                             <span
-                                class="block h-1.5 rounded-full border border-foreground transition-all duration-300"
-                                :class="activeIndex === index
-                                    ? 'w-6 bg-foreground'
-                                    : 'w-1.5 bg-card group-hover:bg-foreground/30'
+                                class="block h-1.5 rounded-full transition-[width,background-color] duration-200 ease-out"
+                                :class="
+                                    activeIndex === index
+                                        ? 'w-6 bg-foreground'
+                                        : 'w-1.5 bg-foreground/15 group-hover:bg-foreground/30'
                                 "
                             />
                         </button>
