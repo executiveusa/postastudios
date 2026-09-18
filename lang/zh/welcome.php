@@ -25,10 +25,10 @@ return [
         'other' => '其他',
     ],
     'goals_title' => '你的目标是什么？',
-    'goals_description' => '选择所有符合的选项，我们会为你配置好 TryPost。',
+    'goals_description' => '选择所有符合的选项，我们会为你配置好 Posta Studio。',
     'goals' => [
         'save_time' => '一次发布到所有平台，节省时间',
-        'ai_content' => '用 TryPost AI 生成帖子',
+        'ai_content' => '用 Posta Studio AI 生成帖子',
         'use_mcp' => '通过 Claude、ChatGPT 或 Cursor 创建帖子',
         'plan_calendar' => '在日历上规划我的帖子',
         'stay_on_brand' => '让每一条帖子都符合品牌调性',
@@ -39,7 +39,7 @@ return [
         'other' => '其他需求',
     ],
     'referral_source_title' => '您是如何找到我们的？',
-    'referral_source_description' => '这有助于我们了解人们是如何发现 TryPost 的。',
+    'referral_source_description' => '这有助于我们了解人们是如何发现 Posta Studio 的。',
     'referral_source' => [
         'google' => 'Google',
         'x' => 'X (Twitter)',
@@ -61,7 +61,7 @@ return [
     ],
     'connect' => [
         'title' => '连接社交账号',
-        'description' => '选择至少一个 TryPost 可以发布内容的平台。',
+        'description' => '选择至少一个 Posta Studio 可以发布内容的平台。',
         'required' => '请至少连接一个社交账号后再继续。',
     ],
 ];

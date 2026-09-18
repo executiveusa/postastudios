@@ -10,8 +10,8 @@ use App\Models\Workspace;
 use Database\Seeders\PlanSeeder;
 
 beforeEach(function () {
-    config(['trypost.self_hosted' => false]);
-    config(['trypost.billing.require_card_for_trial' => true]);
+    config(['postastudio.self_hosted' => false]);
+    config(['postastudio.billing.require_card_for_trial' => true]);
     $this->seed(PlanSeeder::class);
 });
 
@@ -119,7 +119,7 @@ test('user with past_due subscription can access the app instead of being forced
 });
 
 test('user on generic trial can access the app when card is not required', function () {
-    config(['trypost.billing.require_card_for_trial' => false]);
+    config(['postastudio.billing.require_card_for_trial' => false]);
 
     $user = CreateUser::execute([
         'name' => 'Alice',

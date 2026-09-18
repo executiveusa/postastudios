@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Enums\Post\CreatedVia;
 use App\Enums\SocialAccount\Platform;
 use App\Enums\UserWorkspace\Role;
-use App\Mcp\Servers\TryPostServer;
+use App\Mcp\Servers\PostaStudioServer;
 use App\Mcp\Tools\Post\CreatePostTool;
 use App\Mcp\Tools\Post\DeletePostTool;
 use App\Mcp\Tools\Post\GetPostTool;
@@ -37,7 +37,7 @@ test('list posts returns wrapped posts array with PostResource shape', function 
         'user_id' => $this->user->id,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(ListPostsTool::class, []);
 
     $response->assertOk()
@@ -56,7 +56,7 @@ test('list posts only returns own workspace posts', function () {
     $otherWorkspace = Workspace::factory()->create();
     Post::factory()->create(['workspace_id' => $otherWorkspace->id, 'user_id' => $this->user->id]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(ListPostsTool::class, []);
 
     $response->assertOk()
@@ -77,7 +77,7 @@ test('list posts filters by content search', function () {
         'content' => 'Something else entirely',
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(ListPostsTool::class, ['search' => 'marketing']);
 
     $response->assertOk()
@@ -100,7 +100,7 @@ test('list posts search is case insensitive', function () {
         'content' => 'Something else entirely',
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(ListPostsTool::class, ['search' => 'marketing']);
 
     $response->assertOk()
@@ -116,7 +116,7 @@ test('get post returns PostResource shape', function () {
         'content' => 'Hello world',
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(GetPostTool::class, ['post_id' => $post->id]);
 
     $response->assertOk()
@@ -133,14 +133,14 @@ test('get post 404 from another workspace', function () {
     $otherWorkspace = Workspace::factory()->create();
     $post = Post::factory()->create(['workspace_id' => $otherWorkspace->id, 'user_id' => $this->user->id]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(GetPostTool::class, ['post_id' => $post->id]);
 
     $response->assertHasErrors(['Post not found.']);
 });
 
 test('create post with content and date', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, [
             'content' => 'My new post',
             'scheduled_at' => '2099-12-31T15:30:00Z',
@@ -177,7 +177,7 @@ test('create post creates unscheduled draft without a schedule', function (strin
         ],
     };
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, $payload)
         ->assertOk()
         ->assertStructuredContent(fn (AssertableJson $json) => $json
@@ -196,7 +196,7 @@ test('create post creates unscheduled draft without a schedule', function (strin
 ]);
 
 test('create post with platforms enables only those', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, [
             'content' => 'with platforms',
             'platforms' => [
@@ -214,21 +214,21 @@ test('create post with platforms enables only those', function () {
 });
 
 test('create post rejects scheduled_at in the past', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, ['scheduled_at' => '2020-01-01T00:00:00Z']);
 
     $response->assertHasErrors();
 });
 
 test('create post rejects an inactive social account', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
     $inactive = SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
         'platform' => Platform::LinkedIn,
         'is_active' => false,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, [
             'platforms' => [
                 ['social_account_id' => $inactive->id, 'content_type' => 'linkedin_post'],
@@ -239,7 +239,7 @@ test('create post rejects an inactive social account', function () {
 });
 
 test('create post rejects a content_type not in the enum', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, [
             'platforms' => [
                 ['social_account_id' => $this->socialAccount->id, 'content_type' => 'made_up_type'],
@@ -250,7 +250,7 @@ test('create post rejects a content_type not in the enum', function () {
 });
 
 test('create post rejects instagram_carousel — carousel is not a stored content_type', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, [
             'platforms' => [
                 ['social_account_id' => $this->socialAccount->id, 'content_type' => 'instagram_carousel'],
@@ -270,7 +270,7 @@ test('update post rejects instagram_carousel — carousel is not a stored conten
         'social_account_id' => $this->socialAccount->id,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(UpdatePostTool::class, [
             'post_id' => $post->id,
             'platforms' => [
@@ -283,7 +283,7 @@ test('update post rejects instagram_carousel — carousel is not a stored conten
 
 test('create post rejects a content_type that does not match the social account platform', function () {
     // x_post on a LinkedIn account — ContentTypeMatchesPlatform should reject.
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, [
             'platforms' => [
                 ['social_account_id' => $this->socialAccount->id, 'content_type' => 'x_post'],
@@ -297,7 +297,7 @@ test('create post rejects a label_id from another workspace', function () {
     $otherWorkspace = Workspace::factory()->create();
     $foreignLabel = WorkspaceLabel::factory()->create(['workspace_id' => $otherWorkspace->id]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, [
             'platforms' => [
                 ['social_account_id' => $this->socialAccount->id, 'content_type' => 'linkedin_post'],
@@ -314,7 +314,7 @@ test('delete post removes from db', function () {
         'user_id' => $this->user->id,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(DeletePostTool::class, ['post_id' => $post->id]);
 
     $response->assertOk()
@@ -327,28 +327,28 @@ test('delete post 404 from another workspace', function () {
     $otherWorkspace = Workspace::factory()->create();
     $post = Post::factory()->create(['workspace_id' => $otherWorkspace->id, 'user_id' => $this->user->id]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(DeletePostTool::class, ['post_id' => $post->id]);
 
     $response->assertHasErrors(['Post not found.']);
 });
 
 test('get post validates post_id required', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(GetPostTool::class, []);
 
     $response->assertHasErrors();
 });
 
 test('delete post validates post_id required', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(DeletePostTool::class, []);
 
     $response->assertHasErrors();
 });
 
 test('create post persists platform meta (aspect_ratio)', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, [
             'platforms' => [
                 ['social_account_id' => $this->socialAccount->id, 'content_type' => 'linkedin_post', 'meta' => ['aspect_ratio' => '4:5']],
@@ -363,7 +363,7 @@ test('create post persists platform meta (aspect_ratio)', function () {
 });
 
 test('create post rejects an invalid aspect_ratio', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, [
             'platforms' => [
                 ['social_account_id' => $this->socialAccount->id, 'content_type' => 'linkedin_post', 'meta' => ['aspect_ratio' => '3:2']],
@@ -383,7 +383,7 @@ test('update post rejects an invalid aspect_ratio', function () {
         'social_account_id' => $this->socialAccount->id,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(UpdatePostTool::class, [
             'post_id' => $post->id,
             'platforms' => [
@@ -395,7 +395,7 @@ test('update post rejects an invalid aspect_ratio', function () {
 });
 
 test('create post returns the platform meta in the response (read-back)', function () {
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, [
             'platforms' => [
                 ['social_account_id' => $this->socialAccount->id, 'content_type' => 'linkedin_post', 'meta' => ['aspect_ratio' => '4:5']],
@@ -412,14 +412,14 @@ test('update post rejects scheduled status without a future scheduled_at', funct
         'scheduled_at' => $existingScheduledAt,
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(UpdatePostTool::class, [
             'post_id' => $post->id,
             'status' => 'scheduled',
         ])
         ->assertHasErrors();
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(UpdatePostTool::class, [
             'post_id' => $post->id,
             'status' => 'scheduled',
@@ -441,7 +441,7 @@ test('update post accepts scheduled status reusing an existing future scheduled_
         'scheduled_at' => $scheduledAt,
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(UpdatePostTool::class, [
             'post_id' => $post->id,
             'status' => 'scheduled',
@@ -462,7 +462,7 @@ test('update post schedules an unscheduled draft with an explicit future schedul
         'scheduled_at' => null,
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(UpdatePostTool::class, [
             'post_id' => $post->id,
             'status' => 'scheduled',
@@ -484,7 +484,7 @@ test('update post keeps an unscheduled draft when saving as draft without schedu
         'content' => 'Original',
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(UpdatePostTool::class, [
             'post_id' => $post->id,
             'status' => 'draft',
@@ -510,7 +510,7 @@ test('update post accepts a valid aspect_ratio and persists it', function () {
         'social_account_id' => $this->socialAccount->id,
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(UpdatePostTool::class, [
             'post_id' => $post->id,
             'platforms' => [
@@ -533,14 +533,14 @@ test('viewers can list and get posts via mcp', function () {
         'content' => 'Visible to viewers',
     ]);
 
-    TryPostServer::actingAs($viewer)
+    PostaStudioServer::actingAs($viewer)
         ->tool(ListPostsTool::class, [])
         ->assertOk()
         ->assertStructuredContent(function (AssertableJson $json) {
             $json->has('posts', 1)->etc();
         });
 
-    TryPostServer::actingAs($viewer)
+    PostaStudioServer::actingAs($viewer)
         ->tool(GetPostTool::class, ['post_id' => $post->id])
         ->assertOk()
         ->assertStructuredContent(function (AssertableJson $json) use ($post) {
@@ -561,18 +561,18 @@ test('viewers cannot create update or delete posts via mcp', function () {
         'content' => 'Protected',
     ]);
 
-    TryPostServer::actingAs($viewer)
+    PostaStudioServer::actingAs($viewer)
         ->tool(CreatePostTool::class, ['content' => 'Nope'])
         ->assertHasErrors(['Not authorized to create posts.']);
 
-    TryPostServer::actingAs($viewer)
+    PostaStudioServer::actingAs($viewer)
         ->tool(UpdatePostTool::class, [
             'post_id' => $post->id,
             'content' => 'Changed',
         ])
         ->assertHasErrors(['Not authorized to update this post.']);
 
-    TryPostServer::actingAs($viewer)
+    PostaStudioServer::actingAs($viewer)
         ->tool(DeletePostTool::class, ['post_id' => $post->id])
         ->assertHasErrors(['Not authorized to delete this post.']);
 

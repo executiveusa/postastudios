@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 return [
     'title' => 'MCP',
-    'subtitle' => 'TryPost 계정으로 게시물을 만들고 관리할 수 있도록 AI 어시스턴트를 연결하세요.',
-    'copy_step' => 'TryPost 서버 URL 복사',
+    'subtitle' => 'Posta Studio 계정으로 게시물을 만들고 관리할 수 있도록 AI 어시스턴트를 연결하세요.',
+    'copy_step' => 'Posta Studio 서버 URL 복사',
     'open_step' => 'AI 어시스턴트 열기',
     'copy' => 'URL 복사',
     'connect' => ':client 연결',
@@ -18,7 +18,7 @@ return [
     'connected_empty' => '아직 연결된 앱이 없습니다. 위의 Claude, ChatGPT 또는 다른 클라이언트를 사용하세요.',
     'disconnect' => '연결 해제',
     'disconnect_title' => '앱 연결 해제',
-    'disconnect_confirm' => 'TryPost에서 앱 로그인을 해제합니다. MCP를 다시 쓰려면 다시 연결해야 합니다.',
+    'disconnect_confirm' => 'Posta Studio에서 앱 로그인을 해제합니다. MCP를 다시 쓰려면 다시 연결해야 합니다.',
     'disconnected' => '앱 연결이 해제되었습니다.',
     'copied' => '복사됨',
     'last_used' => '최근 사용',
@@ -26,10 +26,10 @@ return [
     'documentation_title' => '문서',
     'documentation_description' => '클라이언트별 설정 가이드, 사용 가능한 도구, 문제 해결.',
     'view_docs' => '문서 보기',
-    'connector_name' => 'TryPost',
+    'connector_name' => 'Posta Studio',
 
     'authorize' => [
-        'page_title' => 'Authorize Application - TryPost',
+        'page_title' => 'Authorize Application - Posta Studio',
         'app_title' => 'Authorize MCP',
         'heading' => 'Authorize :client',
         'intro' => 'This application will be able to:',
@@ -45,7 +45,7 @@ return [
         'search_workspace' => 'Search workspaces...',
         'no_workspace_found' => 'No workspace found',
         'scope_mcp_use' => 'Use MCP server',
-        'error_page_title' => '승인 실패 - TryPost',
+        'error_page_title' => '승인 실패 - Posta Studio',
         'error_title' => '연결할 수 없음',
         'error_body' => '이 승인 요청이 잘못되었거나 만료되었습니다. 이 창을 닫고 MCP 클라이언트에서 다시 연결하세요.',
         'error_code' => '오류: :error',
@@ -57,7 +57,7 @@ return [
     'clients' => [
         'claude' => 'Settings → Connectors를 열고 커스텀 커넥터를 추가한 뒤 위 URL을 붙여넣으세요.',
         'chatgpt' => 'Settings → Apps & Connectors를 열고 커스텀 커넥터를 만든 뒤 위 URL을 붙여넣으세요.',
-        'cursor' => 'Cursor에서 TryPost를 원격 MCP 서버로 추가하세요.',
+        'cursor' => 'Cursor에서 Posta Studio를 원격 MCP 서버로 추가하세요.',
         'cursor_name' => 'Cursor',
         'vscode' => '아래 설정을 VS Code MCP 설정에 붙여넣으세요.',
         'vscode_name' => 'VS Code',

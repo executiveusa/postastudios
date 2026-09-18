@@ -30,7 +30,7 @@ beforeEach(function () {
 test('subject is localized with author name', function () {
     $mail = new MentionedInComment($this->comment, $this->author, 'short excerpt');
 
-    expect($mail->envelope()->subject)->toBe('Alice Author mentioned you on TryPost');
+    expect($mail->envelope()->subject)->toBe('Alice Author mentioned you on Posta Studio');
 });
 
 test('content view + payload + url include the comment context', function () {

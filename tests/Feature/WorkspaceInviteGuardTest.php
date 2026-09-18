@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Workspace;
 
 beforeEach(function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $this->account = Account::factory()->create();
     $this->owner = User::factory()->create(['account_id' => $this->account->id]);

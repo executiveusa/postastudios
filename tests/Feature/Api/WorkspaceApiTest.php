@@ -20,7 +20,7 @@ test('show current workspace', function () {
         'Authorization' => 'Bearer '.$result['plain_token'],
     ])->getJson(
         route('api.workspace.show'),
-        ['HTTP_HOST' => 'api.trypost.test']
+        ['HTTP_HOST' => 'api.postastudio.test']
     );
 
     $response->assertOk();
@@ -30,7 +30,7 @@ test('show current workspace', function () {
 test('show workspace requires authentication', function () {
     $response = $this->getJson(
         route('api.workspace.show'),
-        ['HTTP_HOST' => 'api.trypost.test']
+        ['HTTP_HOST' => 'api.postastudio.test']
     );
 
     $response->assertUnauthorized();

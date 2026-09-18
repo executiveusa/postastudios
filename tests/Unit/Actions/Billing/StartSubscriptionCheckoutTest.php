@@ -14,7 +14,7 @@ uses(RefreshDatabase::class);
 
 test('redirect applies checkout configuration before opening the stripe session', function () {
     config([
-        'trypost.billing.require_card_for_trial' => true,
+        'postastudio.billing.require_card_for_trial' => true,
         'cashier.trial_days' => 8,
         'cashier.first_month_coupon_id' => '',
         'cashier.allow_promotion_codes' => false,

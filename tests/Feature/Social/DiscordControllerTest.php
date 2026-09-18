@@ -82,7 +82,7 @@ test('discord callback fails gracefully when no server was authorized', function
 });
 
 test('user can connect multiple discord accounts when multiple social accounts are allowed', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->discord()->create([
         'workspace_id' => $this->workspace->id,
@@ -112,7 +112,7 @@ test('user can connect multiple discord accounts when multiple social accounts a
 });
 
 test('discord callback shows network_taken when the network is already connected', function () {
-    config()->set('trypost.allow_multiple_social_accounts', false);
+    config()->set('postastudio.allow_multiple_social_accounts', false);
 
     SocialAccount::factory()->discord()->create([
         'workspace_id' => $this->workspace->id,

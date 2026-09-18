@@ -7,7 +7,7 @@ use App\Enums\Media\Type as MediaType;
 use App\Enums\Post\Status as PostStatus;
 use App\Enums\SocialAccount\Platform;
 use App\Enums\UserWorkspace\Role;
-use App\Mcp\Servers\TryPostServer;
+use App\Mcp\Servers\PostaStudioServer;
 use App\Mcp\Tools\Asset\AttachExistingAssetTool;
 use App\Mcp\Tools\Asset\GetAssetTool;
 use App\Mcp\Tools\Asset\ListAssetsTool;
@@ -52,7 +52,7 @@ test('lists current workspace assets with the asset resource shape', function ()
         'mediable_id' => $other->id,
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(ListAssetsTool::class, [])
         ->assertOk()
         ->assertStructuredContent(function (AssertableJson $json) use ($asset) {
@@ -83,12 +83,12 @@ test('filters and limits listed assets', function () {
         'original_filename' => 'reel.mp4',
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(ListAssetsTool::class, ['type' => 'image', 'limit' => 1])
         ->assertOk()
         ->assertStructuredContent(fn (AssertableJson $json) => $json->has('assets', 1)->where('has_more', true));
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(ListAssetsTool::class, ['search' => 'reel', 'type' => 'video'])
         ->assertOk()
         ->assertStructuredContent(function (AssertableJson $json) {
@@ -97,14 +97,14 @@ test('filters and limits listed assets', function () {
             })->where('has_more', false);
         });
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(ListAssetsTool::class, ['type' => 'image', 'limit' => 2])
         ->assertOk()
         ->assertStructuredContent(fn (AssertableJson $json) => $json->has('assets', 2)->where('has_more', false));
 });
 
 test('rejects out of range list limits', function (int $limit) {
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(ListAssetsTool::class, ['limit' => $limit])
         ->assertHasErrors();
 })->with([0, 101]);
@@ -115,7 +115,7 @@ test('returns a workspace asset', function () {
         'mediable_id' => $this->workspace->id,
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(GetAssetTool::class, ['asset_id' => $asset->id])
         ->assertOk()
         ->assertStructuredContent(function (AssertableJson $json) use ($asset) {
@@ -136,11 +136,11 @@ test('does not return a logo or avatar from the asset library', function () {
         'mediable_id' => $this->workspace->id,
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(GetAssetTool::class, ['asset_id' => $logo->id])
         ->assertHasErrors(['Asset not found.']);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(GetAssetTool::class, ['asset_id' => $avatar->id])
         ->assertHasErrors(['Asset not found.']);
 });
@@ -152,11 +152,11 @@ test('missing and cross workspace assets do not reveal metadata', function () {
         'mediable_id' => $other->id,
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(GetAssetTool::class, ['asset_id' => $foreign->id])
         ->assertHasErrors(['Asset not found.']);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(GetAssetTool::class, ['asset_id' => (string) Str::uuid()])
         ->assertHasErrors(['Asset not found.']);
 });
@@ -174,7 +174,7 @@ test('attaches an existing workspace asset once', function () {
         ],
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(AttachExistingAssetTool::class, [
             'post_id' => $this->post->id,
             'asset_id' => $asset->id,
@@ -185,7 +185,7 @@ test('attaches an existing workspace asset once', function () {
             $json->has('post.id');
         });
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(AttachExistingAssetTool::class, [
             'post_id' => $this->post->id,
             'asset_id' => $asset->id,
@@ -218,7 +218,7 @@ test('preserves library alt text when attach omits alt', function () {
         ],
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(AttachExistingAssetTool::class, [
             'post_id' => $this->post->id,
             'asset_id' => $asset->id,
@@ -239,7 +239,7 @@ test('attaches an existing document asset without inventing meta', function () {
         'meta' => [],
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(AttachExistingAssetTool::class, [
             'post_id' => $this->post->id,
             'asset_id' => $asset->id,
@@ -258,7 +258,7 @@ test('does not store alt text for existing non-image assets', function () {
         'mediable_id' => $this->workspace->id,
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(AttachExistingAssetTool::class, [
             'post_id' => $this->post->id,
             'asset_id' => $asset->id,
@@ -280,7 +280,7 @@ test('attaches an existing asset to a scheduled post', function () {
         'mediable_id' => $this->workspace->id,
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(AttachExistingAssetTool::class, [
             'post_id' => $this->post->id,
             'asset_id' => $asset->id,
@@ -306,14 +306,14 @@ test('rejects cross-workspace assets and posts without mutating the post', funct
         'mediable_id' => $this->workspace->id,
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(AttachExistingAssetTool::class, [
             'post_id' => $this->post->id,
             'asset_id' => $foreignAsset->id,
         ])
         ->assertHasErrors(['Asset not found.']);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(AttachExistingAssetTool::class, [
             'post_id' => $foreignPost->id,
             'asset_id' => $asset->id,
@@ -330,7 +330,7 @@ test('rejects posts in non-editable states', function (PostStatus $status) {
         'mediable_id' => $this->workspace->id,
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(AttachExistingAssetTool::class, [
             'post_id' => $this->post->id,
             'asset_id' => $asset->id,
@@ -359,7 +359,7 @@ test('rejects assets that enabled post platforms cannot publish', function () {
         'mediable_id' => $this->workspace->id,
     ]);
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(AttachExistingAssetTool::class, [
             'post_id' => $this->post->id,
             'asset_id' => $asset->id,

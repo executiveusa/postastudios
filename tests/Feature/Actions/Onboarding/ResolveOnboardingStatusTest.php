@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 
 beforeEach(function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $this->user = User::factory()->create();
     $this->workspace = Workspace::factory()->create([
@@ -163,7 +163,7 @@ test('members do not see the progress checklist', function () {
 });
 
 test('generic trial without card still shows progress for the owner', function () {
-    config(['trypost.billing.require_card_for_trial' => false]);
+    config(['postastudio.billing.require_card_for_trial' => false]);
     $this->user->account->subscriptions()->delete();
     $this->user->account->update(['trial_ends_at' => now()->addDays(7)]);
 
@@ -363,7 +363,7 @@ test('completed onboarding returns immediately without resolving steps or captur
 });
 
 test('self-hosted onboarding shows the progress checklist for owners', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $status = app(ResolveOnboardingStatus::class)->handle($this->user);
 
@@ -572,7 +572,7 @@ test('sidebar progress does not query step state for members', function () {
 });
 
 test('sidebar progress works in self hosted mode', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,

@@ -43,7 +43,7 @@ beforeEach(function () {
 
     $this->publisher = new TikTokPublisher;
 
-    $this->api = config('trypost.platforms.tiktok.api');
+    $this->api = config('postastudio.platforms.tiktok.api');
 });
 
 test('tiktok publisher throws exception when no media', function () {

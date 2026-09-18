@@ -25,10 +25,10 @@ return [
         'other' => 'أخرى',
     ],
     'goals_title' => 'ما هدفك؟',
-    'goals_description' => 'اختر كل ما يناسبك وسنقوم بإعداد TryPost من أجلك.',
+    'goals_description' => 'اختر كل ما يناسبك وسنقوم بإعداد Posta Studio من أجلك.',
     'goals' => [
         'save_time' => 'توفير الوقت بالنشر في كل مكان دفعة واحدة',
-        'ai_content' => 'إنشاء منشورات بذكاء TryPost الاصطناعي',
+        'ai_content' => 'إنشاء منشورات بذكاء Posta Studio الاصطناعي',
         'use_mcp' => 'إنشاء منشورات عبر Claude أو ChatGPT أو Cursor',
         'plan_calendar' => 'التخطيط لمنشوراتي على التقويم',
         'stay_on_brand' => 'الحفاظ على اتساق كل منشور مع العلامة التجارية',
@@ -39,7 +39,7 @@ return [
         'other' => 'شيء آخر',
     ],
     'referral_source_title' => 'كيف وجدتنا؟',
-    'referral_source_description' => 'يساعدنا هذا على فهم كيفية اكتشاف الأشخاص لـ TryPost.',
+    'referral_source_description' => 'يساعدنا هذا على فهم كيفية اكتشاف الأشخاص لـ Posta Studio.',
     'referral_source' => [
         'google' => 'Google',
         'x' => 'X (Twitter)',
@@ -61,7 +61,7 @@ return [
     ],
     'connect' => [
         'title' => 'اربط حسابًا اجتماعيًا',
-        'description' => 'اختر شبكة واحدة على الأقل يمكن لـ TryPost النشر عليها.',
+        'description' => 'اختر شبكة واحدة على الأقل يمكن لـ Posta Studio النشر عليها.',
         'required' => 'اربط حسابًا اجتماعيًا واحدًا على الأقل للمتابعة.',
     ],
 ];

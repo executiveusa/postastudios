@@ -35,7 +35,7 @@ class TelegramController extends SocialController
         return response()->json([
             'code' => $code,
             'nonce' => data_get(TelegramConnectCode::decode($code), 'nonce'),
-            'bot_username' => config('trypost.platforms.telegram.bot_username'),
+            'bot_username' => config('postastudio.platforms.telegram.bot_username'),
             'expires_at' => $expiresAt->toIso8601String(),
         ]);
     }

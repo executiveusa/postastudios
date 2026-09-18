@@ -104,7 +104,7 @@ test('uploadFromUrl returns null for a private-network url and never requests it
 });
 
 test('uploadFromUrl attempts the internal fetch when allow_private_network is enabled', function () {
-    config(['trypost.security.allow_private_network' => true]);
+    config(['postastudio.security.allow_private_network' => true]);
     Storage::fake();
 
     Http::fake([

@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Enums\PostPlatform\ContentType;
 use App\Enums\SocialAccount\Platform;
 use App\Enums\UserWorkspace\Role;
-use App\Mcp\Servers\TryPostServer;
+use App\Mcp\Servers\PostaStudioServer;
 use App\Mcp\Tools\Post\AttachMediaFromUrlTool;
 use App\Models\Media;
 use App\Models\Post;
@@ -39,7 +39,7 @@ test('attaches an image from url and creates a media row', function () {
         ),
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUrlTool::class, [
             'post_id' => $this->post->id,
             'urls' => [['url' => 'https://example.com/photo.jpg']],
@@ -60,7 +60,7 @@ test('attaches an image from url with alt text and stores it in meta', function 
         ),
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUrlTool::class, [
             'post_id' => $this->post->id,
             'urls' => [['url' => 'https://example.com/photo.jpg', 'alt' => 'A red bicycle by a wall']],
@@ -76,7 +76,7 @@ test('rejects url that returns non-image content type', function () {
         'example.org/payload' => Http::response('not an image', 200, ['Content-Type' => 'text/html']),
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUrlTool::class, [
             'post_id' => $this->post->id,
             'urls' => [['url' => 'https://example.org/payload']],
@@ -98,7 +98,7 @@ test('reports failures and successes separately', function () {
         'example.com/missing.png' => Http::response(null, 404),
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUrlTool::class, [
             'post_id' => $this->post->id,
             'urls' => [
@@ -129,7 +129,7 @@ test('attaches a pdf document from a url to a LinkedIn post', function () {
         'platform' => Platform::LinkedIn, 'content_type' => ContentType::LinkedInPost, 'enabled' => true,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUrlTool::class, [
             'post_id' => $this->post->id,
             'urls' => [['url' => 'https://example.com/deck.pdf']],
@@ -157,7 +157,7 @@ test('rejects a pdf url for a post with no PDF-capable platform', function () {
         'platform' => Platform::TikTok, 'content_type' => ContentType::TikTokVideo, 'enabled' => true,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUrlTool::class, [
             'post_id' => $this->post->id,
             'urls' => [['url' => 'https://example.com/deck.pdf']],
@@ -172,7 +172,7 @@ test('post 404 from another workspace', function () {
     $other = Workspace::factory()->create();
     $post = Post::factory()->create(['workspace_id' => $other->id, 'user_id' => $this->user->id]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUrlTool::class, [
             'post_id' => $post->id,
             'urls' => [['url' => 'https://example.com/photo.jpg']],
@@ -182,7 +182,7 @@ test('post 404 from another workspace', function () {
 });
 
 test('rejects urls with non-http(s) schemes', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUrlTool::class, [
             'post_id' => $this->post->id,
             'urls' => [['url' => 'ftp://example.com/photo.jpg']],
@@ -194,7 +194,7 @@ test('rejects urls with non-http(s) schemes', function () {
 });
 
 test('rejects malformed url strings', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUrlTool::class, [
             'post_id' => $this->post->id,
             'urls' => [['url' => 'not-a-url-at-all']],
@@ -204,7 +204,7 @@ test('rejects malformed url strings', function () {
 });
 
 test('rejects alt text over the max length', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUrlTool::class, [
             'post_id' => $this->post->id,
             'urls' => [['url' => 'https://example.com/photo.jpg', 'alt' => str_repeat('a', 2001)]],
@@ -214,7 +214,7 @@ test('rejects alt text over the max length', function () {
 });
 
 test('rejects the old bare-string urls shape', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUrlTool::class, [
             'post_id' => $this->post->id,
             'urls' => ['https://example.com/photo.jpg'],
@@ -226,7 +226,7 @@ test('rejects the old bare-string urls shape', function () {
 test('rejects more than 10 urls per call', function () {
     $urls = collect(range(1, 11))->map(fn ($i) => ['url' => "https://example.com/photo-{$i}.jpg"])->all();
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUrlTool::class, [
             'post_id' => $this->post->id,
             'urls' => $urls,

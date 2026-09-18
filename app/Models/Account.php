@@ -75,7 +75,7 @@ class Account extends Model
 
     public function hasActiveSubscription(): bool
     {
-        if (config('trypost.self_hosted')) {
+        if (config('postastudio.self_hosted')) {
             return true;
         }
 
@@ -88,11 +88,11 @@ class Account extends Model
      */
     public function hasAppAccess(): bool
     {
-        if (config('trypost.self_hosted')) {
+        if (config('postastudio.self_hosted')) {
             return true;
         }
 
-        $requiresCardForTrial = (bool) config('trypost.billing.require_card_for_trial', true);
+        $requiresCardForTrial = (bool) config('postastudio.billing.require_card_for_trial', true);
 
         return $this->subscribed(self::SUBSCRIPTION_NAME)
             || (! $requiresCardForTrial && $this->isOnTrial());
@@ -105,7 +105,7 @@ class Account extends Model
      */
     public function syncWorkspaceQuantity(): void
     {
-        if (config('trypost.self_hosted')) {
+        if (config('postastudio.self_hosted')) {
             return;
         }
 
@@ -127,7 +127,7 @@ class Account extends Model
 
     public function isPastDue(): bool
     {
-        if (config('trypost.self_hosted')) {
+        if (config('postastudio.self_hosted')) {
             return false;
         }
 
@@ -136,7 +136,7 @@ class Account extends Model
 
     public function isOnTrial(): bool
     {
-        if (! (bool) config('trypost.billing.require_card_for_trial', true) && $this->onGenericTrial()) {
+        if (! (bool) config('postastudio.billing.require_card_for_trial', true) && $this->onGenericTrial()) {
             return true;
         }
 
@@ -148,7 +148,7 @@ class Account extends Model
         $subscription = $this->subscription(self::SUBSCRIPTION_NAME);
 
         if (! $subscription?->onTrial()) {
-            if (! (bool) config('trypost.billing.require_card_for_trial', true) && $this->onGenericTrial()) {
+            if (! (bool) config('postastudio.billing.require_card_for_trial', true) && $this->onGenericTrial()) {
                 return $this->trial_ends_at;
             }
 

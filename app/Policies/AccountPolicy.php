@@ -28,7 +28,7 @@ class AccountPolicy
      */
     public function useAi(User $user, Account $account): Response
     {
-        if (config('trypost.self_hosted')) {
+        if (config('postastudio.self_hosted')) {
             return Response::allow();
         }
 

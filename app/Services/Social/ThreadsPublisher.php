@@ -28,7 +28,7 @@ class ThreadsPublisher
 
     public function __construct()
     {
-        $this->baseUrl = config('trypost.platforms.threads.graph_api');
+        $this->baseUrl = config('postastudio.platforms.threads.graph_api');
     }
 
     public function publish(PostPlatform $postPlatform): array

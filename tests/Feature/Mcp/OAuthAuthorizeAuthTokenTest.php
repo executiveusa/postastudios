@@ -11,7 +11,7 @@ use Inertia\Testing\AssertableInertia;
 use Symfony\Component\HttpFoundation\Response;
 
 beforeEach(function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $account = Account::factory()->create();
     $this->user = User::factory()->create(['account_id' => $account->id]);

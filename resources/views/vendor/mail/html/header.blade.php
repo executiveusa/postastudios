@@ -2,7 +2,7 @@
 <tr>
 <td class="header">
 <a href="{{ $url }}" style="display: inline-block;">
-<img src="{{ asset('images/trypost/logo-light.png') }}" class="logo" alt="Posta Studio" style="height: 40px; width: auto;">
+<span class="logo" style="font-size: 24px; font-weight: 700;">Posta Studio</span>
 </a>
 </td>
 </tr>

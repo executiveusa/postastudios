@@ -74,7 +74,7 @@ class RunWebhookNode
 
         try {
             $response = Http::withHeaders($headers)
-                ->withUserAgent(config('trypost.user_agent'))
+                ->withUserAgent(config('postastudio.user_agent'))
                 ->withOptions(['allow_redirects' => false])
                 ->send($method, $url, ['json' => $payload]);
         } catch (Throwable $e) {

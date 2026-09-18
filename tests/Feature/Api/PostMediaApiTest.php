@@ -463,7 +463,7 @@ it('keeps an already-hosted item and a freshly-hosted url in order', function ()
         ->postJson(route('api.posts.store'), [
             'content' => 'Mixed media post',
             'media' => [
-                ['id' => 'hosted-1', 'path' => 'assets/already.jpg', 'url' => 'https://cdn.trypost.test/assets/already.jpg', 'type' => 'image'],
+                ['id' => 'hosted-1', 'path' => 'assets/already.jpg', 'url' => 'https://cdn.postastudio.test/assets/already.jpg', 'type' => 'image'],
                 ['url' => 'https://93.184.216.34/external.jpg'],
             ],
             'platforms' => [
@@ -492,7 +492,7 @@ it('passes already-hosted media through on create without downloading', function
             'media' => [[
                 'id' => 'media-1',
                 'path' => 'assets/foo.jpg',
-                'url' => 'https://cdn.trypost.test/assets/foo.jpg',
+                'url' => 'https://cdn.postastudio.test/assets/foo.jpg',
                 'type' => 'image',
             ]],
             'platforms' => [
@@ -554,7 +554,7 @@ it('accepts and persists media alt text on create', function () {
             'media' => [[
                 'id' => 'media-1',
                 'path' => 'assets/foo.jpg',
-                'url' => 'https://cdn.trypost.test/assets/foo.jpg',
+                'url' => 'https://cdn.postastudio.test/assets/foo.jpg',
                 'type' => 'image',
                 'meta' => ['alt_text' => 'A description of the photo'],
             ]],
@@ -576,7 +576,7 @@ it('accepts and persists media alt text on update', function () {
             'media' => [[
                 'id' => 'media-1',
                 'path' => 'assets/foo.jpg',
-                'url' => 'https://cdn.trypost.test/assets/foo.jpg',
+                'url' => 'https://cdn.postastudio.test/assets/foo.jpg',
                 'type' => 'image',
                 'meta' => ['alt_text' => 'Updated alt text'],
             ]],
@@ -593,7 +593,7 @@ it('preserves every media meta key on update, not just alt_text', function () {
             'media' => [[
                 'id' => 'media-1',
                 'path' => 'assets/foo.jpg',
-                'url' => 'https://cdn.trypost.test/assets/foo.jpg',
+                'url' => 'https://cdn.postastudio.test/assets/foo.jpg',
                 'type' => 'image',
                 'meta' => [
                     'width' => 1920,
@@ -623,7 +623,7 @@ it('rejects media alt text over 2000 characters', function () {
             'media' => [[
                 'id' => 'media-1',
                 'path' => 'assets/foo.jpg',
-                'url' => 'https://cdn.trypost.test/assets/foo.jpg',
+                'url' => 'https://cdn.postastudio.test/assets/foo.jpg',
                 'type' => 'image',
                 'meta' => ['alt_text' => str_repeat('a', 2001)],
             ]],

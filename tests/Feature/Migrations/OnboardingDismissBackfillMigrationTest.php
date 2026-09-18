@@ -22,7 +22,7 @@ test('completes every open account regardless of subscription or hosting mode', 
     $subscribed = User::factory()->create();
     subscribeAccount($subscribed->account);
 
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
     $selfHosted = User::factory()->create();
 
     expect($open->account->subscriptions()->exists())->toBeFalse()

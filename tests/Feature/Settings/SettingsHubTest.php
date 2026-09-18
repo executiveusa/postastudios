@@ -11,7 +11,7 @@ test('settings hub requires authentication', function () {
 });
 
 test('account owner with admin workspace role sees all three cards', function () {
-    config()->set('trypost.self_hosted', false);
+    config()->set('postastudio.self_hosted', false);
 
     $user = User::factory()->create();
     $workspace = Workspace::factory()->create(['user_id' => $user->id]);
@@ -63,7 +63,7 @@ test('workspace admin who is not account owner sees profile and workspace only',
 });
 
 test('account card is hidden when self hosted', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
 
     $user = User::factory()->create();
     $workspace = Workspace::factory()->create(['user_id' => $user->id]);

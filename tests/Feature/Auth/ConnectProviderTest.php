@@ -8,7 +8,7 @@ use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\User as SocialiteUser;
 
 test('authenticated user can hit the connect-provider route for github', function () {
-    config(['trypost.github_auth_enabled' => true]);
+    config(['postastudio.github_auth_enabled' => true]);
     $user = User::factory()->create();
 
     $driver = Mockery::mock(AbstractProvider::class);
@@ -22,7 +22,7 @@ test('authenticated user can hit the connect-provider route for github', functio
 });
 
 test('authenticated user can hit the connect-provider route for google', function () {
-    config(['trypost.google_auth_enabled' => true]);
+    config(['postastudio.google_auth_enabled' => true]);
     $user = User::factory()->create();
 
     $driver = Mockery::mock(AbstractProvider::class);
@@ -43,7 +43,7 @@ test('connect-provider route rejects unknown provider', function () {
 });
 
 test('connect-provider route 404s when the provider is disabled', function () {
-    config(['trypost.github_auth_enabled' => false]);
+    config(['postastudio.github_auth_enabled' => false]);
     $user = User::factory()->create();
 
     $this->actingAs($user)

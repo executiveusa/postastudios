@@ -67,7 +67,7 @@ test('create workspace shows form for user with no workspaces', function () {
 });
 
 test('create workspace shows form when user already has workspace in self-hosted mode', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $response = $this->actingAs($this->user)->get(route('app.workspaces.create'));
 
@@ -102,7 +102,7 @@ test('store workspace creates first workspace', function () {
 });
 
 test('store workspace creates second workspace in self-hosted mode', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $response = $this->actingAs($this->user)->post(route('app.workspaces.store'), [
         'name' => 'Second Workspace',
@@ -243,7 +243,7 @@ test('workspace settings shows the workspace settings page', function () {
 });
 
 test('workspace settings marks only workspace in saas mode', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
     $this->user->account->subscriptions()->create([
         'type' => Account::SUBSCRIPTION_NAME,
         'stripe_id' => 'sub_test_'.fake()->uuid(),
@@ -260,7 +260,7 @@ test('workspace settings marks only workspace in saas mode', function () {
 });
 
 test('workspace settings does not mark only workspace when account has more than one', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
     $this->user->account->subscriptions()->create([
         'type' => Account::SUBSCRIPTION_NAME,
         'stripe_id' => 'sub_test_'.fake()->uuid(),
@@ -604,7 +604,7 @@ test('destroy workspace reassigns current to another joined workspace', function
 });
 
 test('destroy workspace is blocked when it is the only workspace', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
     $this->user->account->subscriptions()->create([
         'type' => Account::SUBSCRIPTION_NAME,
         'stripe_id' => 'sub_test_'.fake()->uuid(),
@@ -620,7 +620,7 @@ test('destroy workspace is blocked when it is the only workspace', function () {
 });
 
 test('destroy workspace allows deleting the only workspace in self-hosted mode', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
     $workspaceId = $this->workspace->id;
 
     $response = $this->actingAs($this->user)->delete(route('app.workspaces.destroy', $this->workspace));
@@ -715,7 +715,7 @@ test('autofillBrand returns metadata without persisting anything', function () {
 });
 
 test('autofillBrand is always allowed even without a subscription', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $account = Account::factory()->create(['trial_ends_at' => null]);
     $user = User::factory()->create(['account_id' => $account->id]);
@@ -742,7 +742,7 @@ test('autofillBrand is always allowed even without a subscription', function () 
 });
 
 test('autofillBrand never records AI usage even when the LLM runs', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
     config()->set('ai.providers.gemini.key', 'fake-key');
     config()->set('ai.default', 'gemini');
 
@@ -854,7 +854,7 @@ test('store redirects additional workspace to /accounts', function () {
 });
 
 test('store blocks a second workspace without an active subscription', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $account = Account::factory()->create();
     $user = User::factory()->create(['account_id' => $account->id]);

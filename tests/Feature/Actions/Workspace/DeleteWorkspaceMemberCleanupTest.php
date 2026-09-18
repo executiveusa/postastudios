@@ -143,7 +143,7 @@ test('delete workspace deletes workspace media files and rows', function () {
 });
 
 test('delete workspace returns false when saas blocks the last workspace', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $owner = User::factory()->create();
     $workspace = Workspace::factory()->create([

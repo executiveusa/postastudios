@@ -9,7 +9,7 @@ use App\Services\Social\Telegram\TelegramAnalytics;
 use Illuminate\Support\Facades\Http;
 
 beforeEach(function () {
-    config(['trypost.platforms.telegram.bot_token' => 'TESTTOKEN']);
+    config(['postastudio.platforms.telegram.bot_token' => 'TESTTOKEN']);
 });
 
 it('returns the channel subscriber count as an account metric', function () {
@@ -34,7 +34,7 @@ it('returns no account metrics when the member count call fails', function () {
 });
 
 it('maps stored reactions to post metrics, tagged as reactions', function () {
-    config(['trypost.platforms.telegram.bot_token' => '']); // skip the subscriber lookup
+    config(['postastudio.platforms.telegram.bot_token' => '']); // skip the subscriber lookup
 
     $postPlatform = PostPlatform::factory()->create([
         'platform' => Platform::Telegram,
@@ -68,7 +68,7 @@ it('includes the channel subscriber count alongside reactions', function () {
 });
 
 it('returns no post metrics when there are no reactions yet', function () {
-    config(['trypost.platforms.telegram.bot_token' => '']);
+    config(['postastudio.platforms.telegram.bot_token' => '']);
 
     $postPlatform = PostPlatform::factory()->create([
         'platform' => Platform::Telegram,

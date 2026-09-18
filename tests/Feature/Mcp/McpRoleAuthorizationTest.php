@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\SocialAccount\Platform;
 use App\Enums\UserWorkspace\Role;
-use App\Mcp\Servers\TryPostServer;
+use App\Mcp\Servers\PostaStudioServer;
 use App\Mcp\Tools\Asset\AttachExistingAssetTool;
 use App\Mcp\Tools\Asset\GetAssetTool;
 use App\Mcp\Tools\Asset\ListAssetsTool;
@@ -62,17 +62,17 @@ test('viewers can list labels signatures and social accounts via mcp', function 
         'platform' => Platform::LinkedIn,
     ]);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(ListLabelsTool::class, [])
         ->assertOk()
         ->assertStructuredContent(fn (AssertableJson $json) => $json->has('labels', 1)->etc());
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(ListSignaturesTool::class, [])
         ->assertOk()
         ->assertStructuredContent(fn (AssertableJson $json) => $json->has('signatures', 1)->etc());
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(ListSocialAccountsTool::class, [])
         ->assertOk()
         ->assertStructuredContent(fn (AssertableJson $json) => $json->has('social_accounts', 1)->etc());
@@ -87,37 +87,37 @@ test('viewers cannot publish attach media or request uploads via mcp', function 
         'upload_token' => $uploadToken,
     ]);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(PublishPostTool::class, ['post_id' => $this->post->id])
         ->assertHasErrors(['Not authorized to publish this post.']);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(AttachMediaFromUrlTool::class, [
             'post_id' => $this->post->id,
             'urls' => [['url' => 'https://example.com/photo.jpg']],
         ])
         ->assertHasErrors(['Not authorized to update this post.']);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(AttachMediaFromUploadTool::class, [
             'post_id' => $this->post->id,
             'upload_token' => $uploadToken,
         ])
         ->assertHasErrors(['Not authorized to update this post.']);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(RequestMediaUploadTool::class, [])
         ->assertHasErrors(['Not authorized to upload media.']);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(ListAssetsTool::class, [])
         ->assertHasErrors(['Not authorized to view assets.']);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(GetAssetTool::class, ['asset_id' => (string) Str::uuid()])
         ->assertHasErrors(['Not authorized to view assets.']);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(AttachExistingAssetTool::class, [
             'post_id' => $this->post->id,
             'asset_id' => (string) Str::uuid(),
@@ -129,11 +129,11 @@ test('viewers cannot manage labels or signatures via mcp', function () {
     $label = WorkspaceLabel::factory()->create(['workspace_id' => $this->workspace->id]);
     $signature = WorkspaceSignature::factory()->create(['workspace_id' => $this->workspace->id]);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(CreateLabelTool::class, ['name' => 'Nope', 'color' => '#112233'])
         ->assertHasErrors(['Not authorized to manage labels.']);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(UpdateLabelTool::class, [
             'label_id' => $label->id,
             'name' => 'Nope',
@@ -141,15 +141,15 @@ test('viewers cannot manage labels or signatures via mcp', function () {
         ])
         ->assertHasErrors(['Not authorized to manage labels.']);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(DeleteLabelTool::class, ['label_id' => $label->id])
         ->assertHasErrors(['Not authorized to manage labels.']);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(CreateSignatureTool::class, ['name' => 'Nope', 'content' => 'x'])
         ->assertHasErrors(['Not authorized to manage signatures.']);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(UpdateSignatureTool::class, [
             'signature_id' => $signature->id,
             'name' => 'Nope',
@@ -157,7 +157,7 @@ test('viewers cannot manage labels or signatures via mcp', function () {
         ])
         ->assertHasErrors(['Not authorized to manage signatures.']);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(DeleteSignatureTool::class, ['signature_id' => $signature->id])
         ->assertHasErrors(['Not authorized to manage signatures.']);
 
@@ -178,15 +178,15 @@ test('viewers cannot toggle social accounts or list compose helpers via mcp', fu
         'workspace_id' => $this->workspace->id,
     ]);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(ToggleSocialAccountTool::class, ['account_id' => $linkedin->id])
         ->assertHasErrors(['Not authorized to manage social accounts.']);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(ListDiscordChannelsTool::class, ['account_id' => $discord->id])
         ->assertHasErrors(['Not authorized to manage posts.']);
 
-    TryPostServer::actingAs($this->viewer)
+    PostaStudioServer::actingAs($this->viewer)
         ->tool(ListPinterestBoardsTool::class, ['account_id' => $pinterest->id])
         ->assertHasErrors(['Not authorized to manage posts.']);
 
@@ -200,7 +200,7 @@ test('members cannot toggle social accounts via mcp', function () {
         'is_active' => true,
     ]);
 
-    TryPostServer::actingAs($this->member)
+    PostaStudioServer::actingAs($this->member)
         ->tool(ToggleSocialAccountTool::class, ['account_id' => $account->id])
         ->assertHasErrors(['Not authorized to manage social accounts.']);
 
@@ -214,7 +214,7 @@ test('admins can toggle social accounts via mcp', function () {
         'is_active' => true,
     ]);
 
-    TryPostServer::actingAs($this->owner)
+    PostaStudioServer::actingAs($this->owner)
         ->tool(ToggleSocialAccountTool::class, ['account_id' => $account->id])
         ->assertOk();
 

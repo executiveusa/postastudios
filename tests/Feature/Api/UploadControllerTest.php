@@ -122,7 +122,7 @@ test('rejects replay of an already-used token', function () {
 });
 
 test('rejects file larger than the per-type media cap', function () {
-    config(['trypost.media.max_size_mb.video' => 1]);
+    config(['postastudio.media.max_size_mb.video' => 1]);
 
     $token = (string) Str::uuid();
     $file = UploadedFile::fake()->create('huge.mp4', 1024 + 1, 'video/mp4');
@@ -135,8 +135,8 @@ test('rejects file larger than the per-type media cap', function () {
 
 test('rejects an image larger than the image media cap even when under the video ceiling', function () {
     config([
-        'trypost.media.max_size_mb.image' => 1,
-        'trypost.media.max_size_mb.video' => 1024,
+        'postastudio.media.max_size_mb.image' => 1,
+        'postastudio.media.max_size_mb.video' => 1024,
     ]);
 
     $token = (string) Str::uuid();
@@ -150,8 +150,8 @@ test('rejects an image larger than the image media cap even when under the video
 
 test('rejects a document larger than the document media cap even when under the video ceiling', function () {
     config([
-        'trypost.media.max_size_mb.document' => 1,
-        'trypost.media.max_size_mb.video' => 1024,
+        'postastudio.media.max_size_mb.document' => 1,
+        'postastudio.media.max_size_mb.video' => 1024,
     ]);
 
     $token = (string) Str::uuid();

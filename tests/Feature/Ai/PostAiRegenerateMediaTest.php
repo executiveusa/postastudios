@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 beforeEach(function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $this->user = User::factory()->create();
     $this->workspace = Workspace::factory()->create([

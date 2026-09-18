@@ -43,7 +43,7 @@ beforeEach(function () {
 
 test('linkedin publisher can publish text-only post', function () {
     Http::fake([
-        config('trypost.platforms.linkedin.api').'/rest/posts' => Http::response(null, 201, [
+        config('postastudio.platforms.linkedin.api').'/rest/posts' => Http::response(null, 201, [
             'x-restli-id' => 'urn:li:share:1234567890',
         ]),
     ]);
@@ -65,7 +65,7 @@ test('linkedin publisher can publish text-only post', function () {
 
 test('linkedin publisher uses correct headers', function () {
     Http::fake([
-        config('trypost.platforms.linkedin.api').'/rest/posts' => Http::response(null, 201, [
+        config('postastudio.platforms.linkedin.api').'/rest/posts' => Http::response(null, 201, [
             'x-restli-id' => 'urn:li:share:1234567890',
         ]),
     ]);
@@ -82,7 +82,7 @@ test('linkedin publisher uses correct headers', function () {
 
 test('linkedin publisher throws exception on api error', function () {
     Http::fake([
-        config('trypost.platforms.linkedin.api').'/rest/posts' => Http::response([
+        config('postastudio.platforms.linkedin.api').'/rest/posts' => Http::response([
             'message' => 'Invalid request',
             'status' => 400,
         ], 400),
@@ -94,11 +94,11 @@ test('linkedin publisher throws exception on api error', function () {
 
 test('linkedin publisher throws token expired exception on auth error after retry', function () {
     Http::fake([
-        config('trypost.platforms.linkedin.api').'/rest/posts' => Http::response([
+        config('postastudio.platforms.linkedin.api').'/rest/posts' => Http::response([
             'code' => 'EXPIRED_ACCESS_TOKEN',
             'message' => 'The token used in the request has expired',
         ], 401),
-        config('trypost.platforms.linkedin.oauth_api').'/oauth/v2/accessToken' => Http::response([
+        config('postastudio.platforms.linkedin.oauth_api').'/oauth/v2/accessToken' => Http::response([
             'error' => 'invalid_grant',
             'error_description' => 'The refresh token is invalid',
         ], 400),
@@ -112,12 +112,12 @@ test('linkedin publisher refreshes token when expired', function () {
     $this->socialAccount->update(['token_expires_at' => now()->subHour()]);
 
     Http::fake([
-        config('trypost.platforms.linkedin.oauth_api').'/oauth/v2/accessToken' => Http::response([
+        config('postastudio.platforms.linkedin.oauth_api').'/oauth/v2/accessToken' => Http::response([
             'access_token' => 'new-access-token',
             'refresh_token' => 'new-refresh-token',
             'expires_in' => 5184000,
         ], 200),
-        config('trypost.platforms.linkedin.api').'/rest/posts' => Http::response(null, 201, [
+        config('postastudio.platforms.linkedin.api').'/rest/posts' => Http::response(null, 201, [
             'x-restli-id' => 'urn:li:share:1234567890',
         ]),
     ]);
@@ -146,7 +146,7 @@ test('linkedin publisher throws TokenExpiredException when refresh_token is reje
     $this->socialAccount->update(['token_expires_at' => now()->subHour()]);
 
     Http::fake([
-        config('trypost.platforms.linkedin.oauth_api').'/oauth/v2/accessToken' => Http::response([
+        config('postastudio.platforms.linkedin.oauth_api').'/oauth/v2/accessToken' => Http::response([
             'error' => 'invalid_grant',
             'error_description' => 'The refresh token is invalid',
         ], 400),
@@ -160,7 +160,7 @@ test('linkedin publisher handles empty content', function () {
     $this->post->update(['content' => '']);
 
     Http::fake([
-        config('trypost.platforms.linkedin.api').'/rest/posts' => Http::response(null, 201, [
+        config('postastudio.platforms.linkedin.api').'/rest/posts' => Http::response(null, 201, [
             'x-restli-id' => 'urn:li:share:1234567890',
         ]),
     ]);
@@ -1102,7 +1102,7 @@ test('linkedin publisher throws when document init response is missing the urn',
 
 test('linkedin publisher treats a 401 response without an error code as a token error', function () {
     Http::fake([
-        config('trypost.platforms.linkedin.api').'/rest/posts' => Http::response(['message' => 'Unauthorized'], 401),
+        config('postastudio.platforms.linkedin.api').'/rest/posts' => Http::response(['message' => 'Unauthorized'], 401),
     ]);
 
     expect(fn () => $this->publisher->publish($this->postPlatform))
@@ -1117,12 +1117,12 @@ test('linkedin publisher does NOT rotate the token when it is only expiring soon
     $originalAccessToken = $this->socialAccount->access_token;
 
     Http::fake([
-        config('trypost.platforms.linkedin.oauth_api').'/oauth/v2/accessToken' => Http::response([
+        config('postastudio.platforms.linkedin.oauth_api').'/oauth/v2/accessToken' => Http::response([
             'access_token' => 'new-access-token',
             'refresh_token' => 'new-refresh-token',
             'expires_in' => 3600,
         ], 200),
-        config('trypost.platforms.linkedin.api').'/rest/posts' => Http::response(null, 201, ['x-restli-id' => 'urn:li:share:soon']),
+        config('postastudio.platforms.linkedin.api').'/rest/posts' => Http::response(null, 201, ['x-restli-id' => 'urn:li:share:soon']),
     ]);
 
     $result = $this->publisher->publish($this->postPlatform);
@@ -1137,7 +1137,7 @@ test('linkedin publisher does NOT rotate the token when it is only expiring soon
 
 test('linkedin publisher falls back to an empty id and null url when the post id header is missing', function () {
     Http::fake([
-        config('trypost.platforms.linkedin.api').'/rest/posts' => Http::response(null, 201),
+        config('postastudio.platforms.linkedin.api').'/rest/posts' => Http::response(null, 201),
     ]);
 
     $result = $this->publisher->publish($this->postPlatform);

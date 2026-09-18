@@ -14,8 +14,8 @@ const currentYear = dayjs().year();
         <header class="border-b">
             <div class="mx-auto max-w-5xl px-6 py-4 flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <img src="/images/trypost/logo-light.png" alt="Posta Studio" class="dark:hidden h-7 w-auto" />
-                    <img src="/images/trypost/logo-dark.png" alt="Posta Studio" class="hidden dark:block h-7 w-auto" />
+                    <span class="dark:hidden text-xl font-semibold tracking-tight">Posta Studio</span>
+                    <span class="hidden dark:block text-xl font-semibold tracking-tight">Posta Studio</span>
                 </div>
             </div>
         </header>

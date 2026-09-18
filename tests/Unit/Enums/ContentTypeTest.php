@@ -175,7 +175,7 @@ test('media rules keep editor parity for gif and requires_media flags', function
 /**
  * Lock the flags / limits that used to live in the Vue CONTENT_TYPE_RULES map
  * so a future centralization drift cannot silently flip editor behavior again.
- * Byte caps are the post-clamp values (min(platform, trypost.media hard limit)).
+ * Byte caps are the post-clamp values (min(platform, postastudio.media hard limit)).
  */
 test('media rules preserve pre-centralization editor limits for mapped types', function () {
     $mb = 1024 * 1024;

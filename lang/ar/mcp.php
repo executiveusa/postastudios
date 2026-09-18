@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 return [
     'title' => 'MCP',
-    'subtitle' => 'اربط مساعدي الذكاء الاصطناعي لإنشاء المنشورات وإدارتها بحساب TryPost الخاص بك.',
-    'copy_step' => 'انسخ عنوان خادم TryPost',
+    'subtitle' => 'اربط مساعدي الذكاء الاصطناعي لإنشاء المنشورات وإدارتها بحساب Posta Studio الخاص بك.',
+    'copy_step' => 'انسخ عنوان خادم Posta Studio',
     'open_step' => 'افتح مساعد الذكاء الاصطناعي',
     'copy' => 'نسخ الرابط',
     'connect' => 'اتصال :client',
@@ -18,7 +18,7 @@ return [
     'connected_empty' => 'لا يوجد اتصال بعد. استخدم Claude أو ChatGPT أو عميلًا آخر أعلاه.',
     'disconnect' => 'قطع الاتصال',
     'disconnect_title' => 'قطع اتصال التطبيق',
-    'disconnect_confirm' => 'يؤدي هذا إلى تسجيل خروج التطبيق من TryPost. سيحتاج إلى إعادة الاتصال قبل استخدام MCP مجددًا.',
+    'disconnect_confirm' => 'يؤدي هذا إلى تسجيل خروج التطبيق من Posta Studio. سيحتاج إلى إعادة الاتصال قبل استخدام MCP مجددًا.',
     'disconnected' => 'تم قطع اتصال التطبيق.',
     'copied' => 'تم النسخ',
     'last_used' => 'آخر استخدام',
@@ -26,10 +26,10 @@ return [
     'documentation_title' => 'التوثيق',
     'documentation_description' => 'أدلة الإعداد لكل عميل، والأدوات المتاحة، وحل المشكلات.',
     'view_docs' => 'عرض التوثيق',
-    'connector_name' => 'TryPost',
+    'connector_name' => 'Posta Studio',
 
     'authorize' => [
-        'page_title' => 'Authorize Application - TryPost',
+        'page_title' => 'Authorize Application - Posta Studio',
         'app_title' => 'Authorize MCP',
         'heading' => 'Authorize :client',
         'intro' => 'This application will be able to:',
@@ -45,7 +45,7 @@ return [
         'search_workspace' => 'Search workspaces...',
         'no_workspace_found' => 'No workspace found',
         'scope_mcp_use' => 'Use MCP server',
-        'error_page_title' => 'فشل التفويض - TryPost',
+        'error_page_title' => 'فشل التفويض - Posta Studio',
         'error_title' => 'تعذر الاتصال',
         'error_body' => 'طلب التفويض هذا غير صالح أو منتهٍ. أغلق هذه النافذة وحاول الاتصال مرة أخرى من عميل MCP.',
         'error_code' => 'خطأ: :error',
@@ -57,7 +57,7 @@ return [
     'clients' => [
         'claude' => 'افتح Settings → Connectors، أضِف موصلًا مخصصًا، ثم الصق الرابط أعلاه.',
         'chatgpt' => 'افتح Settings → Apps & Connectors، أنشئ موصلًا مخصصًا، ثم الصق الرابط أعلاه.',
-        'cursor' => 'أضف TryPost كخادم MCP بعيد في Cursor.',
+        'cursor' => 'أضف Posta Studio كخادم MCP بعيد في Cursor.',
         'cursor_name' => 'Cursor',
         'vscode' => 'الصق الإعداد أدناه في إعدادات MCP في VS Code.',
         'vscode_name' => 'VS Code',

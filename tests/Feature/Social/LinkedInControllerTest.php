@@ -89,8 +89,8 @@ function captureLinkedInConnectScopes(object $test): array
 }
 
 test('linkedin connect requests the union of personal and organization scopes', function () {
-    config(['trypost.platforms.linkedin.scopes' => ['openid', 'profile', 'email', 'w_member_social']]);
-    config(['trypost.platforms.linkedin-page.scopes' => ['openid', 'profile', 'email', 'w_organization_social', 'r_organization_social', 'rw_organization_admin', 'w_member_social']]);
+    config(['postastudio.platforms.linkedin.scopes' => ['openid', 'profile', 'email', 'w_member_social']]);
+    config(['postastudio.platforms.linkedin-page.scopes' => ['openid', 'profile', 'email', 'w_organization_social', 'r_organization_social', 'rw_organization_admin', 'w_member_social']]);
 
     expect(captureLinkedInConnectScopes($this))->toEqualCanonicalizing([
         'openid', 'profile', 'email', 'w_member_social',
@@ -99,9 +99,9 @@ test('linkedin connect requests the union of personal and organization scopes', 
 });
 
 test('connect requests only personal scopes when company pages are disabled', function () {
-    config(['trypost.platforms.linkedin.enabled' => true]);
-    config(['trypost.platforms.linkedin-page.enabled' => false]);
-    config(['trypost.platforms.linkedin.scopes' => ['openid', 'profile', 'email', 'w_member_social']]);
+    config(['postastudio.platforms.linkedin.enabled' => true]);
+    config(['postastudio.platforms.linkedin-page.enabled' => false]);
+    config(['postastudio.platforms.linkedin.scopes' => ['openid', 'profile', 'email', 'w_member_social']]);
 
     expect(captureLinkedInConnectScopes($this))->toEqualCanonicalizing([
         'openid', 'profile', 'email', 'w_member_social',
@@ -109,9 +109,9 @@ test('connect requests only personal scopes when company pages are disabled', fu
 });
 
 test('connect requests only organization scopes when the personal profile is disabled', function () {
-    config(['trypost.platforms.linkedin.enabled' => false]);
-    config(['trypost.platforms.linkedin-page.enabled' => true]);
-    config(['trypost.platforms.linkedin-page.scopes' => ['openid', 'w_organization_social', 'r_organization_social', 'rw_organization_admin']]);
+    config(['postastudio.platforms.linkedin.enabled' => false]);
+    config(['postastudio.platforms.linkedin-page.enabled' => true]);
+    config(['postastudio.platforms.linkedin-page.scopes' => ['openid', 'w_organization_social', 'r_organization_social', 'rw_organization_admin']]);
 
     expect(captureLinkedInConnectScopes($this))->toEqualCanonicalizing([
         'openid', 'w_organization_social', 'r_organization_social', 'rw_organization_admin',
@@ -119,8 +119,8 @@ test('connect requests only organization scopes when the personal profile is dis
 });
 
 test('connect is forbidden when both linkedin capabilities are disabled', function () {
-    config(['trypost.platforms.linkedin.enabled' => false]);
-    config(['trypost.platforms.linkedin-page.enabled' => false]);
+    config(['postastudio.platforms.linkedin.enabled' => false]);
+    config(['postastudio.platforms.linkedin-page.enabled' => false]);
 
     $this->actingAs($this->user)
         ->get(route('app.social.linkedin.connect'))
@@ -144,8 +144,8 @@ test('linkedin callback stores the person and organizations then redirects to th
         ->andReturn(Mockery::mock(['user' => linkedInSocialiteUser()]));
 
     Http::fake([
-        config('trypost.platforms.linkedin.api').'/v2/me*' => Http::response(['id' => 'person-123', 'vanityName' => 'johndoe'], 200),
-        config('trypost.platforms.linkedin.api').'/v2/organizationAcls*' => Http::response([
+        config('postastudio.platforms.linkedin.api').'/v2/me*' => Http::response(['id' => 'person-123', 'vanityName' => 'johndoe'], 200),
+        config('postastudio.platforms.linkedin.api').'/v2/organizationAcls*' => Http::response([
             'elements' => [
                 ['organization~' => ['id' => 123456, 'localizedName' => 'Test Company', 'vanityName' => 'testcompany']],
             ],
@@ -169,8 +169,8 @@ test('linkedin callback still redirects to the selector when the member administ
         ->andReturn(Mockery::mock(['user' => linkedInSocialiteUser()]));
 
     Http::fake([
-        config('trypost.platforms.linkedin.api').'/v2/me*' => Http::response(['vanityName' => 'johndoe'], 200),
-        config('trypost.platforms.linkedin.api').'/v2/organizationAcls*' => Http::response(['elements' => []], 200),
+        config('postastudio.platforms.linkedin.api').'/v2/me*' => Http::response(['vanityName' => 'johndoe'], 200),
+        config('postastudio.platforms.linkedin.api').'/v2/organizationAcls*' => Http::response(['elements' => []], 200),
     ]);
 
     $response = $this->actingAs($this->user)->get(route('app.social.linkedin.callback'));
@@ -226,8 +226,8 @@ test('select-identity screen renders the person and organizations', function () 
 });
 
 test('select-identity hides the personal profile when that capability is disabled', function () {
-    config(['trypost.platforms.linkedin.enabled' => false]);
-    config(['trypost.platforms.linkedin-page.enabled' => true]);
+    config(['postastudio.platforms.linkedin.enabled' => false]);
+    config(['postastudio.platforms.linkedin-page.enabled' => true]);
 
     session(['linkedin_pending' => [
         'workspace_id' => $this->workspace->id,
@@ -252,8 +252,8 @@ test('select-identity hides the personal profile when that capability is disable
 });
 
 test('selecting the person is rejected when the personal profile capability is disabled', function () {
-    config(['trypost.platforms.linkedin.enabled' => false]);
-    config(['trypost.platforms.linkedin-page.enabled' => true]);
+    config(['postastudio.platforms.linkedin.enabled' => false]);
+    config(['postastudio.platforms.linkedin-page.enabled' => true]);
 
     session(['linkedin_pending' => [
         'workspace_id' => $this->workspace->id,
@@ -274,8 +274,8 @@ test('selecting the person is rejected when the personal profile capability is d
 });
 
 test('selecting an organization is rejected when company pages are disabled', function () {
-    config(['trypost.platforms.linkedin.enabled' => true]);
-    config(['trypost.platforms.linkedin-page.enabled' => false]);
+    config(['postastudio.platforms.linkedin.enabled' => true]);
+    config(['postastudio.platforms.linkedin-page.enabled' => false]);
 
     session(['linkedin_pending' => [
         'workspace_id' => $this->workspace->id,
@@ -478,7 +478,7 @@ test('select fails with expired session', function () {
 });
 
 test('selecting the person shows network_taken when a linkedin page already occupies the network', function () {
-    config()->set('trypost.allow_multiple_social_accounts', false);
+    config()->set('postastudio.allow_multiple_social_accounts', false);
 
     SocialAccount::factory()->linkedinPage()->create([
         'workspace_id' => $this->workspace->id,
@@ -510,7 +510,7 @@ test('selecting the person shows network_taken when a linkedin page already occu
 });
 
 test('user can connect multiple linkedin organizations when multiple social accounts are allowed', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->linkedinPage()->create([
         'workspace_id' => $this->workspace->id,
@@ -686,7 +686,7 @@ test('linkedin identity picker hides identities that are not the reconnect card'
 });
 
 test('select-identity hides an organization that is already connected', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
@@ -719,7 +719,7 @@ test('select-identity hides an organization that is already connected', function
 });
 
 test('select-identity reports the network is taken when nothing is connectable', function () {
-    config()->set('trypost.allow_multiple_social_accounts', false);
+    config()->set('postastudio.allow_multiple_social_accounts', false);
 
     SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
@@ -750,8 +750,8 @@ test('select-identity reports the network is taken when nothing is connectable',
 });
 
 test('select-identity keeps the picker empty state when linkedin offers nothing', function () {
-    config()->set('trypost.platforms.linkedin.enabled', false);
-    config()->set('trypost.platforms.linkedin-page.enabled', true);
+    config()->set('postastudio.platforms.linkedin.enabled', false);
+    config()->set('postastudio.platforms.linkedin-page.enabled', true);
 
     session(['linkedin_pending' => [
         'workspace_id' => $this->workspace->id,
@@ -774,8 +774,8 @@ test('select-identity keeps the picker empty state when linkedin offers nothing'
 });
 
 test('select-identity does not defer onboarding progress back onto its own route', function () {
-    config()->set('trypost.platforms.linkedin.enabled', false);
-    config()->set('trypost.platforms.linkedin-page.enabled', true);
+    config()->set('postastudio.platforms.linkedin.enabled', false);
+    config()->set('postastudio.platforms.linkedin-page.enabled', true);
 
     session(['linkedin_pending' => [
         'workspace_id' => $this->workspace->id,

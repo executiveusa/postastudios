@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\UserWorkspace\Role;
-use App\Mcp\Servers\TryPostServer;
+use App\Mcp\Servers\PostaStudioServer;
 use App\Mcp\Tools\Workspace\GetWorkspaceTool;
 use App\Models\User;
 use App\Models\Workspace;
@@ -17,7 +17,7 @@ beforeEach(function () {
 });
 
 test('get workspace returns sanitized WorkspaceResource shape', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(GetWorkspaceTool::class, []);
 
     $response->assertOk()

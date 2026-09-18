@@ -1,11 +1,11 @@
 #!/bin/sh
-# TryPost — container entrypoint. Idempotent first-run setup, then exec supervisord.
+# Posta Studio — container entrypoint. Idempotent first-run setup, then exec supervisord.
 
 set -e
 
 cd /var/www/html
 
-TARGET="${TRYPOST_TARGET:-dev}"
+TARGET="${POSTASTUDIO_TARGET:-dev}"
 
 # One-off commands from `docker compose run app ...` must bypass the long-lived
 # application bootstrap and execute exactly as requested.
@@ -20,7 +20,7 @@ fi
 
 # 1) Bootstrap .env from the Docker template on first dev boot. The bind-mount
 #    in dev hides /var/www/html/.env.docker.example, so prefer docker/ first.
-if [ "${TRYPOST_DOCKER_BOOTSTRAP:-0}" = "1" ] && [ ! -f .env ]; then
+if [ "${POSTASTUDIO_DOCKER_BOOTSTRAP:-0}" = "1" ] && [ ! -f .env ]; then
     if [ -f docker/.env.docker.example ]; then
         echo "[entrypoint] seeding .env from docker/.env.docker.example"
         cp docker/.env.docker.example .env
@@ -33,8 +33,8 @@ if [ "${TRYPOST_DOCKER_BOOTSTRAP:-0}" = "1" ] && [ ! -f .env ]; then
 fi
 
 # 2) Skip-bootstrap escape hatch for advanced users.
-if [ "${TRYPOST_SKIP_BOOTSTRAP:-0}" = "1" ]; then
-    echo "[entrypoint] TRYPOST_SKIP_BOOTSTRAP=1 — exec'ing supervisord without setup"
+if [ "${POSTASTUDIO_SKIP_BOOTSTRAP:-0}" = "1" ]; then
+    echo "[entrypoint] POSTASTUDIO_SKIP_BOOTSTRAP=1 — exec'ing supervisord without setup"
     exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 fi
 
@@ -61,7 +61,7 @@ fi
 DB_HOST_VALUE="${DB_HOST:-pgsql}"
 DB_PORT_VALUE="${DB_PORT:-5432}"
 DB_USER_VALUE="${DB_USERNAME:-postgres}"
-DB_NAME_VALUE="${DB_DATABASE:-trypost}"
+DB_NAME_VALUE="${DB_DATABASE:-postastudio}"
 
 echo "[entrypoint] waiting for postgres at ${DB_HOST_VALUE}:${DB_PORT_VALUE}"
 WAIT_ATTEMPTS=0
@@ -90,7 +90,7 @@ fi
 # files under storage/ only for local/dev when those env vars are unset.
 if [ -n "${PASSPORT_PRIVATE_KEY:-}" ] && [ -n "${PASSPORT_PUBLIC_KEY:-}" ]; then
     echo "[entrypoint] using Passport keys from environment"
-elif [ "${TRYPOST_TARGET:-}" = "production" ] || [ "${APP_ENV:-}" = "production" ]; then
+elif [ "${POSTASTUDIO_TARGET:-}" = "production" ] || [ "${APP_ENV:-}" = "production" ]; then
     echo "[entrypoint] ERROR: PASSPORT_PRIVATE_KEY and PASSPORT_PUBLIC_KEY must be set in production." >&2
     echo "[entrypoint] Generate once with: php artisan passport:keys --show" >&2
     exit 1

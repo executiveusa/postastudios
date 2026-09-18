@@ -1280,7 +1280,7 @@ test('instagram publisher checkpoints the media id before fetching the permalink
 });
 
 test('instagram facebook publisher recovers a published container on graph.facebook.com', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
     $account = SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
         'platform' => Platform::InstagramFacebook,
@@ -1300,7 +1300,7 @@ test('instagram facebook publisher recovers a published container on graph.faceb
         ],
     ]);
 
-    $graph = (string) config('trypost.platforms.instagram-facebook.graph_api');
+    $graph = (string) config('postastudio.platforms.instagram-facebook.graph_api');
 
     Http::fake(function (Request $request) use ($graph) {
         expect($request->url())->toStartWith($graph)

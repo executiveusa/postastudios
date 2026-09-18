@@ -86,7 +86,7 @@ test('x callback fails with expired session', function () {
 });
 
 test('user can connect multiple x accounts when multiple social accounts are allowed', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->x()->create([
         'workspace_id' => $this->workspace->id,
@@ -122,7 +122,7 @@ test('user can connect multiple x accounts when multiple social accounts are all
 });
 
 test('x callback shows network_taken when the network is already connected', function () {
-    config()->set('trypost.allow_multiple_social_accounts', false);
+    config()->set('postastudio.allow_multiple_social_accounts', false);
 
     SocialAccount::factory()->x()->create([
         'workspace_id' => $this->workspace->id,

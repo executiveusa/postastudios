@@ -33,7 +33,7 @@ trait PreservesInvite
     {
         $invite = Invite::fromId($this->retrieveInvite());
 
-        if ((bool) config('trypost.self_hosted') && ! $invite) {
+        if ((bool) config('postastudio.self_hosted') && ! $invite) {
             throw new NotFoundHttpException;
         }
 

@@ -13,7 +13,7 @@ class EnsureRegistrationEnabled
 {
     public function handle(Request $request, Closure $next): mixed
     {
-        if (! config('trypost.self_hosted')) {
+        if (! config('postastudio.self_hosted')) {
             return $next($request);
         }
 

@@ -48,7 +48,7 @@ class BlueskyController extends SocialController
 
         $this->authorize('manageAccounts', $workspace);
 
-        $service = config('trypost.platforms.bluesky.default_service');
+        $service = config('postastudio.platforms.bluesky.default_service');
 
         try {
             // Authenticate with Bluesky

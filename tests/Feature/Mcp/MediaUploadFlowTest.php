@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\UserWorkspace\Role;
-use App\Mcp\Servers\TryPostServer;
+use App\Mcp\Servers\PostaStudioServer;
 use App\Mcp\Tools\Post\AttachMediaFromUploadTool;
 use App\Mcp\Tools\Post\RequestMediaUploadTool;
 use App\Models\Post;
@@ -33,7 +33,7 @@ test('agent can request URL, client uploads, agent attaches to post', function (
     $uploadUrl = null;
     $uploadToken = null;
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(RequestMediaUploadTool::class, [])
         ->assertOk()
         ->assertStructuredContent(function (AssertableJson $json) use (&$uploadUrl, &$uploadToken) {
@@ -48,7 +48,7 @@ test('agent can request URL, client uploads, agent attaches to post', function (
     $file = UploadedFile::fake()->image('e2e.png', 64, 64);
     $this->post($uploadUrl, ['media' => $file])->assertCreated();
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUploadTool::class, [
             'post_id' => $this->post->id,
             'upload_token' => $uploadToken,

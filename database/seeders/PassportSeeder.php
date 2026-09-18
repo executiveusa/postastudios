@@ -22,7 +22,7 @@ class PassportSeeder extends Seeder
                 // No client yet — fall through to create.
             }
 
-            $clients->createPersonalAccessGrantClient(name: 'TryPost Personal Access Client');
+            $clients->createPersonalAccessGrantClient(name: 'Posta Studio Personal Access Client');
         });
     }
 }

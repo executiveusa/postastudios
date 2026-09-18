@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 return [
     'title' => 'Pierwsze kroki',
-    'welcome' => 'Witaj w TryPost, :name',
-    'description' => 'Wykonaj poniższe kroki, aby zobaczyć, jak działa TryPost, i opublikować pierwszy post.',
+    'welcome' => 'Witaj w Posta Studio, :name',
+    'description' => 'Wykonaj poniższe kroki, aby zobaczyć, jak działa Posta Studio, i opublikować pierwszy post.',
     'skip_step' => 'Pomiń ten krok',
-    'continue' => 'Przejdź do TryPost',
+    'continue' => 'Przejdź do Posta Studio',
     'status' => [
         'complete' => 'Ukończone',
         'todo' => 'Do zrobienia',
@@ -15,17 +15,17 @@ return [
     ],
     'mcp' => [
         'title' => 'Połącz asystenta AI',
-        'description' => 'Dodaj TryPost jako serwer MCP, aby asystent mógł tworzyć i zarządzać postami społecznościowymi za Ciebie.',
+        'description' => 'Dodaj Posta Studio jako serwer MCP, aby asystent mógł tworzyć i zarządzać postami społecznościowymi za Ciebie.',
         'copied' => 'URL MCP skopiowany.',
     ],
     'social' => [
         'title' => 'Połącz konto społecznościowe',
-        'description' => 'Wybierz co najmniej jedną sieć, na której TryPost może publikować Twoje treści.',
+        'description' => 'Wybierz co najmniej jedną sieć, na której Posta Studio może publikować Twoje treści.',
         'connected_elsewhere' => 'Masz już połączone konto w innym workspace, więc ten krok jest ukończony.',
     ],
     'first_post' => [
         'title' => 'Utwórz pierwszy post',
-        'description' => 'Wypróbuj ten prompt startowy z podłączonym asystentem albo utwórz post bezpośrednio w TryPost.',
+        'description' => 'Wypróbuj ten prompt startowy z podłączonym asystentem albo utwórz post bezpośrednio w Posta Studio.',
         'prompt_label' => 'Przykładowy prompt',
         'sample_prompt' => 'Utwórz przyjazny post społecznościowy przedstawiający moją markę i dostosuj go do każdej podłączonej sieci.',
         'copy_prompt' => 'Kopiuj prompt',
@@ -35,6 +35,6 @@ return [
     ],
     'ready' => [
         'title' => 'Możesz już publikować',
-        'description' => 'Wszystko gotowe. Przejdź do TryPost i zacznij planować treści.',
+        'description' => 'Wszystko gotowe. Przejdź do Posta Studio i zacznij planować treści.',
     ],
 ];

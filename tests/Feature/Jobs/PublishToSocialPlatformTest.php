@@ -215,7 +215,7 @@ test('publish never leaks a raw internal error to the failure record (and the em
 
     $publisher = Mockery::mock(LinkedInPublisher::class);
     $publisher->shouldReceive('publish')->andThrow(new TypeError(
-        'X::getMediaCategory(): Argument #1 ($mimeType) must be of type string, null given, called in /home/forge/app.trypost.it/releases/72198060/app/Services/Social/XPublisher.php on line 130'
+        'X::getMediaCategory(): Argument #1 ($mimeType) must be of type string, null given, called in /home/forge/app.postastudios.com/releases/72198060/app/Services/Social/XPublisher.php on line 130'
     ));
 
     $this->app->instance(LinkedInPublisher::class, $publisher);
@@ -233,7 +233,7 @@ test('the job-failed hook also genericizes a raw internal error', function () {
     Event::fake();
 
     (new PublishToSocialPlatform($this->postPlatform))->failed(new TypeError(
-        'boom in /home/forge/app.trypost.it/releases/72198060/app/Services/Social/XPublisher.php on line 130'
+        'boom in /home/forge/app.postastudios.com/releases/72198060/app/Services/Social/XPublisher.php on line 130'
     ));
 
     $this->postPlatform->refresh();
@@ -1011,7 +1011,7 @@ test('tiktok photo publish resumes after a status-fetch token expiry without a s
     $verifier->shouldReceive('verify')->once()->andReturn(true);
     $this->app->instance(ConnectionVerifier::class, $verifier);
 
-    $api = config('trypost.platforms.tiktok.api');
+    $api = config('postastudio.platforms.tiktok.api');
 
     Http::fake([
         $api.'/post/publish/content/init/' => Http::response(['data' => ['publish_id' => 'pub_job_401']]),

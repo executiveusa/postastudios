@@ -37,7 +37,7 @@ afterEach(function () use ($putEnv) {
     }
 });
 
-$loadConfig = fn (): array => require config_path('trypost.php');
+$loadConfig = fn (): array => require config_path('postastudio.php');
 
 test('it falls back to the self-hosted default when neither env is set', function () use ($putEnv, $loadConfig) {
     $putEnv('ALLOW_MULTIPLE_SOCIAL_ACCOUNTS', null);

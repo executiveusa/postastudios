@@ -44,7 +44,7 @@ final class ConfigureSubscriptionCheckout
         }
 
         if (
-            (bool) config('trypost.billing.require_card_for_trial', true)
+            (bool) config('postastudio.billing.require_card_for_trial', true)
             && self::isFirstTimeSubscriber($account)
         ) {
             $trialDays = (int) config('cashier.trial_days');
@@ -69,7 +69,7 @@ final class ConfigureSubscriptionCheckout
      */
     private static function shouldApplyFirstMonthCoupon(Account $account): bool
     {
-        if (! (bool) config('trypost.billing.require_card_for_trial', true)) {
+        if (! (bool) config('postastudio.billing.require_card_for_trial', true)) {
             return false;
         }
 

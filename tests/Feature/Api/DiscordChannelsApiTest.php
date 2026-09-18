@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 beforeEach(function () {
     Cache::flush();
     config([
-        'trypost.platforms.discord.bot_token' => 'BOTTOKEN',
+        'postastudio.platforms.discord.bot_token' => 'BOTTOKEN',
         'services.discord.client_id' => '999000111',
     ]);
 
@@ -28,15 +28,15 @@ it('lists discord channels for a connected account', function () {
     ]);
 
     Http::fake([
-        config('trypost.platforms.discord.api').'/guilds/111222333/channels' => Http::response([
+        config('postastudio.platforms.discord.api').'/guilds/111222333/channels' => Http::response([
             ['id' => '1', 'name' => 'general', 'type' => 0],
             ['id' => '2', 'name' => 'voice', 'type' => 2],
             ['id' => '3', 'name' => 'news', 'type' => 5],
         ], 200),
-        config('trypost.platforms.discord.api').'/guilds/111222333/roles' => Http::response([
+        config('postastudio.platforms.discord.api').'/guilds/111222333/roles' => Http::response([
             ['id' => '111222333', 'name' => '@everyone', 'permissions' => '3072'],
         ], 200),
-        config('trypost.platforms.discord.api').'/guilds/111222333/members/999000111' => Http::response(['roles' => []], 200),
+        config('postastudio.platforms.discord.api').'/guilds/111222333/members/999000111' => Http::response(['roles' => []], 200),
     ]);
 
     $response = $this->getJson(route('api.social-accounts.channels', $account), [
@@ -59,7 +59,7 @@ it('returns bad gateway when discord channel lookup fails', function () {
     ]);
 
     Http::fake([
-        config('trypost.platforms.discord.api').'/guilds/111222333/channels' => Http::response('upstream down', 500),
+        config('postastudio.platforms.discord.api').'/guilds/111222333/channels' => Http::response('upstream down', 500),
     ]);
 
     $this->getJson(route('api.social-accounts.channels', $account), [

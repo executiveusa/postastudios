@@ -18,11 +18,11 @@ return [
     'throttle' => 'Zbyt wiele prób logowania. Spróbuj ponownie za :seconds s.',
 
     'flash' => [
-        'welcome' => 'Witamy w TryPost!',
-        'welcome_trial' => 'Witamy w TryPost! Twój okres próbny właśnie się rozpoczął.',
+        'welcome' => 'Witamy w Posta Studio!',
+        'welcome_trial' => 'Witamy w Posta Studio! Twój okres próbny właśnie się rozpoczął.',
     ],
 
-    'legal' => 'Kontynuując, akceptujesz nasze <a href="https://trypost.it/terms" target="_blank">Warunki korzystania z usługi</a> oraz <a href="https://trypost.it/privacy" target="_blank">Politykę prywatności</a>.',
+    'legal' => 'Kontynuując, akceptujesz nasze <a href="https://postastudios.com/terms" target="_blank">Warunki korzystania z usługi</a> oraz <a href="https://postastudios.com/privacy" target="_blank">Politykę prywatności</a>.',
 
     'slides' => [
         'calendar' => [

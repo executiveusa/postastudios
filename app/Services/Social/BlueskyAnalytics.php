@@ -26,7 +26,7 @@ class BlueskyAnalytics
         // Read counts (likes, reposts, replies, quotes) live on the AT
         // Protocol AppView, not the PDS. The user's PDS requires Bearer auth
         // for this endpoint; the public AppView does not.
-        $appView = (string) config('trypost.platforms.bluesky.public_appview');
+        $appView = (string) config('postastudio.platforms.bluesky.public_appview');
 
         $response = $this->socialHttp()
             ->get("{$appView}/xrpc/".BlueskyLexicon::GET_POSTS, [

@@ -16,8 +16,8 @@ use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\Cache;
 
 beforeEach(function () {
-    config()->set('trypost.self_hosted', false);
-    config()->set('trypost.allow_multiple_social_accounts', false);
+    config()->set('postastudio.self_hosted', false);
+    config()->set('postastudio.allow_multiple_social_accounts', false);
     $this->workspace = Workspace::factory()->create();
 });
 
@@ -101,7 +101,7 @@ test('reconnecting the same account via updateOrCreate is allowed', function () 
 });
 
 test('allowing multiple social accounts bypasses the one-per-network rule', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
@@ -119,8 +119,8 @@ test('allowing multiple social accounts bypasses the one-per-network rule', func
 });
 
 test('multiple social accounts can be enabled without self-hosted mode', function () {
-    config()->set('trypost.self_hosted', false);
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.self_hosted', false);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
@@ -138,8 +138,8 @@ test('multiple social accounts can be enabled without self-hosted mode', functio
 });
 
 test('self-hosted still enforces one-per-network when multiple social accounts are disabled', function () {
-    config()->set('trypost.self_hosted', true);
-    config()->set('trypost.allow_multiple_social_accounts', false);
+    config()->set('postastudio.self_hosted', true);
+    config()->set('postastudio.allow_multiple_social_accounts', false);
 
     SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
@@ -180,7 +180,7 @@ test('blocks a same-id account connected via a different network variant', funct
 });
 
 test('the same workspace platform identity cannot be stored twice', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
@@ -196,7 +196,7 @@ test('the same workspace platform identity cannot be stored twice', function () 
 });
 
 test('connectIdentity refuses to repoint the reconnect target at another identity', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     $account = SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
@@ -219,7 +219,7 @@ test('connectIdentity refuses to repoint the reconnect target at another identit
 });
 
 test('connectIdentity keeps posts on the card when a stray identity is authorized', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     $account = SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
@@ -268,7 +268,7 @@ test('connectIdentity still reconnects the same identity across a network varian
 });
 
 test('connectIdentity reconnect throws when the new identity is already taken', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,

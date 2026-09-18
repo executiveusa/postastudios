@@ -22,7 +22,7 @@ class FacebookAnalytics
 
     public function __construct()
     {
-        $this->baseUrl = config('trypost.platforms.facebook.graph_api');
+        $this->baseUrl = config('postastudio.platforms.facebook.graph_api');
     }
 
     public function getMetrics(SocialAccount $account, ?CarbonInterface $since = null, ?CarbonInterface $until = null): array

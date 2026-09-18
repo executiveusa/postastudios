@@ -280,13 +280,13 @@ class DiscordPublisher
 
     private function endpoint(string $channelId): string
     {
-        return config('trypost.platforms.discord.api')."/channels/{$channelId}/messages";
+        return config('postastudio.platforms.discord.api')."/channels/{$channelId}/messages";
     }
 
     private function bot(): PendingRequest
     {
         return $this->socialHttp()
-            ->withToken((string) config('trypost.platforms.discord.bot_token'), 'Bot');
+            ->withToken((string) config('postastudio.platforms.discord.bot_token'), 'Bot');
     }
 
     private function messageId(Response $response): string

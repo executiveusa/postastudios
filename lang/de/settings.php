@@ -151,7 +151,7 @@ return [
         'delete_only_description' => 'Du kannst deinen einzigen Workspace nicht löschen. Kündige das Abonnement in der Abrechnung, um die Zahlung zu stoppen, oder lösche dein Konto unter Authentifizierung, um die Abrechnung zu beenden und alles dauerhaft zu entfernen.',
         'delete_go_to_billing' => 'Zur Abrechnung',
         'delete_go_to_delete_account' => 'Konto löschen',
-        'delete_members_warning' => '{1}:count weiteres Mitglied verliert den Zugriff. Mitglieder ohne anderen TryPost-Workspace werden dauerhaft gelöscht.|[2,*]:count weitere Mitglieder verlieren den Zugriff. Mitglieder ohne anderen TryPost-Workspace werden dauerhaft gelöscht.',
+        'delete_members_warning' => '{1}:count weiteres Mitglied verliert den Zugriff. Mitglieder ohne anderen Posta Studio-Workspace werden dauerhaft gelöscht.|[2,*]:count weitere Mitglieder verlieren den Zugriff. Mitglieder ohne anderen Posta Studio-Workspace werden dauerhaft gelöscht.',
         'delete_action' => 'Workspace löschen',
         'delete_cancel' => 'Abbrechen',
         'delete_confirm_title' => 'Workspace löschen?',
@@ -294,7 +294,7 @@ return [
 
         'errors' => [
             'invite_exists' => 'Für diese E-Mail existiert bereits eine Einladung.',
-            'email_belongs_to_account' => 'Diese E-Mail gehört bereits zu einem anderen TryPost-Konto. Bitte eine dedizierte Arbeits-E-Mail verwenden.',
+            'email_belongs_to_account' => 'Diese E-Mail gehört bereits zu einem anderen Posta Studio-Konto. Bitte eine dedizierte Arbeits-E-Mail verwenden.',
         ],
 
         'flash' => [

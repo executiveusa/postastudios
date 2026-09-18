@@ -7,7 +7,7 @@ use App\Enums\PostPlatform\ContentType;
 use App\Enums\SocialAccount\Platform;
 use App\Enums\UserWorkspace\Role;
 use App\Jobs\PublishPost;
-use App\Mcp\Servers\TryPostServer;
+use App\Mcp\Servers\PostaStudioServer;
 use App\Mcp\Tools\Post\AttachMediaFromUploadTool;
 use App\Mcp\Tools\Post\CreatePostTool;
 use App\Mcp\Tools\Post\PublishPostTool;
@@ -33,7 +33,7 @@ beforeEach(function () {
 });
 
 test('create post persists Discord channel + embeds meta', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, [
             'content' => 'Hello Discord',
             'platforms' => [[
@@ -57,7 +57,7 @@ test('create post persists Discord channel + embeds meta', function () {
 test('create post persists LinkedIn document_title meta', function () {
     $linkedin = SocialAccount::factory()->create(['workspace_id' => $this->workspace->id, 'platform' => Platform::LinkedIn]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, [
             'content' => 'Check our latest deck',
             'platforms' => [[
@@ -85,7 +85,7 @@ test('update post merges per-platform meta', function () {
         'meta' => ['channel_name' => 'general'],
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(UpdatePostTool::class, [
             'post_id' => $post->id,
             'platforms' => [[
@@ -124,7 +124,7 @@ test('publish guard ignores disabled platforms missing meta', function () {
         'meta' => [],
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(PublishPostTool::class, ['post_id' => $post->id]);
 
     $response->assertOk();
@@ -144,7 +144,7 @@ test('publish post rejects a Discord platform without a channel', function () {
         'meta' => [],
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(PublishPostTool::class, ['post_id' => $post->id]);
 
     $response->assertHasErrors([__('posts.form.discord.channel_required')]);
@@ -168,7 +168,7 @@ test('publish guard enforces required meta for TikTok and Pinterest', function (
         'meta' => [],
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(PublishPostTool::class, ['post_id' => $post->id]);
 
     $response->assertHasErrors([__($messageKey)]);
@@ -203,7 +203,7 @@ test('attach media from upload accepts a PDF for a LinkedIn post', function () {
         'upload_token' => $uploadToken,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUploadTool::class, [
             'post_id' => $post->id,
             'upload_token' => $uploadToken,
@@ -236,7 +236,7 @@ test('publish post succeeds for a LinkedIn document that has a PDF', function ()
         'platform' => Platform::LinkedIn, 'content_type' => ContentType::LinkedInPost, 'enabled' => true,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(PublishPostTool::class, ['post_id' => $post->id]);
 
     $response->assertOk();
@@ -260,7 +260,7 @@ test('publish post rejects a LinkedIn post that mixes a PDF with an image', func
         'platform' => Platform::LinkedIn, 'content_type' => ContentType::LinkedInPost, 'enabled' => true,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(PublishPostTool::class, ['post_id' => $post->id]);
 
     $response->assertHasErrors(['A PDF document must be the only attachment.']);
@@ -281,7 +281,7 @@ test('publish post succeeds for a Discord platform with a channel', function () 
         'meta' => ['channel_id' => '444555666'],
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(PublishPostTool::class, ['post_id' => $post->id]);
 
     $response->assertOk();
@@ -291,7 +291,7 @@ test('publish post succeeds for a Discord platform with a channel', function () 
 test('create post persists Pinterest title and link meta', function () {
     $pinterest = SocialAccount::factory()->create(['workspace_id' => $this->workspace->id, 'platform' => Platform::Pinterest]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, [
             'content' => 'Shared caption',
             'platforms' => [[
@@ -329,7 +329,7 @@ test('update post merges Pinterest title and link meta', function () {
         'meta' => ['board_id' => 'board-1'],
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(UpdatePostTool::class, [
             'post_id' => $post->id,
             'platforms' => [[
@@ -354,7 +354,7 @@ test('update post merges Pinterest title and link meta', function () {
 test('create post rejects invalid Pinterest destination link', function () {
     $pinterest = SocialAccount::factory()->create(['workspace_id' => $this->workspace->id, 'platform' => Platform::Pinterest]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreatePostTool::class, [
             'content' => 'Shared caption',
             'platforms' => [[

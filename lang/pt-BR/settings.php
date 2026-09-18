@@ -149,7 +149,7 @@ return [
         'delete_only_description' => 'Você não pode excluir seu único workspace. Cancele a assinatura na cobrança para parar de pagar, ou exclua sua conta em Autenticação para cancelar a cobrança e remover tudo permanentemente.',
         'delete_go_to_billing' => 'Ir para cobrança',
         'delete_go_to_delete_account' => 'Excluir conta',
-        'delete_members_warning' => '{1}:count outro membro perderá o acesso. Membros sem outro workspace no TryPost terão a conta excluída permanentemente.|[2,*]:count outros membros perderão o acesso. Membros sem outro workspace no TryPost terão a conta excluída permanentemente.',
+        'delete_members_warning' => '{1}:count outro membro perderá o acesso. Membros sem outro workspace no Posta Studio terão a conta excluída permanentemente.|[2,*]:count outros membros perderão o acesso. Membros sem outro workspace no Posta Studio terão a conta excluída permanentemente.',
         'delete_action' => 'Excluir workspace',
         'delete_cancel' => 'Cancelar',
         'delete_confirm_title' => 'Excluir workspace?',
@@ -292,7 +292,7 @@ return [
 
         'errors' => [
             'invite_exists' => 'Já existe um convite para este e-mail.',
-            'email_belongs_to_account' => 'Este e-mail já pertence a outra conta TryPost. Peça um e-mail de trabalho dedicado.',
+            'email_belongs_to_account' => 'Este e-mail já pertence a outra conta Posta Studio. Peça um e-mail de trabalho dedicado.',
         ],
 
         'flash' => [

@@ -107,7 +107,7 @@ test('threads callback fails with expired session', function () {
 });
 
 test('user can connect multiple threads accounts when multiple social accounts are allowed', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->threads()->create([
         'workspace_id' => $this->workspace->id,
@@ -174,7 +174,7 @@ test('threads callback handles token exchange failure', function () {
 });
 
 test('threads callback shows network_taken when the network is already connected', function () {
-    config()->set('trypost.allow_multiple_social_accounts', false);
+    config()->set('postastudio.allow_multiple_social_accounts', false);
 
     SocialAccount::factory()->threads()->create([
         'workspace_id' => $this->workspace->id,
@@ -227,11 +227,11 @@ test('threads callback fails the connect when the long-lived token exchange fail
     ]);
 
     Http::fake([
-        config('trypost.platforms.threads.auth_api').'/oauth/access_token' => Http::response([
+        config('postastudio.platforms.threads.auth_api').'/oauth/access_token' => Http::response([
             'access_token' => 'short-lived-token',
             'user_id' => '123456789',
         ], 200),
-        config('trypost.platforms.threads.auth_api').'/access_token*' => Http::response('upstream error', 503),
+        config('postastudio.platforms.threads.auth_api').'/access_token*' => Http::response('upstream error', 503),
     ]);
 
     $response = $this->actingAs($this->user)->get(route('app.social.threads.callback', [
@@ -260,14 +260,14 @@ test('threads callback records a 60-day expiry when the long-lived exchange omit
     ]);
 
     Http::fake([
-        config('trypost.platforms.threads.auth_api').'/oauth/access_token' => Http::response([
+        config('postastudio.platforms.threads.auth_api').'/oauth/access_token' => Http::response([
             'access_token' => 'short-lived-token',
             'user_id' => '123456789',
         ], 200),
-        config('trypost.platforms.threads.auth_api').'/access_token*' => Http::response([
+        config('postastudio.platforms.threads.auth_api').'/access_token*' => Http::response([
             'access_token' => 'long-lived-token',
         ], 200),
-        config('trypost.platforms.threads.graph_api').'/123456789*' => Http::response([
+        config('postastudio.platforms.threads.graph_api').'/123456789*' => Http::response([
             'id' => '123456789',
             'username' => 'testuser',
             'name' => 'Test User',
@@ -308,8 +308,8 @@ test('threads callback reconnects the original card', function () {
         'threads_oauth_state' => $state,
     ]);
 
-    $authApi = config('trypost.platforms.threads.auth_api');
-    $graphApi = config('trypost.platforms.threads.graph_api');
+    $authApi = config('postastudio.platforms.threads.auth_api');
+    $graphApi = config('postastudio.platforms.threads.graph_api');
 
     Http::fake([
         "{$authApi}/oauth/access_token" => Http::response([
@@ -357,8 +357,8 @@ test('threads reconnect that authorizes another account says so instead of conne
         'threads_oauth_state' => $state,
     ]);
 
-    $authApi = config('trypost.platforms.threads.auth_api');
-    $graphApi = config('trypost.platforms.threads.graph_api');
+    $authApi = config('postastudio.platforms.threads.auth_api');
+    $graphApi = config('postastudio.platforms.threads.graph_api');
 
     Http::fake([
         "{$authApi}/oauth/access_token" => Http::response([

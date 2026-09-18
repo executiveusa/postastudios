@@ -12,7 +12,7 @@ class TelegramApi
 {
     public static function token(): string
     {
-        return (string) config('trypost.platforms.telegram.bot_token');
+        return (string) config('postastudio.platforms.telegram.bot_token');
     }
 
     /**
@@ -39,6 +39,6 @@ class TelegramApi
 
     private static function baseUrl(): string
     {
-        return rtrim((string) config('trypost.platforms.telegram.api'), '/');
+        return rtrim((string) config('postastudio.platforms.telegram.api'), '/');
     }
 }

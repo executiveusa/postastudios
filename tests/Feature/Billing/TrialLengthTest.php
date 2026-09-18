@@ -13,7 +13,7 @@ test('allow_promotion_codes defaults to false for saas recipe A', function () {
 });
 
 test('signup grants a trial of cashier.trial_days in no-card mode', function () {
-    config(['trypost.billing.require_card_for_trial' => false]);
+    config(['postastudio.billing.require_card_for_trial' => false]);
 
     $user = CreateUser::execute([
         'name' => 'Trial User',

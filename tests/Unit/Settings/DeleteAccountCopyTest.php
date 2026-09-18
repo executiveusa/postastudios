@@ -34,22 +34,22 @@ $accountDeleteInvitedMemberMarkers = [
  * @var array<string, string>
  */
 $workspaceDeleteConditionalMemberMarkers = [
-    'en' => 'without another TryPost workspace',
-    'uk' => 'без іншого workspace у TryPost',
-    'pt-BR' => 'sem outro workspace no TryPost',
-    'es' => 'sin otro workspace en TryPost',
-    'fr' => 'sans autre workspace TryPost',
-    'de' => 'ohne anderen TryPost-Workspace',
-    'it' => 'senza un altro workspace TryPost',
-    'nl' => 'zonder andere TryPost-workspace',
-    'pl' => 'bez innego workspace w TryPost',
-    'el' => 'χωρίς άλλο workspace στο TryPost',
-    'ja' => '別のTryPostワークスペースがない',
-    'ko' => '다른 TryPost 워크스페이스가 없는',
-    'zh' => '没有其他 TryPost 工作区',
-    'ru' => 'без другого workspace в TryPost',
-    'tr' => 'Başka bir TryPost workspace',
-    'ar' => 'مساحة عمل أخرى في TryPost',
+    'en' => 'without another Posta Studio workspace',
+    'uk' => 'без іншого workspace у Posta Studio',
+    'pt-BR' => 'sem outro workspace no Posta Studio',
+    'es' => 'sin otro workspace en Posta Studio',
+    'fr' => 'sans autre workspace Posta Studio',
+    'de' => 'ohne anderen Posta Studio-Workspace',
+    'it' => 'senza un altro workspace Posta Studio',
+    'nl' => 'zonder andere Posta Studio-workspace',
+    'pl' => 'bez innego workspace w Posta Studio',
+    'el' => 'χωρίς άλλο workspace στο Posta Studio',
+    'ja' => '別のPosta Studioワークスペースがない',
+    'ko' => '다른 Posta Studio 워크스페이스가 없는',
+    'zh' => '没有其他 Posta Studio 工作区',
+    'ru' => 'без другого workspace в Posta Studio',
+    'tr' => 'Başka bir Posta Studio workspace',
+    'ar' => 'مساحة عمل أخرى في Posta Studio',
 ];
 
 test('workspace delete members warning describes conditional permanent deletion', function () {
@@ -57,7 +57,7 @@ test('workspace delete members warning describes conditional permanent deletion'
 
     expect($warning)
         ->toContain('lose access')
-        ->toContain('without another TryPost workspace')
+        ->toContain('without another Posta Studio workspace')
         ->toContain('permanently deleted')
         ->not->toContain('personal account');
 });

@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Http;
 beforeEach(function () {
     Cache::flush(); // channel list is cached per guild — isolate between tests
     config([
-        'trypost.platforms.discord.bot_token' => 'BOTTOKEN',
+        'postastudio.platforms.discord.bot_token' => 'BOTTOKEN',
         'services.discord.client_id' => '999000111', // bot user id, used by the channel permission check
     ]);
 
@@ -51,15 +51,15 @@ beforeEach(function () {
 function fakeDiscord(array $messageResponse = ['id' => '777'], int $status = 200): void
 {
     Http::fake([
-        config('trypost.platforms.discord.api').'/guilds/*/channels' => Http::response([
+        config('postastudio.platforms.discord.api').'/guilds/*/channels' => Http::response([
             ['id' => '444555666', 'name' => 'general', 'type' => 0],
         ], 200),
         // @everyone (role id == guild id) grants VIEW_CHANNEL + SEND_MESSAGES (1024 + 2048).
-        config('trypost.platforms.discord.api').'/guilds/*/roles' => Http::response([
+        config('postastudio.platforms.discord.api').'/guilds/*/roles' => Http::response([
             ['id' => '111222333', 'name' => '@everyone', 'permissions' => '3072'],
         ], 200),
-        config('trypost.platforms.discord.api').'/guilds/*/members/*' => Http::response(['roles' => []], 200),
-        config('trypost.platforms.discord.api').'/channels/*/messages' => Http::response($messageResponse, $status),
+        config('postastudio.platforms.discord.api').'/guilds/*/members/*' => Http::response(['roles' => []], 200),
+        config('postastudio.platforms.discord.api').'/channels/*/messages' => Http::response($messageResponse, $status),
     ]);
 }
 
@@ -147,11 +147,11 @@ test('uploads media as a multipart attachment', function () {
         ->andReturnUsing(fn () => tap(tempnam(sys_get_temp_dir(), 'discord_test_'), fn ($f) => file_put_contents($f, str_repeat('x', 1024))));
 
     Http::fake([
-        config('trypost.platforms.discord.api').'/guilds/*/channels' => Http::response([['id' => '444555666', 'name' => 'general', 'type' => 0]], 200),
-        config('trypost.platforms.discord.api').'/guilds/*/roles' => Http::response([['id' => '111222333', 'name' => '@everyone', 'permissions' => '3072']], 200),
-        config('trypost.platforms.discord.api').'/guilds/*/members/*' => Http::response(['roles' => []], 200),
+        config('postastudio.platforms.discord.api').'/guilds/*/channels' => Http::response([['id' => '444555666', 'name' => 'general', 'type' => 0]], 200),
+        config('postastudio.platforms.discord.api').'/guilds/*/roles' => Http::response([['id' => '111222333', 'name' => '@everyone', 'permissions' => '3072']], 200),
+        config('postastudio.platforms.discord.api').'/guilds/*/members/*' => Http::response(['roles' => []], 200),
         'example.com/*' => Http::response(str_repeat('x', 1024), 200),
-        config('trypost.platforms.discord.api').'/channels/*/messages' => Http::response(['id' => '901'], 200),
+        config('postastudio.platforms.discord.api').'/channels/*/messages' => Http::response(['id' => '901'], 200),
     ]);
 
     $result = $this->publisher->publish(($this->makePostPlatform)());
@@ -187,11 +187,11 @@ test('sets the attachment description from image alt text, capped at the platfor
         ->andReturnUsing(fn () => tap(tempnam(sys_get_temp_dir(), 'discord_test_'), fn ($f) => file_put_contents($f, str_repeat('x', 1024))));
 
     Http::fake([
-        config('trypost.platforms.discord.api').'/guilds/*/channels' => Http::response([['id' => '444555666', 'name' => 'general', 'type' => 0]], 200),
-        config('trypost.platforms.discord.api').'/guilds/*/roles' => Http::response([['id' => '111222333', 'name' => '@everyone', 'permissions' => '3072']], 200),
-        config('trypost.platforms.discord.api').'/guilds/*/members/*' => Http::response(['roles' => []], 200),
+        config('postastudio.platforms.discord.api').'/guilds/*/channels' => Http::response([['id' => '444555666', 'name' => 'general', 'type' => 0]], 200),
+        config('postastudio.platforms.discord.api').'/guilds/*/roles' => Http::response([['id' => '111222333', 'name' => '@everyone', 'permissions' => '3072']], 200),
+        config('postastudio.platforms.discord.api').'/guilds/*/members/*' => Http::response(['roles' => []], 200),
         'example.com/*' => Http::response(str_repeat('x', 1024), 200),
-        config('trypost.platforms.discord.api').'/channels/*/messages' => Http::response(['id' => '902'], 200),
+        config('postastudio.platforms.discord.api').'/channels/*/messages' => Http::response(['id' => '902'], 200),
     ]);
 
     $this->publisher->publish(($this->makePostPlatform)());
@@ -226,11 +226,11 @@ test('omits the attachment description when the image has no alt text', function
         ->andReturnUsing(fn () => tap(tempnam(sys_get_temp_dir(), 'discord_test_'), fn ($f) => file_put_contents($f, str_repeat('x', 1024))));
 
     Http::fake([
-        config('trypost.platforms.discord.api').'/guilds/*/channels' => Http::response([['id' => '444555666', 'name' => 'general', 'type' => 0]], 200),
-        config('trypost.platforms.discord.api').'/guilds/*/roles' => Http::response([['id' => '111222333', 'name' => '@everyone', 'permissions' => '3072']], 200),
-        config('trypost.platforms.discord.api').'/guilds/*/members/*' => Http::response(['roles' => []], 200),
+        config('postastudio.platforms.discord.api').'/guilds/*/channels' => Http::response([['id' => '444555666', 'name' => 'general', 'type' => 0]], 200),
+        config('postastudio.platforms.discord.api').'/guilds/*/roles' => Http::response([['id' => '111222333', 'name' => '@everyone', 'permissions' => '3072']], 200),
+        config('postastudio.platforms.discord.api').'/guilds/*/members/*' => Http::response(['roles' => []], 200),
         'example.com/*' => Http::response(str_repeat('x', 1024), 200),
-        config('trypost.platforms.discord.api').'/channels/*/messages' => Http::response(['id' => '903'], 200),
+        config('postastudio.platforms.discord.api').'/channels/*/messages' => Http::response(['id' => '903'], 200),
     ]);
 
     $this->publisher->publish(($this->makePostPlatform)());
@@ -259,11 +259,11 @@ test('does not set a description on a non-image attachment even if it carries al
     ]);
 
     Http::fake([
-        config('trypost.platforms.discord.api').'/guilds/*/channels' => Http::response([['id' => '444555666', 'name' => 'general', 'type' => 0]], 200),
-        config('trypost.platforms.discord.api').'/guilds/*/roles' => Http::response([['id' => '111222333', 'name' => '@everyone', 'permissions' => '3072']], 200),
-        config('trypost.platforms.discord.api').'/guilds/*/members/*' => Http::response(['roles' => []], 200),
+        config('postastudio.platforms.discord.api').'/guilds/*/channels' => Http::response([['id' => '444555666', 'name' => 'general', 'type' => 0]], 200),
+        config('postastudio.platforms.discord.api').'/guilds/*/roles' => Http::response([['id' => '111222333', 'name' => '@everyone', 'permissions' => '3072']], 200),
+        config('postastudio.platforms.discord.api').'/guilds/*/members/*' => Http::response(['roles' => []], 200),
         'example.com/*' => Http::response(str_repeat('x', 1024), 200),
-        config('trypost.platforms.discord.api').'/channels/*/messages' => Http::response(['id' => '904'], 200),
+        config('postastudio.platforms.discord.api').'/channels/*/messages' => Http::response(['id' => '904'], 200),
     ]);
 
     $this->publisher->publish(($this->makePostPlatform)());
@@ -293,8 +293,8 @@ test('throws when the channel is not part of the guild', function () {
 
 test('retries (does not permanently fail) when the channel lookup is transiently down', function () {
     Http::fake([
-        config('trypost.platforms.discord.api').'/guilds/*/channels' => Http::response('upstream down', 500),
-        config('trypost.platforms.discord.api').'/channels/*/messages' => Http::response(['id' => '777'], 200),
+        config('postastudio.platforms.discord.api').'/guilds/*/channels' => Http::response('upstream down', 500),
+        config('postastudio.platforms.discord.api').'/channels/*/messages' => Http::response(['id' => '777'], 200),
     ]);
 
     // A 5xx on the channel guard must surface as PlatformUnavailableException so

@@ -149,7 +149,7 @@ return [
         'delete_only_description' => 'Nie możesz usunąć swojego jedynego workspace. Anuluj subskrypcję w rozliczeniach, aby przestać płacić, albo usuń konto w Uwierzytelnianiu, aby anulować rozliczenia i trwale usunąć wszystko.',
         'delete_go_to_billing' => 'Przejdź do rozliczeń',
         'delete_go_to_delete_account' => 'Usuń konto',
-        'delete_members_warning' => '{1}:count inny członek straci dostęp. Członkowie bez innego workspace w TryPost zostaną trwale usunięci.|[2,*]:count innych członków straci dostęp. Członkowie bez innego workspace w TryPost zostaną trwale usunięci.',
+        'delete_members_warning' => '{1}:count inny członek straci dostęp. Członkowie bez innego workspace w Posta Studio zostaną trwale usunięci.|[2,*]:count innych członków straci dostęp. Członkowie bez innego workspace w Posta Studio zostaną trwale usunięci.',
         'delete_action' => 'Usuń workspace',
         'delete_cancel' => 'Anuluj',
         'delete_confirm_title' => 'Usunąć workspace?',
@@ -292,7 +292,7 @@ return [
 
         'errors' => [
             'invite_exists' => 'Zaproszenie dla tego adresu e-mail już istnieje.',
-            'email_belongs_to_account' => 'Ten adres e-mail należy już do innego konta TryPost. Poproś o dedykowany służbowy adres e-mail.',
+            'email_belongs_to_account' => 'Ten adres e-mail należy już do innego konta Posta Studio. Poproś o dedykowany służbowy adres e-mail.',
         ],
 
         'flash' => [

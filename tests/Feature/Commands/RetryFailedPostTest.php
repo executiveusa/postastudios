@@ -328,7 +328,7 @@ test('a TikTok retry with a publish_id resumes instead of calling init', functio
         ->expectsConfirmation('Queue publish attempts for these failed platforms?', 'yes')
         ->assertSuccessful();
 
-    $api = config('trypost.platforms.tiktok.api');
+    $api = config('postastudio.platforms.tiktok.api');
     Http::fake([
         $api.'/post/publish/status/fetch/' => Http::response([
             'data' => [
@@ -560,7 +560,7 @@ test('a TikTok retry after a remote FAILED starts a new publish', function () {
 
     expect($failedTikTok->fresh()->error_context)->toBeNull();
 
-    $api = config('trypost.platforms.tiktok.api');
+    $api = config('postastudio.platforms.tiktok.api');
     Http::fake([
         $api.'/post/publish/video/init/' => Http::response([
             'data' => ['publish_id' => 'pub_fresh'],

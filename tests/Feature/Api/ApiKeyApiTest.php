@@ -26,7 +26,7 @@ test('list api keys', function () {
         'Authorization' => 'Bearer '.$result['plain_token'],
     ])->getJson(
         route('api.api-keys.index'),
-        ['HTTP_HOST' => 'api.trypost.test']
+        ['HTTP_HOST' => 'api.postastudio.test']
     );
 
     $response->assertOk();
@@ -90,7 +90,7 @@ test('create api key returns plain token', function () {
     ])->postJson(
         route('api.api-keys.store'),
         ['name' => 'CI/CD Token'],
-        ['HTTP_HOST' => 'api.trypost.test']
+        ['HTTP_HOST' => 'api.postastudio.test']
     );
 
     $response->assertCreated();
@@ -126,7 +126,7 @@ test('create api key validation errors', function () {
     ])->postJson(
         route('api.api-keys.store'),
         [],
-        ['HTTP_HOST' => 'api.trypost.test']
+        ['HTTP_HOST' => 'api.postastudio.test']
     );
 
     $response->assertUnprocessable();
@@ -146,7 +146,7 @@ test('delete api key', function () {
     ])->deleteJson(
         route('api.api-keys.destroy', $tokenToDelete->id),
         [],
-        ['HTTP_HOST' => 'api.trypost.test']
+        ['HTTP_HOST' => 'api.postastudio.test']
     );
 
     $response->assertNoContent();
@@ -170,7 +170,7 @@ test('cannot delete api key from another workspace', function () {
     ])->deleteJson(
         route('api.api-keys.destroy', $otherToken->id),
         [],
-        ['HTTP_HOST' => 'api.trypost.test']
+        ['HTTP_HOST' => 'api.postastudio.test']
     );
 
     $response->assertNotFound();

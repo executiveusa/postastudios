@@ -233,7 +233,7 @@ enum ContentType: string
 
     /**
      * Per-type image size cap in bytes, capped at the global upload hard limit
-     * (trypost.media.max_size_mb.image). Null when images are not accepted or
+     * (postastudio.media.max_size_mb.image). Null when images are not accepted or
      * the platform has no tighter editor-side limit than that hard cap.
      */
     public function maxImageBytes(): ?int
@@ -254,7 +254,7 @@ enum ContentType: string
 
     /**
      * Per-type video size cap in bytes, capped at the global upload hard limit
-     * (trypost.media.max_size_mb.video). Null when videos are not accepted or
+     * (postastudio.media.max_size_mb.video). Null when videos are not accepted or
      * the platform has no tighter editor-side limit than that hard cap.
      */
     public function maxVideoBytes(): ?int
@@ -429,7 +429,7 @@ enum ContentType: string
     }
 
     /**
-     * Never advertise a soft platform ceiling above what trypost.media allows
+     * Never advertise a soft platform ceiling above what postastudio.media allows
      * on upload (web / API / MCP signed URL).
      */
     private static function capToHardLimit(?int $platformBytes, MediaType $type): ?int

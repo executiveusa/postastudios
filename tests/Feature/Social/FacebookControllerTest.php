@@ -57,7 +57,7 @@ test('facebook oauth callback creates account with single page', function () {
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -93,7 +93,7 @@ test('facebook oauth callback creates account with single page', function () {
 });
 
 test('facebook callback shows network_taken when the network is already connected', function () {
-    config()->set('trypost.allow_multiple_social_accounts', false);
+    config()->set('postastudio.allow_multiple_social_accounts', false);
 
     SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
@@ -111,7 +111,7 @@ test('facebook callback shows network_taken when the network is already connecte
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -154,7 +154,7 @@ test('facebook callback redirects to page selection when multiple pages', functi
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -199,7 +199,7 @@ test('facebook callback fails when no pages found', function () {
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -230,7 +230,7 @@ test('facebook callback fails with error connecting when the first accounts requ
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -263,7 +263,7 @@ test('facebook callback follows accounts pagination and shows picker for pages a
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
     $nextUrl = "{$graphApi}/me/accounts?access_token=test-user-token&after=cursor1&limit=100";
 
     Http::fake([
@@ -321,7 +321,7 @@ test('facebook callback connects authorized page when first accounts page is emp
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
     $nextUrl = "{$graphApi}/me/accounts?access_token=test-user-token&after=cursor1&limit=100";
 
     Http::fake([
@@ -374,7 +374,7 @@ test('facebook callback fails without connecting when accounts pagination is inc
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
     $nextUrl = "{$graphApi}/me/accounts?access_token=test-user-token&after=cursor1&limit=100";
 
     Http::fake([
@@ -419,7 +419,7 @@ test('facebook callback fails with expired session', function () {
 });
 
 test('user can connect multiple facebook accounts when multiple social accounts are allowed', function () {
-    config(['trypost.allow_multiple_social_accounts' => true]);
+    config(['postastudio.allow_multiple_social_accounts' => true]);
 
     SocialAccount::factory()->facebook()->create([
         'workspace_id' => $this->workspace->id,
@@ -438,7 +438,7 @@ test('user can connect multiple facebook accounts when multiple social accounts 
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -554,7 +554,7 @@ test('facebook select page returns popup callback when the session expired', fun
 });
 
 test('facebook popup callback overrides deferred onboarding progress for mid-activation owners', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
     subscribeAccount($this->user->account);
 
     expect(app(ResolveOnboardingStatus::class)->canShowProgress($this->user->fresh()))->toBeTrue();
@@ -737,7 +737,7 @@ test('facebook reconnect keeps the original card when multiple pages are returne
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -801,7 +801,7 @@ test('facebook reconnect shows page_not_found when the page is missing from grap
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -888,7 +888,7 @@ test('facebook page picker refuses a user who can no longer manage accounts', fu
 });
 
 test('facebook says every page is connected instead of network_taken in multi-account mode', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
@@ -910,7 +910,7 @@ test('facebook says every page is connected instead of network_taken in multi-ac
         ->with('facebook')
         ->andReturn($driverMock);
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -946,7 +946,7 @@ test('facebook callback connects a page the user only administers through a busi
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -993,7 +993,7 @@ test('facebook callback still reports no pages when the portfolio has none eithe
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -1022,7 +1022,7 @@ test('facebook callback offers every portfolio page when the portfolio holds mor
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -1091,7 +1091,7 @@ test('facebook callback merges a portfolio page with the one me/accounts already
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -1142,7 +1142,7 @@ test('facebook callback says the permission is missing when meta lists a page wi
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),
@@ -1178,7 +1178,7 @@ test('facebook drops a scope meta reports as declined', function () {
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),
@@ -1218,7 +1218,7 @@ test('facebook keeps a scope meta never mentions rather than guessing it was ref
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),
@@ -1255,7 +1255,7 @@ test('facebook falls back to the requested scopes when meta will not list permis
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),
@@ -1299,7 +1299,7 @@ test('facebook reconnects a card whose page is now only reachable through a port
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),
@@ -1349,7 +1349,7 @@ test('facebook refuses a login that declined the permission needed to publish', 
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),
@@ -1379,7 +1379,7 @@ test('facebook asks rather than auto-connecting a lone page found by an incomple
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),
@@ -1418,7 +1418,7 @@ test('facebook still connects a lone page when the walk saw everything', functio
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),
@@ -1452,7 +1452,7 @@ test('facebook says the walk was cut short rather than claiming there are no pag
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),
@@ -1475,7 +1475,7 @@ test('facebook says the walk was cut short rather than claiming there are no pag
 });
 
 test('facebook says the walk was cut short rather than claiming everything is connected', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
@@ -1493,7 +1493,7 @@ test('facebook says the walk was cut short rather than claiming everything is co
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),
@@ -1535,7 +1535,7 @@ test('facebook still says the slot is taken when the walk came back short', func
         ->with('facebook')
         ->andReturn(Mockery::mock()->shouldReceive('usingGraphVersion')->andReturnSelf()->shouldReceive('user')->andReturn($socialiteUser)->getMock());
 
-    $graphApi = config('trypost.platforms.facebook.graph_api');
+    $graphApi = config('postastudio.platforms.facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),

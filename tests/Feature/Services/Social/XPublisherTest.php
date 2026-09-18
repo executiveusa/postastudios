@@ -99,8 +99,8 @@ test('x publisher does NOT rotate the token when it is only expiring soon but st
     $originalAccessToken = $this->socialAccount->access_token;
 
     Http::fake([
-        config('trypost.platforms.x.api').'/tweets' => Http::response(['data' => ['id' => '999']], 200),
-        config('trypost.platforms.x.api').'/oauth2/token' => Http::response([
+        config('postastudio.platforms.x.api').'/tweets' => Http::response(['data' => ['id' => '999']], 200),
+        config('postastudio.platforms.x.api').'/oauth2/token' => Http::response([
             'access_token' => 'should-not-be-used',
             'refresh_token' => 'should-not-be-used',
             'expires_in' => 7200,

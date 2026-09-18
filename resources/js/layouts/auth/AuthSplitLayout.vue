@@ -88,11 +88,7 @@ const platforms = [
     <div class="grid min-h-svh grid-cols-1 lg:grid-cols-2">
         <div class="flex min-w-0 flex-col gap-4 p-6 md:p-10">
             <div class="flex items-start">
-                <img
-                    src="/images/trypost/logo-light.png"
-                    alt="Posta Studio"
-                    class="h-7"
-                />
+                <span class=" text-xl font-semibold tracking-tight">Posta Studio</span>
             </div>
 
             <div class="flex flex-1 items-center justify-center">

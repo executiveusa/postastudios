@@ -49,7 +49,7 @@ class AccessToken extends Token
     /**
      * Passport resolves the user model via the OAuth client's provider, which
      * breaks eager-loading `user` (the relation is built on an empty token with
-     * no client). Tokens in TryPost always belong to App\Models\User.
+     * no client). Tokens in Posta Studio always belong to App\Models\User.
      */
     public function user(): BelongsTo
     {

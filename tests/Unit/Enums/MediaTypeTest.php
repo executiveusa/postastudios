@@ -27,15 +27,15 @@ test('media type document accepts only the pdf extension', function () {
 });
 
 test('media type max size in mb is read from config', function () {
-    config(['trypost.media.max_size_mb.image' => 10]);
-    config(['trypost.media.max_size_mb.video' => 1024]);
+    config(['postastudio.media.max_size_mb.image' => 10]);
+    config(['postastudio.media.max_size_mb.video' => 1024]);
 
     expect(Type::Image->maxSizeInMb())->toBe(10);
     expect(Type::Video->maxSizeInMb())->toBe(1024);
 });
 
 test('media type exposes derived size units', function () {
-    config(['trypost.media.max_size_mb.video' => 1024]);
+    config(['postastudio.media.max_size_mb.video' => 1024]);
 
     expect(Type::Video->maxSizeInKb())->toBe(1024 * 1024);
     expect(Type::Video->maxSizeInBytes())->toBe(1024 * 1024 * 1024);
@@ -49,7 +49,7 @@ test('media type resolves from mime', function () {
 });
 
 test('media type document max size in mb is read from config', function () {
-    config(['trypost.media.max_size_mb.document' => 100]);
+    config(['postastudio.media.max_size_mb.document' => 100]);
 
     expect(Type::Document->maxSizeInMb())->toBe(100);
 });

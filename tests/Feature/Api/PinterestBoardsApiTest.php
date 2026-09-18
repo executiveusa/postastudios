@@ -21,7 +21,7 @@ it('lists pinterest boards for a connected account', function () {
     ]);
 
     Http::fake([
-        config('trypost.platforms.pinterest.api').'/boards*' => Http::response([
+        config('postastudio.platforms.pinterest.api').'/boards*' => Http::response([
             'items' => [
                 ['id' => 'board_1', 'name' => 'Ideas', 'privacy' => 'PUBLIC'],
                 ['id' => 'board_2', 'name' => 'Product', 'privacy' => 'PUBLIC'],
@@ -50,7 +50,7 @@ it('returns an empty boards list when pinterest has none', function () {
     ]);
 
     Http::fake([
-        config('trypost.platforms.pinterest.api').'/boards*' => Http::response([
+        config('postastudio.platforms.pinterest.api').'/boards*' => Http::response([
             'items' => [],
         ], 200),
     ]);
@@ -69,7 +69,7 @@ it('returns unauthorized when the pinterest token is expired', function () {
     ]);
 
     Http::fake([
-        config('trypost.platforms.pinterest.api').'/boards*' => Http::response([
+        config('postastudio.platforms.pinterest.api').'/boards*' => Http::response([
             'message' => 'Access token has expired or been revoked',
         ], 401),
     ]);
@@ -88,7 +88,7 @@ it('returns bad gateway when pinterest is unavailable', function () {
     ]);
 
     Http::fake([
-        config('trypost.platforms.pinterest.api').'/boards*' => Http::response([
+        config('postastudio.platforms.pinterest.api').'/boards*' => Http::response([
             'message' => 'Internal error',
         ], 500),
     ]);

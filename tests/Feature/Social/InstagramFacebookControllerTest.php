@@ -40,7 +40,7 @@ test('instagram-facebook callback follows accounts pagination and shows picker',
                 ->getMock()
         );
 
-    $graphApi = config('trypost.platforms.instagram-facebook.graph_api');
+    $graphApi = config('postastudio.platforms.instagram-facebook.graph_api');
     $nextUrl = "{$graphApi}/me/accounts?access_token=test-user-token&after=cursor1&limit=100";
 
     Http::fake([
@@ -113,7 +113,7 @@ test('instagram-facebook callback connects page when first accounts response is 
                 ->getMock()
         );
 
-    $graphApi = config('trypost.platforms.instagram-facebook.graph_api');
+    $graphApi = config('postastudio.platforms.instagram-facebook.graph_api');
     $nextUrl = "{$graphApi}/me/accounts?access_token=test-user-token&after=cursor1&limit=100";
 
     Http::fake([
@@ -176,7 +176,7 @@ test('instagram-facebook callback still connects when the instagram profile look
                 ->getMock()
         );
 
-    $graphApi = config('trypost.platforms.instagram-facebook.graph_api');
+    $graphApi = config('postastudio.platforms.instagram-facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -228,7 +228,7 @@ test('instagram-facebook callback skips pages without instagram across paginated
                 ->getMock()
         );
 
-    $graphApi = config('trypost.platforms.instagram-facebook.graph_api');
+    $graphApi = config('postastudio.platforms.instagram-facebook.graph_api');
     $nextUrl = "{$graphApi}/me/accounts?access_token=test-user-token&after=cursor1&limit=100";
 
     Http::fake([
@@ -298,7 +298,7 @@ test('instagram-facebook callback fails without connecting when accounts paginat
                 ->getMock()
         );
 
-    $graphApi = config('trypost.platforms.instagram-facebook.graph_api');
+    $graphApi = config('postastudio.platforms.instagram-facebook.graph_api');
     $nextUrl = "{$graphApi}/me/accounts?access_token=test-user-token&after=cursor1&limit=100";
 
     Http::fake([
@@ -333,7 +333,7 @@ test('instagram-facebook callback fails without connecting when accounts paginat
 });
 
 test('instagram-facebook select skips deferred onboarding progress in self-hosted mode', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
 
     session([
         'social_connect_workspace' => $this->workspace->id,
@@ -446,7 +446,7 @@ test('instagram-facebook select page returns popup callback when the session exp
 });
 
 test('instagram-facebook select shows network_taken when a standalone instagram is already connected', function () {
-    config()->set('trypost.allow_multiple_social_accounts', false);
+    config()->set('postastudio.allow_multiple_social_accounts', false);
 
     SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
@@ -487,7 +487,7 @@ test('instagram-facebook select shows network_taken when a standalone instagram 
 });
 
 test('instagram-facebook callback hides an instagram already connected standalone in multi-account mode', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
@@ -508,7 +508,7 @@ test('instagram-facebook callback hides an instagram already connected standalon
             ->shouldReceive('user')->andReturn($socialiteUser)
             ->getMock());
 
-    $graphApi = config('trypost.platforms.instagram-facebook.graph_api');
+    $graphApi = config('postastudio.platforms.instagram-facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -559,7 +559,7 @@ test('instagram via facebook connects a page reached through a business portfoli
             ->shouldReceive('user')->andReturn($socialiteUser)
             ->getMock());
 
-    $graphApi = config('trypost.platforms.instagram-facebook.graph_api');
+    $graphApi = config('postastudio.platforms.instagram-facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me/permissions*" => Http::response(['data' => [['permission' => 'pages_show_list', 'status' => 'granted']]], 200),
@@ -614,7 +614,7 @@ test('instagram via facebook describes every page in rounds without serialising 
             ->shouldReceive('user')->andReturn($socialiteUser)
             ->getMock());
 
-    $graphApi = config('trypost.platforms.instagram-facebook.graph_api');
+    $graphApi = config('postastudio.platforms.instagram-facebook.graph_api');
     $pages = collect(range(1, 45))->map(fn (int $n) => [
         'id' => "page_{$n}",
         'name' => "Page {$n}",
@@ -656,7 +656,7 @@ test('instagram via facebook says the permission is missing when meta lists a pa
             ->shouldReceive('user')->andReturn($socialiteUser)
             ->getMock());
 
-    $graphApi = config('trypost.platforms.instagram-facebook.graph_api');
+    $graphApi = config('postastudio.platforms.instagram-facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),
@@ -678,7 +678,7 @@ test('instagram via facebook says the permission is missing when meta lists a pa
 });
 
 test('instagram via facebook does not describe a page it is about to discard', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
@@ -699,7 +699,7 @@ test('instagram via facebook does not describe a page it is about to discard', f
             ->shouldReceive('user')->andReturn($socialiteUser)
             ->getMock());
 
-    $graphApi = config('trypost.platforms.instagram-facebook.graph_api');
+    $graphApi = config('postastudio.platforms.instagram-facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),
@@ -745,7 +745,7 @@ test('instagram via facebook falls back to the username when meta returns a null
             ->shouldReceive('user')->andReturn($socialiteUser)
             ->getMock());
 
-    $graphApi = config('trypost.platforms.instagram-facebook.graph_api');
+    $graphApi = config('postastudio.platforms.instagram-facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),
@@ -766,7 +766,7 @@ test('instagram via facebook falls back to the username when meta returns a null
 });
 
 test('instagram via facebook falls back to the page name when the lookups run out of time', function () {
-    config()->set('trypost.meta_page_walk_seconds', 0);
+    config()->set('postastudio.meta_page_walk_seconds', 0);
 
     session(['social_connect_workspace' => $this->workspace->id]);
 
@@ -781,7 +781,7 @@ test('instagram via facebook falls back to the page name when the lookups run ou
             ->shouldReceive('user')->andReturn($socialiteUser)
             ->getMock());
 
-    $graphApi = config('trypost.platforms.instagram-facebook.graph_api');
+    $graphApi = config('postastudio.platforms.instagram-facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),
@@ -806,7 +806,7 @@ test('instagram via facebook falls back to the page name when the lookups run ou
 });
 
 test('a reconnect keeps the handle it had when the lookup never ran', function () {
-    config()->set('trypost.meta_page_walk_seconds', 0);
+    config()->set('postastudio.meta_page_walk_seconds', 0);
 
     $account = SocialAccount::factory()->create([
         'workspace_id' => $this->workspace->id,
@@ -832,7 +832,7 @@ test('a reconnect keeps the handle it had when the lookup never ran', function (
             ->shouldReceive('user')->andReturn($socialiteUser)
             ->getMock());
 
-    $graphApi = config('trypost.platforms.instagram-facebook.graph_api');
+    $graphApi = config('postastudio.platforms.instagram-facebook.graph_api');
 
     Http::fake([
         "{$graphApi}/me?*" => Http::response(['id' => 'facebook_user_123', 'name' => 'User'], 200),

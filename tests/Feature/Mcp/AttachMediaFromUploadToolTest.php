@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\UserWorkspace\Role;
-use App\Mcp\Servers\TryPostServer;
+use App\Mcp\Servers\PostaStudioServer;
 use App\Mcp\Tools\Post\AttachMediaFromUploadTool;
 use App\Models\Media;
 use App\Models\Post;
@@ -32,7 +32,7 @@ beforeEach(function () {
 });
 
 test('attaches the uploaded Media to the post', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUploadTool::class, [
             'post_id' => $this->post->id,
             'upload_token' => $this->token,
@@ -43,7 +43,7 @@ test('attaches the uploaded Media to the post', function () {
 });
 
 test('attaches an uploaded Media with alt text stored in meta', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUploadTool::class, [
             'post_id' => $this->post->id,
             'upload_token' => $this->token,
@@ -62,7 +62,7 @@ test('does not store alt text on a non-image upload', function () {
         'upload_token' => (string) Str::uuid(),
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUploadTool::class, [
             'post_id' => $this->post->id,
             'upload_token' => $video->upload_token,
@@ -76,7 +76,7 @@ test('does not store alt text on a non-image upload', function () {
 });
 
 test('rejects alt text over the max length', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUploadTool::class, [
             'post_id' => $this->post->id,
             'upload_token' => $this->token,
@@ -98,7 +98,7 @@ test('rejects a token from a different workspace', function () {
         'upload_token' => $foreignToken,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUploadTool::class, [
             'post_id' => $this->post->id,
             'upload_token' => $foreignToken,
@@ -109,7 +109,7 @@ test('rejects a token from a different workspace', function () {
 });
 
 test('rejects an unknown upload_token', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUploadTool::class, [
             'post_id' => $this->post->id,
             'upload_token' => (string) Str::uuid(),
@@ -126,7 +126,7 @@ test('rejects a post from another workspace', function () {
         'user_id' => $other->id,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(AttachMediaFromUploadTool::class, [
             'post_id' => $otherPost->id,
             'upload_token' => $this->token,

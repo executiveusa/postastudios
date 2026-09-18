@@ -62,7 +62,7 @@ return [
     */
 
     'security' => [
-        'allow_private_network' => (bool) env('TRYPOST_ALLOW_PRIVATE_NETWORK', false),
+        'allow_private_network' => (bool) env('POSTASTUDIO_ALLOW_PRIVATE_NETWORK', false),
     ],
 
     /*
@@ -131,11 +131,11 @@ return [
     |
     | Branded User-Agent applied to outbound HTTP from automation nodes
     | (webhook + http_request) so recipients know the request came from
-    | TryPost.it. Self-hosters can override it.
+    | postastudios.com. Self-hosters can override it.
     |
     */
 
-    'user_agent' => env('TRYPOST_USER_AGENT', 'TryPost.it/1.0 (+https://trypost.it)'),
+    'user_agent' => env('POSTASTUDIO_USER_AGENT', 'postastudios.com/1.0 (+https://postastudios.com)'),
 
     'google_auth_enabled' => env('GOOGLE_AUTH_ENABLED', false),
 

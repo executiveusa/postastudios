@@ -114,7 +114,7 @@ test('pinterest callback fails with expired session', function () {
 });
 
 test('user can connect multiple pinterest accounts when multiple social accounts are allowed', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->pinterest()->create([
         'workspace_id' => $this->workspace->id,
@@ -150,7 +150,7 @@ test('user can connect multiple pinterest accounts when multiple social accounts
 });
 
 test('pinterest callback shows network_taken when the network is already connected', function () {
-    config()->set('trypost.allow_multiple_social_accounts', false);
+    config()->set('postastudio.allow_multiple_social_accounts', false);
 
     SocialAccount::factory()->pinterest()->create([
         'workspace_id' => $this->workspace->id,
@@ -187,7 +187,7 @@ test('pinterest callback shows network_taken when the network is already connect
 });
 
 test('pinterest callback reconnects the same identity via updateOrCreate', function () {
-    config()->set('trypost.allow_multiple_social_accounts', false);
+    config()->set('postastudio.allow_multiple_social_accounts', false);
 
     SocialAccount::factory()->pinterest()->create([
         'workspace_id' => $this->workspace->id,

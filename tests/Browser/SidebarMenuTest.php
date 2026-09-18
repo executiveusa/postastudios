@@ -25,7 +25,7 @@ function waitForSidebarTestId(mixed $page, string $testId): void
 }
 
 test('account owners see account and workspace settings in the sidebar menu', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $user = User::factory()->create();
     $workspace = Workspace::factory()->create([
@@ -55,7 +55,7 @@ test('account owners see account and workspace settings in the sidebar menu', fu
 });
 
 test('account billing is hidden in the sidebar menu when self-hosted', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $user = User::factory()->create();
     $workspace = Workspace::factory()->create([
@@ -82,7 +82,7 @@ test('account billing is hidden in the sidebar menu when self-hosted', function 
 });
 
 test('workspace admins see workspace settings but not account billing', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     [
         'owner' => $owner,
@@ -118,7 +118,7 @@ test('workspace admins see workspace settings but not account billing', function
 });
 
 test('workspace members do not see account or workspace settings in the sidebar menu', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     [
         'owner' => $owner,
@@ -154,7 +154,7 @@ test('workspace members do not see account or workspace settings in the sidebar 
 });
 
 test('workspace viewers do not see account or workspace settings in the sidebar menu', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     [
         'owner' => $owner,

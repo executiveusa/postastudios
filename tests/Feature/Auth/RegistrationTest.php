@@ -7,7 +7,7 @@ use App\Models\Invite;
 use App\Models\User;
 use App\Models\Workspace;
 
-beforeEach(fn () => config()->set('trypost.self_hosted', false));
+beforeEach(fn () => config()->set('postastudio.self_hosted', false));
 
 function createTestInvite(string $email): Invite
 {
@@ -101,7 +101,7 @@ test('new users registering via invite have verified email automatically', funct
 });
 
 test('register page returns 404 when self_hosted and no pending invite in session', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
 
     $response = $this->get(route('register'));
 
@@ -109,7 +109,7 @@ test('register page returns 404 when self_hosted and no pending invite in sessio
 });
 
 test('register POST returns 404 when self_hosted and no pending invite in session', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
 
     $response = $this->post(route('register.store'), [
         'name' => 'Test User',
@@ -122,7 +122,7 @@ test('register POST returns 404 when self_hosted and no pending invite in sessio
 });
 
 test('register page renders when self_hosted but session has pending invite', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
     $invite = createTestInvite('invitee@example.com');
 
     $response = $this
@@ -133,7 +133,7 @@ test('register page renders when self_hosted but session has pending invite', fu
 });
 
 test('register page renders when self_hosted with invite query param and persists it to session', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
     $invite = createTestInvite('invitee@example.com');
 
     $response = $this->get(route('register', ['invite' => $invite->id]));
@@ -143,7 +143,7 @@ test('register page renders when self_hosted with invite query param and persist
 });
 
 test('signup clears pending_invite_id from session', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
     $invite = createTestInvite('invitee@example.com');
 
     $this->withSession(['pending_invite_id' => $invite->id])
@@ -158,7 +158,7 @@ test('signup clears pending_invite_id from session', function () {
 });
 
 test('register POST passes when self_hosted with invite query param even without prior session', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
     $invite = createTestInvite('invitee@example.com');
 
     $response = $this->post(route('register.store', ['invite' => $invite->id]), [
@@ -172,7 +172,7 @@ test('register POST passes when self_hosted with invite query param even without
 });
 
 test('register works normally when not self_hosted even with pending invite in session', function () {
-    config()->set('trypost.self_hosted', false);
+    config()->set('postastudio.self_hosted', false);
 
     $response = $this
         ->withSession(['pending_invite_id' => 'invite-abc'])

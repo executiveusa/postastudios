@@ -16,8 +16,8 @@
 
 
 :root {
-  /* TryPost design system — warm cream + ink + signature violet.
-     Mirrors the marketing site (~/Herd/trypost-site) so the app and the
+  /* Posta Studio design system — warm cream + ink + signature violet.
+     Mirrors the marketing site (~/Herd/postastudio-site) so the app and the
      site share one identity. All structural borders are ink-black. */
   --background: #faf8f5;
   --foreground: #0a0a0a;
@@ -144,7 +144,7 @@
   }
 }
 
-/* Site headline + container utility classes — mirrors trypost-site's
+/* Site headline + container utility classes — mirrors postastudio-site's
    `assets/css/utility-patterns.css`. Use `.h1`/.h2`/.h3` for serif
    display headlines (Instrument Serif) instead of stacking Tailwind
    text-* utilities. */
@@ -163,7 +163,7 @@
   @apply text-pretty text-2xl font-normal tracking-tight sm:text-4xl;
 }
 
-.trypost-container {
+.postastudio-container {
   @apply relative max-w-7xl w-full flex-1 mx-auto flex flex-col justify-center;
 }
 

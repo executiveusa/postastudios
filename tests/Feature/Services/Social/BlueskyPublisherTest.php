@@ -115,7 +115,7 @@ test('bluesky publisher strips trailing punctuation from URL facets', function (
     $this->post->update(['content' => 'see https://example.com).']);
 
     Http::fake([
-        config('trypost.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
+        config('postastudio.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
             'uri' => 'at://did:plc:testuser123/app.bsky.feed.post/3abc123xyz',
             'cid' => 'bafyreiabc123',
         ], 200),
@@ -137,7 +137,7 @@ test('bluesky publisher keeps a closing paren that has a matching open paren', f
     $this->post->update(['content' => 'see https://en.wikipedia.org/wiki/Foo_(bar)']);
 
     Http::fake([
-        config('trypost.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
+        config('postastudio.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
             'uri' => 'at://did:plc:testuser123/app.bsky.feed.post/3abc123xyz',
             'cid' => 'bafyreiabc123',
         ], 200),
@@ -158,7 +158,7 @@ test('bluesky publisher computes byte offsets after multibyte characters', funct
     $this->post->update(['content' => 'Olá 🎉 #café']);
 
     Http::fake([
-        config('trypost.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
+        config('postastudio.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
             'uri' => 'at://did:plc:testuser123/app.bsky.feed.post/3abc123xyz',
             'cid' => 'bafyreiabc123',
         ], 200),
@@ -188,7 +188,7 @@ test('bluesky publisher resolves mentions to DIDs as facets', function () {
         '*/xrpc/com.atproto.identity.resolveHandle*' => Http::response([
             'did' => 'did:plc:friend456',
         ], 200),
-        config('trypost.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
+        config('postastudio.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
             'uri' => 'at://did:plc:testuser123/app.bsky.feed.post/3abc123xyz',
             'cid' => 'bafyreiabc123',
         ], 200),
@@ -220,7 +220,7 @@ test('bluesky publisher skips mention facet when handle cannot be resolved', fun
 
     Http::fake([
         '*/xrpc/com.atproto.identity.resolveHandle*' => Http::response(['error' => 'InvalidRequest'], 400),
-        config('trypost.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
+        config('postastudio.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
             'uri' => 'at://did:plc:testuser123/app.bsky.feed.post/3abc123xyz',
             'cid' => 'bafyreiabc123',
         ], 200),
@@ -278,10 +278,10 @@ test('bluesky publisher publishes as plain text when handle resolution errors', 
 });
 
 test('bluesky publisher builds the post url from the configured web app host', function () {
-    config(['trypost.platforms.bluesky.web_app' => 'https://custom.bsky.example']);
+    config(['postastudio.platforms.bluesky.web_app' => 'https://custom.bsky.example']);
 
     Http::fake([
-        config('trypost.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
+        config('postastudio.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
             'uri' => 'at://did:plc:testuser123/app.bsky.feed.post/3abc123xyz',
             'cid' => 'bafyreiabc123',
         ], 200),
@@ -334,7 +334,7 @@ test('bluesky publisher resolves a repeated handle only once', function () {
 
     Http::fake([
         '*/xrpc/com.atproto.identity.resolveHandle*' => Http::response(['did' => 'did:plc:dup789'], 200),
-        config('trypost.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
+        config('postastudio.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
             'uri' => 'at://did:plc:testuser123/app.bsky.feed.post/3abc123xyz',
             'cid' => 'bafyreiabc123',
         ], 200),
@@ -718,7 +718,7 @@ function attachBlueskyVideo(Post $post, string $mimeType = 'video/mp4'): void
 function fakeBlueskyVideoPipeline(string $jobState = 'JOB_STATE_COMPLETED', bool $blobOnComplete = true): void
 {
     // Poll without sleeping so multi-poll paths stay instant under test.
-    config(['trypost.platforms.bluesky.video_poll_seconds' => 0]);
+    config(['postastudio.platforms.bluesky.video_poll_seconds' => 0]);
 
     Http::fake(function ($request) use ($jobState, $blobOnComplete) {
         $url = $request->url();
@@ -828,7 +828,7 @@ test('bluesky publisher publishes text-only when video processing fails', functi
 
 test('bluesky publisher retries a transient video transcode failure', function () {
     attachBlueskyVideo($this->post);
-    config(['trypost.platforms.bluesky.video_poll_seconds' => 0]);
+    config(['postastudio.platforms.bluesky.video_poll_seconds' => 0]);
 
     $jobCalls = 0;
     Http::fake(function ($request) use (&$jobCalls) {
@@ -883,7 +883,7 @@ test('bluesky publisher retries a transient video transcode failure', function (
 
 test('bluesky publisher skips an oversized video and publishes text-only', function () {
     attachBlueskyVideo($this->post);
-    config(['trypost.platforms.bluesky.video_max_bytes' => 1024]);
+    config(['postastudio.platforms.bluesky.video_max_bytes' => 1024]);
 
     Http::fake(function ($request) {
         if (str_contains($request->url(), 'createRecord')) {
@@ -992,7 +992,7 @@ test('bluesky publisher embeds the existing blob when upload returns 409 already
 
 test('bluesky publisher publishes text-only when upload returns no job id', function () {
     attachBlueskyVideo($this->post);
-    config(['trypost.platforms.bluesky.video_poll_seconds' => 0]);
+    config(['postastudio.platforms.bluesky.video_poll_seconds' => 0]);
 
     Http::fake(function ($request) {
         $url = $request->url();
@@ -1020,7 +1020,7 @@ test('bluesky publisher publishes text-only when upload returns no job id', func
 
 test('bluesky publisher publishes text-only when getJobStatus errors', function () {
     attachBlueskyVideo($this->post);
-    config(['trypost.platforms.bluesky.video_poll_seconds' => 0]);
+    config(['postastudio.platforms.bluesky.video_poll_seconds' => 0]);
 
     Http::fake(function ($request) {
         $url = $request->url();
@@ -1054,8 +1054,8 @@ test('bluesky publisher publishes text-only when getJobStatus errors', function 
 test('bluesky publisher backs off while video processing remains pending', function () {
     attachBlueskyVideo($this->post);
     config([
-        'trypost.platforms.bluesky.video_poll_seconds' => 2,
-        'trypost.platforms.bluesky.video_poll_max_seconds' => 30,
+        'postastudio.platforms.bluesky.video_poll_seconds' => 2,
+        'postastudio.platforms.bluesky.video_poll_max_seconds' => 30,
     ]);
     Sleep::fake();
 
@@ -1108,8 +1108,8 @@ test('bluesky publisher backs off while video processing remains pending', funct
 test('bluesky publisher caps video poll backoff at the configured maximum', function () {
     attachBlueskyVideo($this->post);
     config([
-        'trypost.platforms.bluesky.video_poll_seconds' => 10,
-        'trypost.platforms.bluesky.video_poll_max_seconds' => 30,
+        'postastudio.platforms.bluesky.video_poll_seconds' => 10,
+        'postastudio.platforms.bluesky.video_poll_max_seconds' => 30,
     ]);
     Sleep::fake();
 
@@ -1161,7 +1161,7 @@ test('bluesky publisher caps video poll backoff at the configured maximum', func
 
 test('bluesky publisher retries the upload up to three times before giving up', function () {
     attachBlueskyVideo($this->post);
-    config(['trypost.platforms.bluesky.video_poll_seconds' => 0]);
+    config(['postastudio.platforms.bluesky.video_poll_seconds' => 0]);
 
     $uploads = 0;
     Http::fake(function ($request) use (&$uploads) {
@@ -1197,7 +1197,7 @@ test('bluesky publisher retries the upload up to three times before giving up', 
 
 test('bluesky publisher times out and publishes text-only when the job never completes', function () {
     attachBlueskyVideo($this->post);
-    config(['trypost.platforms.bluesky.video_poll_seconds' => 0]);
+    config(['postastudio.platforms.bluesky.video_poll_seconds' => 0]);
 
     Http::fake(function ($request) {
         $url = $request->url();
@@ -1338,7 +1338,7 @@ test('bluesky publisher scopes the status service-auth to the video service', fu
 
 test('bluesky publisher picks the PDS entry even when other services come first', function () {
     attachBlueskyVideo($this->post);
-    config(['trypost.platforms.bluesky.video_poll_seconds' => 0]);
+    config(['postastudio.platforms.bluesky.video_poll_seconds' => 0]);
 
     Http::fake(function ($request) {
         $url = $request->url();
@@ -1629,7 +1629,7 @@ test('bluesky publisher builds an external card without a thumb when there is no
         ));
 
     Http::fake([
-        config('trypost.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
+        config('postastudio.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
             'uri' => 'at://did:plc:testuser123/app.bsky.feed.post/3abc123xyz',
             'cid' => 'bafyreiabc123',
         ], 200),
@@ -1745,7 +1745,7 @@ test('bluesky publisher blocks the thumb download when the card image points at 
         ));
 
     Http::fake([
-        config('trypost.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
+        config('postastudio.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
             'uri' => 'at://did:plc:testuser123/app.bsky.feed.post/3abc123xyz',
             'cid' => 'bafyreiabc123',
         ], 200),
@@ -1785,7 +1785,7 @@ test('bluesky publisher does not follow a redirect on the card thumb download', 
 
     Http::fake([
         'https://93.184.216.34/card.jpg' => Http::response('', 302, ['Location' => 'http://127.0.0.1/internal.jpg']),
-        config('trypost.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
+        config('postastudio.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
             'uri' => 'at://did:plc:testuser123/app.bsky.feed.post/3abc123xyz',
             'cid' => 'bafyreiabc123',
         ], 200),
@@ -1826,7 +1826,7 @@ test('bluesky publisher does not attach a card when a non-embeddable media item 
     $this->mock(LinkCardFetcher::class)->shouldReceive('fetch')->never();
 
     Http::fake([
-        config('trypost.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
+        config('postastudio.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
             'uri' => 'at://did:plc:testuser123/app.bsky.feed.post/3abc123xyz',
             'cid' => 'bafyreiabc123',
         ], 200),
@@ -1853,7 +1853,7 @@ test('bluesky publisher publishes with only a facet when no card is available', 
 
     // beforeEach default mock returns null (no card).
     Http::fake([
-        config('trypost.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
+        config('postastudio.platforms.bluesky.default_service').'/xrpc/com.atproto.repo.createRecord' => Http::response([
             'uri' => 'at://did:plc:testuser123/app.bsky.feed.post/3abc123xyz',
             'cid' => 'bafyreiabc123',
         ], 200),

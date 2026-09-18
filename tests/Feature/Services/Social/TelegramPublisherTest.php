@@ -14,7 +14,7 @@ use App\Services\Social\Telegram\TelegramPublisher;
 use Illuminate\Support\Facades\Http;
 
 beforeEach(function () {
-    config(['trypost.platforms.telegram.bot_token' => 'TESTTOKEN']);
+    config(['postastudio.platforms.telegram.bot_token' => 'TESTTOKEN']);
 
     $this->user = User::factory()->create();
     $this->workspace = Workspace::factory()->create(['user_id' => $this->user->id]);

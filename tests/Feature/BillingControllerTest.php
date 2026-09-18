@@ -14,7 +14,7 @@ use App\Models\Workspace;
 use Illuminate\Support\Facades\Bus;
 
 beforeEach(function () {
-    config(['trypost.billing.require_card_for_trial' => true]);
+    config(['postastudio.billing.require_card_for_trial' => true]);
 
     $this->account = Account::factory()->create();
     $this->user = User::factory()->create([
@@ -37,7 +37,7 @@ test('subscribe requires authentication', function () {
 });
 
 test('subscribe redirects to welcome', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $response = $this->actingAs($this->user)->get(route('app.subscribe'));
 
@@ -45,7 +45,7 @@ test('subscribe redirects to welcome', function () {
 });
 
 test('swapToYearly redirects to calendar in self hosted mode', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $response = $this->actingAs($this->user)
         ->post(route('app.billing.swap-to-yearly'));
@@ -54,7 +54,7 @@ test('swapToYearly redirects to calendar in self hosted mode', function () {
 });
 
 test('portal redirects to calendar in self hosted mode', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $response = $this->actingAs($this->user)->get(route('app.billing.portal'));
 
@@ -69,7 +69,7 @@ test('billing index requires authentication', function () {
 });
 
 test('billing index shows billing dashboard', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $this->account->subscriptions()->create([
         'type' => Account::SUBSCRIPTION_NAME,
@@ -90,7 +90,7 @@ test('billing index shows billing dashboard', function () {
 });
 
 test('billing index exposes onTrial=true and trialEndsAt for subscription-trial account', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $subscriptionEndsAt = now()->addDays(5)->startOfSecond();
     $this->account->subscriptions()->create([
@@ -111,7 +111,7 @@ test('billing index exposes onTrial=true and trialEndsAt for subscription-trial 
 });
 
 test('billing index exposes onTrial=false and trialEndsAt=null for paying subscribed user', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $this->account->subscriptions()->create([
         'type' => Account::SUBSCRIPTION_NAME,
@@ -130,7 +130,7 @@ test('billing index exposes onTrial=false and trialEndsAt=null for paying subscr
 });
 
 test('billing index redirects to calendar in self hosted mode', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $response = $this->actingAs($this->user)->get(route('app.billing.index'));
 
@@ -145,7 +145,7 @@ test('billing processing requires authentication', function () {
 });
 
 test('billing processing shows processing page', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $response = $this->actingAs($this->user)->get(route('app.billing.processing'));
 
@@ -158,7 +158,7 @@ test('billing processing shows processing page', function () {
 });
 
 test('billing processing skips onboarding when already completed', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
     $this->user->account->forceFill(['onboarding_completed_at' => now()])->save();
 
     $this->actingAs($this->user->fresh())
@@ -168,7 +168,7 @@ test('billing processing skips onboarding when already completed', function () {
 });
 
 test('billing processing skips onboarding when dismissed', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
     $this->user->account->forceFill(['onboarding_dismissed_at' => now()])->save();
 
     $this->actingAs($this->user->fresh())
@@ -178,7 +178,7 @@ test('billing processing skips onboarding when dismissed', function () {
 });
 
 test('billing processing does not send members to onboarding', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $member = User::factory()->create(['account_id' => $this->account->id]);
     $this->workspace->members()->attach($member->id, ['role' => Role::Member->value]);
@@ -191,7 +191,7 @@ test('billing processing does not send members to onboarding', function () {
 });
 
 test('billing processing still sends satisfied-but-unstamped owners to onboarding', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
     $this->account->subscriptions()->create([
         'type' => Account::SUBSCRIPTION_NAME,
         'stripe_id' => 'sub_test_'.fake()->uuid(),
@@ -228,7 +228,7 @@ test('billing processing still sends satisfied-but-unstamped owners to onboardin
 });
 
 test('shared auth.plan exposes name slug and interval via AuthPlanResource', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $plan = Plan::where('slug', 'workspace')->firstOrFail();
     $this->account->update(['plan_id' => $plan->id]);
@@ -244,7 +244,7 @@ test('shared auth.plan exposes name slug and interval via AuthPlanResource', fun
 });
 
 test('billing processing redirects to calendar in self hosted mode', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $response = $this->actingAs($this->user)->get(route('app.billing.processing'));
 
@@ -261,7 +261,7 @@ test('portal requires authentication', function () {
 
 // Authorization tests
 test('non-owner admin cannot access billing index', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $admin = User::factory()->create([
         'account_id' => $this->account->id,
@@ -280,7 +280,7 @@ test('non-owner admin cannot access billing index', function () {
 });
 
 test('member cannot access billing index', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $member = User::factory()->create([
         'account_id' => $this->account->id,
@@ -300,7 +300,7 @@ test('member cannot access billing index', function () {
 
 // Swap-to-yearly tests
 test('swapToYearly forbids a non-owner', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $member = User::factory()->create(['account_id' => $this->account->id]);
     $this->workspace->members()->attach($member->id, ['role' => Role::Member->value]);
@@ -319,7 +319,7 @@ test('swapToYearly forbids a non-owner', function () {
 });
 
 test('swapToYearly is a no-op when already on annual billing', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $plan = Plan::where('slug', 'workspace')->first();
     $plan->update([

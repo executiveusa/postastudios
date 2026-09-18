@@ -18,11 +18,11 @@ return [
     'throttle' => 'Πάρα πολλές προσπάθειες σύνδεσης. Παρακαλούμε δοκιμάστε ξανά σε :seconds δευτερόλεπτα.',
 
     'flash' => [
-        'welcome' => 'Καλώς ήρθατε στο TryPost!',
-        'welcome_trial' => 'Καλώς ήρθατε στο TryPost! Η δοκιμαστική σας περίοδος ξεκίνησε.',
+        'welcome' => 'Καλώς ήρθατε στο Posta Studio!',
+        'welcome_trial' => 'Καλώς ήρθατε στο Posta Studio! Η δοκιμαστική σας περίοδος ξεκίνησε.',
     ],
 
-    'legal' => 'Συνεχίζοντας, συμφωνείτε με τους <a href="https://trypost.it/terms" target="_blank">Όρους Χρήσης</a> και την <a href="https://trypost.it/privacy" target="_blank">Πολιτική Απορρήτου</a> μας.',
+    'legal' => 'Συνεχίζοντας, συμφωνείτε με τους <a href="https://postastudios.com/terms" target="_blank">Όρους Χρήσης</a> και την <a href="https://postastudios.com/privacy" target="_blank">Πολιτική Απορρήτου</a> μας.',
 
     'slides' => [
         'calendar' => [

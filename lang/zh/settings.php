@@ -149,7 +149,7 @@ return [
         'delete_only_description' => '无法删除唯一的工作区。可在账单中取消订阅以停止付费，或在身份验证设置中删除账户以取消计费并永久删除全部数据。',
         'delete_go_to_billing' => '前往账单',
         'delete_go_to_delete_account' => '删除账户',
-        'delete_members_warning' => '{1}另有 :count 位成员将失去访问权限。没有其他 TryPost 工作区的成员账户将被永久删除。|[2,*]另有 :count 位成员将失去访问权限。没有其他 TryPost 工作区的成员账户将被永久删除。',
+        'delete_members_warning' => '{1}另有 :count 位成员将失去访问权限。没有其他 Posta Studio 工作区的成员账户将被永久删除。|[2,*]另有 :count 位成员将失去访问权限。没有其他 Posta Studio 工作区的成员账户将被永久删除。',
         'delete_action' => '删除工作区',
         'delete_cancel' => '取消',
         'delete_confirm_title' => '删除工作区？',
@@ -292,7 +292,7 @@ return [
 
         'errors' => [
             'invite_exists' => '该邮箱已有邀请。',
-            'email_belongs_to_account' => '该邮箱已属于另一个 TryPost 账户。请改用专用工作邮箱。',
+            'email_belongs_to_account' => '该邮箱已属于另一个 Posta Studio 账户。请改用专用工作邮箱。',
         ],
 
         'flash' => [

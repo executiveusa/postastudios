@@ -21,7 +21,7 @@ beforeEach(function () {
 });
 
 test('show invite displays invite details for guest when not self_hosted', function () {
-    config()->set('trypost.self_hosted', false);
+    config()->set('postastudio.self_hosted', false);
 
     $invite = Invite::factory()->create([
         'account_id' => $this->account->id,
@@ -44,7 +44,7 @@ test('show invite displays invite details for guest when not self_hosted', funct
 });
 
 test('show invite displays invite details for guest when self_hosted (page renders, gate happens on /register)', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
 
     $invite = Invite::factory()->create([
         'account_id' => $this->account->id,

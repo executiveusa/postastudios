@@ -35,7 +35,7 @@ class DiscordClient
 
     public function baseUrl(): string
     {
-        return (string) config('trypost.platforms.discord.api');
+        return (string) config('postastudio.platforms.discord.api');
     }
 
     /**
@@ -253,6 +253,6 @@ class DiscordClient
     private function bot(): PendingRequest
     {
         return $this->socialHttp()
-            ->withToken((string) config('trypost.platforms.discord.bot_token'), 'Bot');
+            ->withToken((string) config('postastudio.platforms.discord.bot_token'), 'Bot');
     }
 }

@@ -10,14 +10,14 @@ use App\Services\Social\Discord\DiscordAnalytics;
 use Illuminate\Support\Facades\Http;
 
 beforeEach(function () {
-    config(['trypost.platforms.discord.bot_token' => 'BOTTOKEN']);
+    config(['postastudio.platforms.discord.bot_token' => 'BOTTOKEN']);
 });
 
 it('returns the server member count as an account metric', function () {
     $account = SocialAccount::factory()->discord()->create(['platform_user_id' => '111222333']);
 
     Http::fake([
-        config('trypost.platforms.discord.api').'/guilds/111222333*' => Http::response(['id' => '111222333', 'approximate_member_count' => 4200], 200),
+        config('postastudio.platforms.discord.api').'/guilds/111222333*' => Http::response(['id' => '111222333', 'approximate_member_count' => 4200], 200),
     ]);
 
     expect(app(DiscordAnalytics::class)->getMetrics($account))
@@ -28,7 +28,7 @@ it('returns no account metrics when the guild lookup fails', function () {
     $account = SocialAccount::factory()->discord()->create(['platform_user_id' => '111222333']);
 
     Http::fake([
-        config('trypost.platforms.discord.api').'/guilds/111222333*' => Http::response(['message' => 'Unknown Guild'], 404),
+        config('postastudio.platforms.discord.api').'/guilds/111222333*' => Http::response(['message' => 'Unknown Guild'], 404),
     ]);
 
     expect(app(DiscordAnalytics::class)->getMetrics($account))->toBe([]);
@@ -45,8 +45,8 @@ it('maps message reactions and thread replies to post metrics', function () {
     ]);
 
     Http::fake([
-        config('trypost.platforms.discord.api').'/guilds/111222333*' => Http::response(['approximate_member_count' => 50], 200),
-        config('trypost.platforms.discord.api').'/channels/444555666/messages/777' => Http::response([
+        config('postastudio.platforms.discord.api').'/guilds/111222333*' => Http::response(['approximate_member_count' => 50], 200),
+        config('postastudio.platforms.discord.api').'/channels/444555666/messages/777' => Http::response([
             'id' => '777',
             'thread' => ['message_count' => 8],
             'reactions' => [
@@ -76,8 +76,8 @@ it('returns only the member count when the message has no engagement yet', funct
     ]);
 
     Http::fake([
-        config('trypost.platforms.discord.api').'/guilds/111222333*' => Http::response(['approximate_member_count' => 50], 200),
-        config('trypost.platforms.discord.api').'/channels/444555666/messages/777' => Http::response(['id' => '777'], 200),
+        config('postastudio.platforms.discord.api').'/guilds/111222333*' => Http::response(['approximate_member_count' => 50], 200),
+        config('postastudio.platforms.discord.api').'/channels/444555666/messages/777' => Http::response(['id' => '777'], 200),
     ]);
 
     expect(app(DiscordAnalytics::class)->fetchPostMetrics($postPlatform))

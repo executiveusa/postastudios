@@ -29,7 +29,7 @@ class PinterestPublisher
 
     public function __construct()
     {
-        $this->baseUrl = config('trypost.platforms.pinterest.api');
+        $this->baseUrl = config('postastudio.platforms.pinterest.api');
     }
 
     public function publish(PostPlatform $postPlatform): array

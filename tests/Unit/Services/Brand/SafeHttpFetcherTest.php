@@ -76,7 +76,7 @@ test('guardAgainstSsrf blocks a private ip by default', function () {
 });
 
 test('guardAgainstSsrf allows a private ip when allow_private_network is enabled', function () {
-    config(['trypost.security.allow_private_network' => true]);
+    config(['postastudio.security.allow_private_network' => true]);
 
     app(SafeHttpFetcher::class)->guardAgainstSsrf('http://127.0.0.1/x');
 })->throwsNoExceptions();

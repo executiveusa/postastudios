@@ -109,7 +109,7 @@ test('platform is enabled by default', function () {
 });
 
 test('platform can be disabled via config', function () {
-    config(['trypost.platforms.linkedin.enabled' => false]);
+    config(['postastudio.platforms.linkedin.enabled' => false]);
 
     expect(Platform::LinkedIn->isEnabled())->toBeFalse();
 });
@@ -122,32 +122,32 @@ test('linkedin pages and instagram facebook are not directly connectable', funct
 });
 
 test('the linkedin card is connectable while either capability is enabled', function () {
-    config(['trypost.platforms.linkedin.enabled' => true, 'trypost.platforms.linkedin-page.enabled' => false]);
+    config(['postastudio.platforms.linkedin.enabled' => true, 'postastudio.platforms.linkedin-page.enabled' => false]);
     expect(Platform::LinkedIn->isConnectable())->toBeTrue();
 
-    config(['trypost.platforms.linkedin.enabled' => false, 'trypost.platforms.linkedin-page.enabled' => true]);
+    config(['postastudio.platforms.linkedin.enabled' => false, 'postastudio.platforms.linkedin-page.enabled' => true]);
     expect(Platform::LinkedIn->isConnectable())->toBeTrue();
 
-    config(['trypost.platforms.linkedin.enabled' => false, 'trypost.platforms.linkedin-page.enabled' => false]);
+    config(['postastudio.platforms.linkedin.enabled' => false, 'postastudio.platforms.linkedin-page.enabled' => false]);
     expect(Platform::LinkedIn->isConnectable())->toBeFalse();
 
     // A company page never gets its own card regardless of toggles.
-    config(['trypost.platforms.linkedin-page.enabled' => true]);
+    config(['postastudio.platforms.linkedin-page.enabled' => true]);
     expect(Platform::LinkedInPage->isConnectable())->toBeFalse();
 });
 
 test('the instagram card is connectable while either capability is enabled', function () {
-    config(['trypost.platforms.instagram.enabled' => true, 'trypost.platforms.instagram-facebook.enabled' => false]);
+    config(['postastudio.platforms.instagram.enabled' => true, 'postastudio.platforms.instagram-facebook.enabled' => false]);
     expect(Platform::Instagram->isConnectable())->toBeTrue();
 
-    config(['trypost.platforms.instagram.enabled' => false, 'trypost.platforms.instagram-facebook.enabled' => true]);
+    config(['postastudio.platforms.instagram.enabled' => false, 'postastudio.platforms.instagram-facebook.enabled' => true]);
     expect(Platform::Instagram->isConnectable())->toBeTrue();
 
-    config(['trypost.platforms.instagram.enabled' => false, 'trypost.platforms.instagram-facebook.enabled' => false]);
+    config(['postastudio.platforms.instagram.enabled' => false, 'postastudio.platforms.instagram-facebook.enabled' => false]);
     expect(Platform::Instagram->isConnectable())->toBeFalse();
 
     // Via-Facebook never gets its own card regardless of toggles.
-    config(['trypost.platforms.instagram-facebook.enabled' => true]);
+    config(['postastudio.platforms.instagram-facebook.enabled' => true]);
     expect(Platform::InstagramFacebook->isConnectable())->toBeFalse();
 });
 
@@ -168,7 +168,7 @@ test('connectable options include a single instagram card and omit the facebook 
 });
 
 test('instagram connectable option lists only enabled connect methods', function () {
-    config(['trypost.platforms.instagram.enabled' => true, 'trypost.platforms.instagram-facebook.enabled' => false]);
+    config(['postastudio.platforms.instagram.enabled' => true, 'postastudio.platforms.instagram-facebook.enabled' => false]);
 
     expect(Platform::instagramConnectMethods())->toBe([Platform::Instagram->value]);
 
@@ -176,11 +176,11 @@ test('instagram connectable option lists only enabled connect methods', function
 
     expect($instagram['connect_methods'])->toBe([Platform::Instagram->value]);
 
-    config(['trypost.platforms.instagram.enabled' => false, 'trypost.platforms.instagram-facebook.enabled' => true]);
+    config(['postastudio.platforms.instagram.enabled' => false, 'postastudio.platforms.instagram-facebook.enabled' => true]);
 
     expect(Platform::instagramConnectMethods())->toBe([Platform::InstagramFacebook->value]);
 
-    config(['trypost.platforms.instagram.enabled' => true, 'trypost.platforms.instagram-facebook.enabled' => true]);
+    config(['postastudio.platforms.instagram.enabled' => true, 'postastudio.platforms.instagram-facebook.enabled' => true]);
 
     expect(Platform::instagramConnectMethods())->toBe([
         Platform::Instagram->value,

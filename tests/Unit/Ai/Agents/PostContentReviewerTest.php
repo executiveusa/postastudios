@@ -8,7 +8,7 @@ use Illuminate\JsonSchema\JsonSchemaTypeFactory;
 
 test('instructions render brand context and language', function () {
     $workspace = Workspace::factory()->make([
-        'name' => 'TryPost',
+        'name' => 'Posta Studio',
         'brand_voice_traits' => ['friendly', 'concise'],
         'content_language' => 'pt-BR',
     ]);
@@ -16,7 +16,7 @@ test('instructions render brand context and language', function () {
     $agent = new PostContentReviewer(workspace: $workspace);
     $instructions = $agent->instructions();
 
-    expect($instructions)->toContain('TryPost');
+    expect($instructions)->toContain('Posta Studio');
     expect($instructions)->toContain('friendly'); // "Be warm and friendly."
     expect($instructions)->toContain('short'); // "Keep sentences short and objective."
     expect($instructions)->toContain('pt-BR');

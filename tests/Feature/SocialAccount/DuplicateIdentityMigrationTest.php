@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Schema;
  * the migration has to collapse them before the index can be created.
  */
 beforeEach(function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     $this->migration = require database_path(
         'migrations/2026_08_21_130941_add_workspace_platform_identity_unique_to_social_accounts_table.php',

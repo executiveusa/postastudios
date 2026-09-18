@@ -36,7 +36,7 @@ class RequestMediaUploadTool extends Tool
 
         $workspaceId = $workspace->id;
 
-        $ttlMinutes = (int) config('trypost.media.signed_upload_url_ttl_minutes');
+        $ttlMinutes = (int) config('postastudio.media.signed_upload_url_ttl_minutes');
 
         $token = (string) Str::uuid();
         $expiresAt = CarbonImmutable::now()->addMinutes($ttlMinutes);

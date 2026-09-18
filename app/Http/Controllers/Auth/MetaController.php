@@ -28,7 +28,7 @@ abstract class MetaController extends SocialController
     /** When the whole callback must stop reading pages, shared by every phase of it. */
     protected function deadline(): float
     {
-        return $this->deadline ??= microtime(true) + (int) config('trypost.meta_page_walk_seconds');
+        return $this->deadline ??= microtime(true) + (int) config('postastudio.meta_page_walk_seconds');
     }
 
     /** Meta's app review wants to see this called; the answer is unused, so nothing it does can fail the connect. */

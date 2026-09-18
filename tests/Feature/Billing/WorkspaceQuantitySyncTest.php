@@ -10,7 +10,7 @@ use App\Models\Workspace;
 use Laravel\Cashier\Subscription;
 
 test('syncWorkspaceQuantity does not touch Stripe in self-hosted mode', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
 
     $subscription = mock(Subscription::class);
     $subscription->shouldReceive('active')->andReturnTrue();
@@ -24,7 +24,7 @@ test('syncWorkspaceQuantity does not touch Stripe in self-hosted mode', function
 });
 
 test('syncWorkspaceQuantity does not touch Stripe without an active subscription', function () {
-    config()->set('trypost.self_hosted', false);
+    config()->set('postastudio.self_hosted', false);
 
     $subscription = mock(Subscription::class);
     $subscription->shouldReceive('active')->andReturnFalse();
@@ -37,7 +37,7 @@ test('syncWorkspaceQuantity does not touch Stripe without an active subscription
 });
 
 test('syncWorkspaceQuantity updates the subscription quantity to the workspace count', function () {
-    config()->set('trypost.self_hosted', false);
+    config()->set('postastudio.self_hosted', false);
 
     $subscription = mock(Subscription::class);
     $subscription->shouldReceive('active')->andReturnTrue();
@@ -61,7 +61,7 @@ test('creating a workspace syncs the stripe quantity', function () {
 });
 
 test('deleting a workspace syncs the stripe quantity', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
 
     $user = User::factory()->create();
     $workspace = Workspace::factory()->create([

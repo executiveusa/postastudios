@@ -460,7 +460,7 @@ const defaultEdgeOptions = {
                             <TooltipTrigger as-child>
                                 <Button
                                     as="a"
-                                    href="https://docs.trypost.it/knowledge-base/automations/introduction"
+                                    href="https://docs.postastudios.com/knowledge-base/automations/introduction"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     variant="outline"
@@ -566,7 +566,7 @@ const defaultEdgeOptions = {
 
 <style>
 /* Canvas surface — n8n uses a near-white gray (#f5f5f5) as the canvas background.
-   TryPost uses a warm cream (#faf8f5) for brand consistency. Dots use n8n's
+   Posta Studio uses a warm cream (#faf8f5) for brand consistency. Dots use n8n's
    neutral-500 gray, drawn at 1px with 16px gap (n8n's GRID_SIZE) so they are
    crisp and clearly visible against either tint. */
 .automations-canvas-host {
@@ -577,7 +577,7 @@ const defaultEdgeOptions = {
     background-color: transparent;
 }
 
-/* Controls — keep TryPost's ink-border, hard-shadow identity but adopt n8n's
+/* Controls — keep Posta Studio's ink-border, hard-shadow identity but adopt n8n's
    compact, square-icon layout (icons sit vertically on the bottom-left). */
 .automations-canvas .vue-flow__controls {
     box-shadow: var(--shadow-sm);
@@ -610,7 +610,7 @@ const defaultEdgeOptions = {
     max-height: 12px;
 }
 
-/* Edges — TryPost ink-on-cream. Default uses the foreground color at 55% so
+/* Edges — Posta Studio ink-on-cream. Default uses the foreground color at 55% so
    it reads as a confident line without being heavy. Hover/selected pop to full
    ink. The arrowhead marker (configured per edge in JS) inherits stroke color
    via `context-stroke`. */
@@ -637,7 +637,7 @@ const defaultEdgeOptions = {
 }
 
 
-/* Handles — solid ink-bordered dots in the TryPost brutalist style. Offset by
+/* Handles — solid ink-bordered dots in the Posta Studio brutalist style. Offset by
    -2px on the active side compensates for the node's 2px border so the dot
    straddles the border (50% inside / 50% outside). */
 .automations-canvas .vue-flow__handle {

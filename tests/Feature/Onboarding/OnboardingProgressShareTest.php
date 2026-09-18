@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Inertia\DeferProp;
 
 beforeEach(function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $this->user = User::factory()->create();
     $this->workspace = Workspace::factory()->create([
@@ -75,7 +75,7 @@ test('does not share the onboarding progress with workspace members', function (
 });
 
 test('defers the onboarding progress in self-hosted mode', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $this->actingAs($this->user)
         ->get(route('app.calendar'))

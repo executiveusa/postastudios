@@ -9,13 +9,13 @@ use Carbon\Carbon;
 use Database\Seeders\PlanSeeder;
 
 beforeEach(function () {
-    config(['trypost.billing.require_card_for_trial' => true]);
+    config(['postastudio.billing.require_card_for_trial' => true]);
     $this->seed(PlanSeeder::class);
     Carbon::setTestNow('2026-05-14 12:00:00');
 });
 
 test('isPastDue returns false without a subscription', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $account = Account::factory()->create(['trial_ends_at' => null]);
 
@@ -23,7 +23,7 @@ test('isPastDue returns false without a subscription', function () {
 });
 
 test('isPastDue returns true for a past_due subscription', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $account = Account::factory()->create([
         'trial_ends_at' => null,
@@ -40,7 +40,7 @@ test('isPastDue returns true for a past_due subscription', function () {
 });
 
 test('isPastDue returns false for an active subscription', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $account = Account::factory()->create([
         'trial_ends_at' => null,
@@ -57,7 +57,7 @@ test('isPastDue returns false for an active subscription', function () {
 });
 
 test('isPastDue returns false when self-hosted', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $account = Account::factory()->create([
         'trial_ends_at' => null,
@@ -80,7 +80,7 @@ test('isOnTrial ignores generic trial when there is no subscription', function (
 });
 
 test('isOnTrial includes generic trial when card is not required', function () {
-    config(['trypost.billing.require_card_for_trial' => false]);
+    config(['postastudio.billing.require_card_for_trial' => false]);
 
     $account = Account::factory()->create(['trial_ends_at' => now()->addDays(7)]);
 
@@ -123,7 +123,7 @@ test('activeTrialEndsAt returns generic trial date when only generic is active',
 });
 
 test('activeTrialEndsAt returns generic trial date when card is not required', function () {
-    config(['trypost.billing.require_card_for_trial' => false]);
+    config(['postastudio.billing.require_card_for_trial' => false]);
 
     $endsAt = now()->addDays(7);
     $account = Account::factory()->create(['trial_ends_at' => $endsAt]);
@@ -189,7 +189,7 @@ test('activeTrialEndsAt returns null for paying customer post-trial', function (
 });
 
 test('hasAppAccess is always true when self-hosted', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $account = Account::factory()->create(['trial_ends_at' => null]);
 
@@ -197,7 +197,7 @@ test('hasAppAccess is always true when self-hosted', function () {
 });
 
 test('hasAppAccess is false without a subscription on saas', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $account = Account::factory()->create(['trial_ends_at' => null]);
 
@@ -205,7 +205,7 @@ test('hasAppAccess is false without a subscription on saas', function () {
 });
 
 test('hasAppAccess is true for an active subscription', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $account = Account::factory()->create([
         'trial_ends_at' => null,
@@ -222,7 +222,7 @@ test('hasAppAccess is true for an active subscription', function () {
 });
 
 test('hasAppAccess is true for a trialing subscription', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $account = Account::factory()->create([
         'trial_ends_at' => null,
@@ -240,7 +240,7 @@ test('hasAppAccess is true for a trialing subscription', function () {
 });
 
 test('hasAppAccess is true for a past_due subscription', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $account = Account::factory()->create([
         'trial_ends_at' => null,
@@ -258,8 +258,8 @@ test('hasAppAccess is true for a past_due subscription', function () {
 
 test('hasAppAccess ignores generic trial when card is required', function () {
     config([
-        'trypost.self_hosted' => false,
-        'trypost.billing.require_card_for_trial' => true,
+        'postastudio.self_hosted' => false,
+        'postastudio.billing.require_card_for_trial' => true,
     ]);
 
     $account = Account::factory()->create(['trial_ends_at' => now()->addDays(7)]);
@@ -270,8 +270,8 @@ test('hasAppAccess ignores generic trial when card is required', function () {
 
 test('hasAppAccess allows generic trial when card is not required', function () {
     config([
-        'trypost.self_hosted' => false,
-        'trypost.billing.require_card_for_trial' => false,
+        'postastudio.self_hosted' => false,
+        'postastudio.billing.require_card_for_trial' => false,
     ]);
 
     $account = Account::factory()->create(['trial_ends_at' => now()->addDays(7)]);
@@ -283,8 +283,8 @@ test('hasAppAccess allows generic trial when card is not required', function () 
 
 test('hasAppAccess denies expired generic trial when card is not required', function () {
     config([
-        'trypost.self_hosted' => false,
-        'trypost.billing.require_card_for_trial' => false,
+        'postastudio.self_hosted' => false,
+        'postastudio.billing.require_card_for_trial' => false,
     ]);
 
     $account = Account::factory()->create(['trial_ends_at' => now()->subDay()]);

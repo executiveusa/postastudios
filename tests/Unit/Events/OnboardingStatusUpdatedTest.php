@@ -80,7 +80,7 @@ test('broadcastForAccount notifies every workspace even after completion', funct
 
 test('dispatchForWorkspace fans out Echo to sibling workspaces while onboarding is open', function () {
     Event::fake([OnboardingStatusUpdated::class]);
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $user = User::factory()->create();
     $workspaceA = Workspace::factory()->create([
@@ -108,7 +108,7 @@ test('dispatchForWorkspace fans out Echo to sibling workspaces while onboarding 
 
 test('dispatchForWorkspace does not stamp when the surrounding transaction rolls back', function () {
     Carbon::setTestNow('2026-07-29 12:00:00');
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $user = User::factory()->create();
     $workspace = Workspace::factory()->create([
@@ -142,7 +142,7 @@ test('dispatchForWorkspace does not stamp when the surrounding transaction rolls
 
 test('dispatchForWorkspace stamps completion when actor current workspace differs', function () {
     Carbon::setTestNow('2026-07-29 12:00:00');
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $user = User::factory()->create();
     $readyWorkspace = Workspace::factory()->create([
@@ -179,7 +179,7 @@ test('dispatchForWorkspace stamps completion when actor current workspace differ
 
 test('dispatchForWorkspace stamps when nobody is currently on the workspace', function () {
     Carbon::setTestNow('2026-07-29 12:00:00');
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $owner = User::factory()->create(['current_workspace_id' => null]);
     $readyWorkspace = Workspace::factory()->create([
@@ -208,7 +208,7 @@ test('dispatchForWorkspace stamps when nobody is currently on the workspace', fu
 
 test('dispatchForWorkspace stamps completion via the account owner when the actor is null', function () {
     Carbon::setTestNow('2026-07-29 12:00:00');
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $owner = User::factory()->create(['current_workspace_id' => null]);
     $readyWorkspace = Workspace::factory()->create([
@@ -234,7 +234,7 @@ test('dispatchForWorkspace stamps completion via the account owner when the acto
 
 test('completion broadcasts exactly once per workspace', function () {
     Event::fake([OnboardingStatusUpdated::class]);
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $user = User::factory()->create();
     $workspace = Workspace::factory()->create([

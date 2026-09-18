@@ -31,7 +31,7 @@ class DiscordProvider extends AbstractProvider implements ProviderInterface
 
     protected function getAuthUrl($state): string
     {
-        return $this->buildAuthUrlFromBase(config('trypost.platforms.discord.oauth_api').'/authorize', $state);
+        return $this->buildAuthUrlFromBase(config('postastudio.platforms.discord.oauth_api').'/authorize', $state);
     }
 
     /**
@@ -40,14 +40,14 @@ class DiscordProvider extends AbstractProvider implements ProviderInterface
     protected function getCodeFields($state = null): array
     {
         return array_merge(parent::getCodeFields($state), [
-            'permissions' => (string) config('trypost.platforms.discord.permissions'),
+            'permissions' => (string) config('postastudio.platforms.discord.permissions'),
             'integration_type' => 0,
         ]);
     }
 
     protected function getTokenUrl(): string
     {
-        return config('trypost.platforms.discord.oauth_api').'/token';
+        return config('postastudio.platforms.discord.oauth_api').'/token';
     }
 
     /**

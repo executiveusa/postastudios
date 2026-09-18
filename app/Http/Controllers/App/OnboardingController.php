@@ -51,7 +51,7 @@ class OnboardingController extends Controller
             'canSkipSteps' => fn (): bool => $user->isAccountOwner(),
             'canManageAccounts' => fn (): bool => $user->can('manageAccounts', $workspace),
             'canCreatePost' => fn (): bool => $user->can('createPost', $workspace),
-            'mcpUrl' => fn (): string => route('mcp.trypost'),
+            'mcpUrl' => fn (): string => route('mcp.postastudio'),
             'platforms' => fn (): array => SocialPlatform::connectableOptions(),
             'accounts' => fn (): array => SocialAccountResource::collection(
                 $workspace->socialAccounts()->orderBy('id')->get(),

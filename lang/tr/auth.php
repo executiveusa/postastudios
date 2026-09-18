@@ -20,11 +20,11 @@ return [
     'throttle' => 'Çok fazla giriş denemesi. Lütfen :seconds saniye sonra tekrar deneyin.',
 
     'flash' => [
-        'welcome' => 'TryPost\'a hoş geldiniz!',
-        'welcome_trial' => 'TryPost\'a hoş geldiniz! Deneme süreniz başladı.',
+        'welcome' => 'Posta Studio\'a hoş geldiniz!',
+        'welcome_trial' => 'Posta Studio\'a hoş geldiniz! Deneme süreniz başladı.',
     ],
 
-    'legal' => 'Devam ederek <a href="https://trypost.it/terms" target="_blank">Hizmet Şartları</a> ve <a href="https://trypost.it/privacy" target="_blank">Gizlilik Politikası</a>\'nı kabul etmiş olursunuz.',
+    'legal' => 'Devam ederek <a href="https://postastudios.com/terms" target="_blank">Hizmet Şartları</a> ve <a href="https://postastudios.com/privacy" target="_blank">Gizlilik Politikası</a>\'nı kabul etmiş olursunuz.',
 
     'slides' => [
         'calendar' => [

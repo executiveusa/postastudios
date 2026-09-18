@@ -149,7 +149,7 @@ return [
         'delete_only_description' => 'Δεν μπορείτε να διαγράψετε το μοναδικό σας workspace. Ακυρώστε τη συνδρομή στη χρέωση για να σταματήσετε να πληρώνετε, ή διαγράψτε τον λογαριασμό σας στην Επαλήθευση για να ακυρώσετε τη χρέωση και να αφαιρέσετε τα πάντα οριστικά.',
         'delete_go_to_billing' => 'Μετάβαση στη χρέωση',
         'delete_go_to_delete_account' => 'Διαγραφή λογαριασμού',
-        'delete_members_warning' => '{1}:count άλλο μέλος θα χάσει την πρόσβαση. Τα μέλη χωρίς άλλο workspace στο TryPost θα διαγραφούν οριστικά.|[2,*]:count άλλα μέλη θα χάσουν την πρόσβαση. Τα μέλη χωρίς άλλο workspace στο TryPost θα διαγραφούν οριστικά.',
+        'delete_members_warning' => '{1}:count άλλο μέλος θα χάσει την πρόσβαση. Τα μέλη χωρίς άλλο workspace στο Posta Studio θα διαγραφούν οριστικά.|[2,*]:count άλλα μέλη θα χάσουν την πρόσβαση. Τα μέλη χωρίς άλλο workspace στο Posta Studio θα διαγραφούν οριστικά.',
         'delete_action' => 'Διαγραφή workspace',
         'delete_cancel' => 'Ακύρωση',
         'delete_confirm_title' => 'Διαγραφή workspace;',
@@ -292,7 +292,7 @@ return [
 
         'errors' => [
             'invite_exists' => 'Υπάρχει ήδη πρόσκληση για αυτό το email.',
-            'email_belongs_to_account' => 'Αυτό το email ανήκει ήδη σε άλλο λογαριασμό TryPost. Ζητήστε ένα ειδικό email εργασίας.',
+            'email_belongs_to_account' => 'Αυτό το email ανήκει ήδη σε άλλο λογαριασμό Posta Studio. Ζητήστε ένα ειδικό email εργασίας.',
         ],
 
         'flash' => [

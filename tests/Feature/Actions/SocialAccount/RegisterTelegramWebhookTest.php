@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Http;
 
 beforeEach(function () {
     config([
-        'trypost.platforms.telegram.bot_token' => 'TESTTOKEN',
-        'trypost.platforms.telegram.webhook_secret' => 'shh-secret',
+        'postastudio.platforms.telegram.bot_token' => 'TESTTOKEN',
+        'postastudio.platforms.telegram.webhook_secret' => 'shh-secret',
     ]);
 });
 
@@ -30,7 +30,7 @@ test('it registers the webhook with the url, secret and allowed updates', functi
 });
 
 test('it throws when the bot token or secret is missing', function () {
-    config(['trypost.platforms.telegram.webhook_secret' => '']);
+    config(['postastudio.platforms.telegram.webhook_secret' => '']);
 
     Http::fake();
 

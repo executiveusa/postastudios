@@ -21,7 +21,7 @@ class RegisterTelegramWebhook
      */
     public static function execute(): string
     {
-        $secret = (string) config('trypost.platforms.telegram.webhook_secret');
+        $secret = (string) config('postastudio.platforms.telegram.webhook_secret');
 
         if (TelegramApi::token() === '' || $secret === '') {
             throw new InvalidArgumentException('TELEGRAM_BOT_TOKEN and TELEGRAM_WEBHOOK_SECRET must both be set.');

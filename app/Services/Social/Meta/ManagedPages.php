@@ -53,7 +53,7 @@ class ManagedPages
         private readonly string $fields,
         ?float $deadline,
     ) {
-        $this->deadline = $deadline ?? microtime(true) + (int) config('trypost.meta_page_walk_seconds');
+        $this->deadline = $deadline ?? microtime(true) + (int) config('postastudio.meta_page_walk_seconds');
     }
 
     /**

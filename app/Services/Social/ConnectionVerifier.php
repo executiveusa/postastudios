@@ -250,7 +250,7 @@ class ConnectionVerifier
         }
 
         $response = TokenRefreshClient::for($account->platform)->send(fn () => $this->refreshHttp()->asForm()
-            ->post(config('trypost.platforms.linkedin.oauth_api').'/oauth/v2/accessToken', [
+            ->post(config('postastudio.platforms.linkedin.oauth_api').'/oauth/v2/accessToken', [
                 'grant_type' => 'refresh_token',
                 'refresh_token' => $account->refresh_token,
                 'client_id' => config('services.linkedin.client_id'),
@@ -276,7 +276,7 @@ class ConnectionVerifier
 
         $response = TokenRefreshClient::for(Platform::X)->send(fn () => $this->refreshHttp()->asForm()
             ->withBasicAuth(config('services.x.client_id'), config('services.x.client_secret'))
-            ->post(config('trypost.platforms.x.api').'/oauth2/token', [
+            ->post(config('postastudio.platforms.x.api').'/oauth2/token', [
                 'grant_type' => 'refresh_token',
                 'refresh_token' => $account->refresh_token,
             ]));
@@ -294,7 +294,7 @@ class ConnectionVerifier
 
     private function refreshBlueskyToken(SocialAccount $account): void
     {
-        $service = $account->meta['service'] ?? config('trypost.platforms.bluesky.default_service');
+        $service = $account->meta['service'] ?? config('postastudio.platforms.bluesky.default_service');
         $client = TokenRefreshClient::for(Platform::Bluesky);
 
         try {
@@ -347,7 +347,7 @@ class ConnectionVerifier
         }
 
         $response = TokenRefreshClient::for(Platform::YouTube)->send(fn () => $this->refreshHttp()->asForm()
-            ->post(config('trypost.platforms.youtube.oauth_api').'/token', [
+            ->post(config('postastudio.platforms.youtube.oauth_api').'/token', [
                 'grant_type' => 'refresh_token',
                 'refresh_token' => $account->refresh_token,
                 'client_id' => config('services.google.client_id'),
@@ -371,7 +371,7 @@ class ConnectionVerifier
         }
 
         $response = TokenRefreshClient::for(Platform::TikTok)->send(fn () => $this->refreshHttp()->asForm()
-            ->post(config('trypost.platforms.tiktok.api').'/oauth/token/', [
+            ->post(config('postastudio.platforms.tiktok.api').'/oauth/token/', [
                 'grant_type' => 'refresh_token',
                 'refresh_token' => $account->refresh_token,
                 'client_key' => config('services.tiktok.client_id'),
@@ -400,7 +400,7 @@ class ConnectionVerifier
         $response = TokenRefreshClient::for(Platform::Pinterest)->send(fn () => $this->refreshHttp()->withHeaders([
             'Authorization' => "Basic {$credentials}",
             'Content-Type' => 'application/x-www-form-urlencoded',
-        ])->asForm()->post(config('trypost.platforms.pinterest.api').'/oauth/token', [
+        ])->asForm()->post(config('postastudio.platforms.pinterest.api').'/oauth/token', [
             'grant_type' => 'refresh_token',
             'refresh_token' => $account->refresh_token,
         ]));
@@ -420,7 +420,7 @@ class ConnectionVerifier
     {
         // Threads uses long-lived tokens that can be refreshed
         $response = TokenRefreshClient::for(Platform::Threads)->send(
-            fn () => $this->refreshHttp()->get(config('trypost.platforms.threads.auth_api').'/refresh_access_token', [
+            fn () => $this->refreshHttp()->get(config('postastudio.platforms.threads.auth_api').'/refresh_access_token', [
                 'grant_type' => 'th_refresh_token',
                 'access_token' => $account->access_token,
             ]),
@@ -442,7 +442,7 @@ class ConnectionVerifier
     private function refreshInstagramToken(SocialAccount $account): void
     {
         $response = TokenRefreshClient::for(Platform::Instagram)->send(
-            fn () => $this->refreshHttp()->get(config('trypost.platforms.instagram.auth_api').'/refresh_access_token', [
+            fn () => $this->refreshHttp()->get(config('postastudio.platforms.instagram.auth_api').'/refresh_access_token', [
                 'grant_type' => 'ig_refresh_token',
                 'access_token' => $account->access_token,
             ]),
@@ -468,7 +468,7 @@ class ConnectionVerifier
                 'X-Restli-Protocol-Version' => '2.0.0',
                 'LinkedIn-Version' => '202601',
             ])
-            ->get(config('trypost.platforms.linkedin.api').'/rest/userinfo');
+            ->get(config('postastudio.platforms.linkedin.api').'/rest/userinfo');
 
         if (LinkedInPublishException::isConfirmedDeadToken($response)) {
             throw new TokenExpiredException('LinkedIn access token is invalid or expired');
@@ -491,7 +491,7 @@ class ConnectionVerifier
                 'X-Restli-Protocol-Version' => '2.0.0',
                 'LinkedIn-Version' => '202601',
             ])
-            ->get(config('trypost.platforms.linkedin-page.api').'/rest/organizationAcls', [
+            ->get(config('postastudio.platforms.linkedin-page.api').'/rest/organizationAcls', [
                 'q' => 'roleAssignee',
             ]);
 
@@ -512,7 +512,7 @@ class ConnectionVerifier
     private function verifyX(SocialAccount $account): bool
     {
         $response = Http::withToken($account->access_token)
-            ->get(config('trypost.platforms.x.api').'/users/me');
+            ->get(config('postastudio.platforms.x.api').'/users/me');
 
         if (XPublishException::isConfirmedDeadToken($response)) {
             throw new TokenExpiredException('X access token is invalid or expired');
@@ -550,7 +550,7 @@ class ConnectionVerifier
 
     private function verifyFacebook(SocialAccount $account): bool
     {
-        $response = Http::get(config('trypost.platforms.facebook.graph_api').'/me', [
+        $response = Http::get(config('postastudio.platforms.facebook.graph_api').'/me', [
             'fields' => 'id,name',
             'access_token' => $account->access_token,
         ]);
@@ -564,7 +564,7 @@ class ConnectionVerifier
 
     private function verifyThreads(SocialAccount $account): bool
     {
-        $response = Http::get(config('trypost.platforms.threads.graph_api').'/me', [
+        $response = Http::get(config('postastudio.platforms.threads.graph_api').'/me', [
             'fields' => 'id,username',
             'access_token' => $account->access_token,
         ]);
@@ -582,7 +582,7 @@ class ConnectionVerifier
             ->withHeaders([
                 'Content-Type' => 'application/json',
             ])
-            ->get(config('trypost.platforms.tiktok.api').'/user/info/', [
+            ->get(config('postastudio.platforms.tiktok.api').'/user/info/', [
                 'fields' => 'open_id,display_name',
             ]);
 
@@ -607,7 +607,7 @@ class ConnectionVerifier
     private function verifyYouTube(SocialAccount $account): bool
     {
         $response = Http::withToken($account->access_token)
-            ->get(config('trypost.platforms.youtube.data_api').'/channels', [
+            ->get(config('postastudio.platforms.youtube.data_api').'/channels', [
                 'part' => 'id',
                 'mine' => 'true',
             ]);
@@ -629,7 +629,7 @@ class ConnectionVerifier
     private function verifyPinterest(SocialAccount $account): bool
     {
         $response = Http::withToken($account->access_token)
-            ->get(config('trypost.platforms.pinterest.api').'/user_account');
+            ->get(config('postastudio.platforms.pinterest.api').'/user_account');
 
         if (PinterestPublishException::isConfirmedDeadToken($response)) {
             throw new TokenExpiredException('Pinterest access token is invalid or expired');
@@ -647,7 +647,7 @@ class ConnectionVerifier
 
     private function verifyBluesky(SocialAccount $account): bool
     {
-        $service = $account->meta['service'] ?? config('trypost.platforms.bluesky.default_service');
+        $service = $account->meta['service'] ?? config('postastudio.platforms.bluesky.default_service');
 
         $response = Http::withToken($account->access_token)
             ->get("{$service}/xrpc/".BlueskyLexicon::GET_PROFILE, [
@@ -704,7 +704,7 @@ class ConnectionVerifier
 
     private function verifyMastodon(SocialAccount $account): bool
     {
-        $instance = $account->meta['instance'] ?? config('trypost.platforms.mastodon.default_instance');
+        $instance = $account->meta['instance'] ?? config('postastudio.platforms.mastodon.default_instance');
 
         $response = Http::withToken($account->access_token)
             ->get("{$instance}/api/v1/accounts/verify_credentials");

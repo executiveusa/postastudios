@@ -35,7 +35,7 @@ class HandleInertiaRequests extends Middleware
 
         $currentWorkspace = $user?->currentWorkspace?->load('media');
         $account = $user?->account;
-        $isSelfHosted = (bool) config('trypost.self_hosted');
+        $isSelfHosted = (bool) config('postastudio.self_hosted');
 
         return [
             ...parent::share($request),
@@ -65,7 +65,7 @@ class HandleInertiaRequests extends Middleware
             ])->values()->all(),
             'aiEnabled' => filled(config('ai.providers.'.config('ai.default').'.key')),
             'selfHosted' => $isSelfHosted,
-            'allowMultipleSocialAccounts' => (bool) config('trypost.allow_multiple_social_accounts'),
+            'allowMultipleSocialAccounts' => (bool) config('postastudio.allow_multiple_social_accounts'),
             'googleAuthEnabled' => SocialAuthProvider::Google->isEnabled(),
             'githubAuthEnabled' => SocialAuthProvider::GitHub->isEnabled(),
         ];

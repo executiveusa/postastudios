@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 beforeEach(function (): void {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $this->user = User::factory()->create();
     $this->workspace = Workspace::factory()->create([
@@ -31,14 +31,14 @@ it('shows the mcp settings page', function (): void {
         ->assertOk()
         ->assertInertia(fn ($page) => $page
             ->component('settings/workspace/Mcp')
-            ->where('mcpUrl', route('mcp.trypost'))
+            ->where('mcpUrl', route('mcp.postastudio'))
             ->missing('docsUrl')
             ->missing('mcpClients')
             ->has('connectedClients'));
 });
 
 it('shows the mcp settings page without a subscription in self-hosted mode', function (): void {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
     $this->user->account->subscriptions()->delete();
 
     $this->actingAs($this->user->fresh())
@@ -46,7 +46,7 @@ it('shows the mcp settings page without a subscription in self-hosted mode', fun
         ->assertOk()
         ->assertInertia(fn ($page) => $page
             ->component('settings/workspace/Mcp')
-            ->where('mcpUrl', route('mcp.trypost')));
+            ->where('mcpUrl', route('mcp.postastudio')));
 });
 
 it('lists only the current users oauth clients as connected, excluding personal access tokens', function (): void {

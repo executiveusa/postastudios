@@ -153,7 +153,7 @@ class AppServiceProvider extends ServiceProvider
         // IP backstop so one client cannot flood every workspace.
         RateLimiter::for('signed-uploads', function (Request $request) {
             $limits = [
-                Limit::perMinute((int) config('trypost.media.signed_upload_per_ip_per_minute'))
+                Limit::perMinute((int) config('postastudio.media.signed_upload_per_ip_per_minute'))
                     ->by("ip:{$request->ip()}"),
             ];
 
@@ -162,7 +162,7 @@ class AppServiceProvider extends ServiceProvider
             if (filled($workspaceId)) {
                 array_unshift(
                     $limits,
-                    Limit::perMinute((int) config('trypost.media.signed_upload_per_workspace_per_minute'))
+                    Limit::perMinute((int) config('postastudio.media.signed_upload_per_workspace_per_minute'))
                         ->by("workspace:{$workspaceId}"),
                 );
             }

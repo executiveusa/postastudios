@@ -28,7 +28,7 @@ test('instructions use Ukrainian when the workspace content language is uk', fun
 
 test('instructions render brand context', function () {
     $workspace = Workspace::factory()->make([
-        'name' => 'TryPost',
+        'name' => 'Posta Studio',
         'brand_description' => 'Social media scheduling tool',
         'brand_voice_traits' => ['friendly', 'direct'],
         'content_language' => 'en',
@@ -37,7 +37,7 @@ test('instructions render brand context', function () {
     $agent = new PostContentGenerator(workspace: $workspace);
     $instructions = $agent->instructions();
 
-    expect($instructions)->toContain('TryPost');
+    expect($instructions)->toContain('Posta Studio');
     expect($instructions)->toContain('friendly'); // "Be warm and friendly."
     expect($instructions)->toContain('direct'); // "Use direct, plain, accessible language."
     expect($instructions)->toContain('en');
@@ -45,7 +45,7 @@ test('instructions render brand context', function () {
 
 test('instructions omit brand description and voice when applyBrandVoice is false', function () {
     $workspace = Workspace::factory()->make([
-        'name' => 'TryPost',
+        'name' => 'Posta Studio',
         'brand_description' => 'A social scheduling tool for founders',
         'brand_voice_traits' => ['first_person', 'transparent'],
         'content_language' => 'en',

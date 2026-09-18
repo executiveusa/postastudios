@@ -41,7 +41,7 @@ test('refresh job routes through refreshToken, never the billed verify endpoint'
 
 test('proactive refresh rotates the X refresh token without disconnecting the account', function () {
     Http::fake([
-        config('trypost.platforms.x.api').'/oauth2/token' => Http::response([
+        config('postastudio.platforms.x.api').'/oauth2/token' => Http::response([
             'access_token' => 'rotated-access-token',
             'refresh_token' => 'rotated-refresh-token',
             'expires_in' => 7200,
@@ -72,7 +72,7 @@ test('proactive refresh EXTENDS a still-valid Instagram token (extension-model p
     ]);
 
     Http::fake([
-        config('trypost.platforms.instagram.auth_api').'/refresh_access_token*' => Http::response([
+        config('postastudio.platforms.instagram.auth_api').'/refresh_access_token*' => Http::response([
             'access_token' => 'extended-ig-token',
             'expires_in' => 5184000,
         ], 200),
@@ -96,7 +96,7 @@ test('proactive refresh EXTENDS a still-valid Threads token (extension-model pla
     ]);
 
     Http::fake([
-        config('trypost.platforms.threads.auth_api').'/refresh_access_token*' => Http::response([
+        config('postastudio.platforms.threads.auth_api').'/refresh_access_token*' => Http::response([
             'access_token' => 'extended-threads-token',
             'expires_in' => 5184000,
         ], 200),
@@ -118,7 +118,7 @@ test('proactive refresh does NOT disconnect Instagram on a Meta rate-limit (400 
     ]);
 
     Http::fake([
-        config('trypost.platforms.instagram.auth_api').'/refresh_access_token*' => Http::response([
+        config('postastudio.platforms.instagram.auth_api').'/refresh_access_token*' => Http::response([
             'error' => ['message' => 'Application request limit reached', 'type' => 'OAuthException', 'code' => 4],
         ], 400),
     ]);
@@ -191,8 +191,8 @@ test('refresh job does NOT mark account expired when platform is unavailable', f
 
 test('proactive refresh renews a still-valid X token without spending a billed user read', function () {
     Http::fake([
-        config('trypost.platforms.x.api').'/users/me' => Http::response(['data' => ['id' => '123']], 200),
-        config('trypost.platforms.x.api').'/oauth2/token' => Http::response([
+        config('postastudio.platforms.x.api').'/users/me' => Http::response(['data' => ['id' => '123']], 200),
+        config('postastudio.platforms.x.api').'/oauth2/token' => Http::response([
             'access_token' => 'rotated-access-token',
             'refresh_token' => 'rotated-refresh-token',
             'expires_in' => 7200,
@@ -217,7 +217,7 @@ test('proactive refresh renews a still-valid X token without spending a billed u
 
 test('a successful refresh stamps last_verified_at so other jobs can skip verifying', function () {
     Http::fake([
-        config('trypost.platforms.x.api').'/oauth2/token' => Http::response([
+        config('postastudio.platforms.x.api').'/oauth2/token' => Http::response([
             'access_token' => 'rotated-access-token',
             'refresh_token' => 'rotated-refresh-token',
             'expires_in' => 7200,
@@ -240,11 +240,11 @@ test('a rejected refresh does not disconnect an account whose access token still
     Http::fake([
         // X single-uses the refresh_token; a concurrent refresh already burned
         // this one, so the provider rejects it — but the access_token is alive.
-        config('trypost.platforms.x.api').'/oauth2/token' => Http::response([
+        config('postastudio.platforms.x.api').'/oauth2/token' => Http::response([
             'error' => 'invalid_grant',
             'error_description' => 'Value passed for the token was invalid.',
         ], 400),
-        config('trypost.platforms.x.api').'/users/me' => Http::response(['data' => ['id' => '123']], 200),
+        config('postastudio.platforms.x.api').'/users/me' => Http::response(['data' => ['id' => '123']], 200),
     ]);
 
     $this->account->update([
@@ -265,7 +265,7 @@ test('an account with no refresh token stays connected while its access token wo
     Queue::fake();
 
     Http::fake([
-        config('trypost.platforms.x.api').'/users/me' => Http::response(['data' => ['id' => '123']], 200),
+        config('postastudio.platforms.x.api').'/users/me' => Http::response(['data' => ['id' => '123']], 200),
     ]);
 
     $this->account->update([
@@ -284,11 +284,11 @@ test('a rejected refresh DOES disconnect once the access token is dead too', fun
     Queue::fake();
 
     Http::fake([
-        config('trypost.platforms.x.api').'/oauth2/token' => Http::response([
+        config('postastudio.platforms.x.api').'/oauth2/token' => Http::response([
             'error' => 'invalid_grant',
             'error_description' => 'refresh_token revoked',
         ], 400),
-        config('trypost.platforms.x.api').'/users/me' => Http::response([
+        config('postastudio.platforms.x.api').'/users/me' => Http::response([
             'title' => 'Unauthorized',
             'status' => 401,
         ], 401),
@@ -306,7 +306,7 @@ test('a rejected refresh DOES disconnect once the access token is dead too', fun
 });
 
 test('lock skipped by a concurrent refresh does not record a verification', function () {
-    Http::fake([config('trypost.platforms.x.api').'/*' => Http::response([], 200)]);
+    Http::fake([config('postastudio.platforms.x.api').'/*' => Http::response([], 200)]);
 
     $this->account->update([
         'last_verified_at' => null,
@@ -337,12 +337,12 @@ test('a platform with nothing to refresh is never recorded as verified', functio
 
 test('a refresh whose follow-up verify fails is not recorded as a verification', function () {
     Http::fake([
-        config('trypost.platforms.x.api').'/oauth2/token' => Http::response([
+        config('postastudio.platforms.x.api').'/oauth2/token' => Http::response([
             'access_token' => 'fresh-but-rejected',
             'refresh_token' => 'rt-new',
             'expires_in' => 7200,
         ], 200),
-        config('trypost.platforms.x.api').'/users/me' => Http::response(['title' => 'Unauthorized'], 401),
+        config('postastudio.platforms.x.api').'/users/me' => Http::response(['title' => 'Unauthorized'], 401),
     ]);
 
     $this->account->update([
@@ -365,7 +365,7 @@ test('a refresh that returns an empty access token is not recorded as a verifica
     // TokenRefreshClient classifies on HTTP status alone and never inspects the
     // body, so a 200 carrying an empty token is stored as-is.
     Http::fake([
-        config('trypost.platforms.x.api').'/oauth2/token' => Http::response([
+        config('postastudio.platforms.x.api').'/oauth2/token' => Http::response([
             'access_token' => '',
             'refresh_token' => 'rt-new',
             'expires_in' => 7200,
@@ -386,10 +386,10 @@ test('a rejected refresh is not re-sent before the access token is checked', fun
     Queue::fake();
 
     Http::fake([
-        config('trypost.platforms.x.api').'/oauth2/token' => Http::response([
+        config('postastudio.platforms.x.api').'/oauth2/token' => Http::response([
             'error' => 'invalid_grant',
         ], 400),
-        config('trypost.platforms.x.api').'/users/me' => Http::response(['data' => ['id' => '123']], 200),
+        config('postastudio.platforms.x.api').'/users/me' => Http::response(['data' => ['id' => '123']], 200),
     ]);
 
     $this->account->update([
@@ -412,7 +412,7 @@ test('a rejected refresh is not re-sent before the access token is checked', fun
 test('a refresh lost to a concurrent one falls back to the token that won', function () {
     Queue::fake();
 
-    $api = config('trypost.platforms.x.api');
+    $api = config('postastudio.platforms.x.api');
     Http::fake([
         // Our refresh_token was already consumed by the process that won.
         $api.'/oauth2/token' => Http::response(['error' => 'invalid_grant'], 400),
@@ -472,10 +472,10 @@ test('a rejected Instagram extension disconnects loudly instead of waiting for t
     ]);
 
     Http::fake([
-        config('trypost.platforms.instagram.auth_api').'/refresh_access_token*' => Http::response([
+        config('postastudio.platforms.instagram.auth_api').'/refresh_access_token*' => Http::response([
             'error' => ['message' => 'Invalid OAuth access token', 'type' => 'OAuthException', 'code' => 190],
         ], 400),
-        config('trypost.platforms.instagram.graph_api').'/me*' => Http::response(['id' => '1', 'username' => 'u'], 200),
+        config('postastudio.platforms.instagram.graph_api').'/me*' => Http::response(['id' => '1', 'username' => 'u'], 200),
     ]);
 
     (new RefreshSocialToken($account))->handle(app(ConnectionVerifier::class));
@@ -489,7 +489,7 @@ test('a rejected Instagram extension disconnects loudly instead of waiting for t
 
 test('the job survives the account being deleted while it is in flight', function () {
     Http::fake([
-        config('trypost.platforms.x.api').'/oauth2/token' => Http::response(['error' => 'invalid_grant'], 400),
+        config('postastudio.platforms.x.api').'/oauth2/token' => Http::response(['error' => 'invalid_grant'], 400),
     ]);
 
     $account = $this->account;
@@ -513,7 +513,7 @@ test('a 200 without a token leaves the working credential intact', function () {
     Queue::fake();
 
     Http::fake([
-        config('trypost.platforms.x.api').'/oauth2/token' => Http::response([
+        config('postastudio.platforms.x.api').'/oauth2/token' => Http::response([
             'access_token' => '',
             'refresh_token' => 'rt-new',
             'expires_in' => 7200,
@@ -698,7 +698,7 @@ test('a failure the fallback cannot attribute to the token surfaces instead of p
 
 test('a null refresh_token in a 200 does not wipe the one we already had', function () {
     Http::fake([
-        config('trypost.platforms.x.api').'/oauth2/token' => Http::response([
+        config('postastudio.platforms.x.api').'/oauth2/token' => Http::response([
             'access_token' => 'fresh-access-token',
             'refresh_token' => null,
             'expires_in' => 7200,
@@ -733,8 +733,8 @@ test('a refresh already in flight on a dead token is transient, not something to
 
 test('a billed fallback check counts as a verification like any other', function () {
     Http::fake([
-        config('trypost.platforms.x.api').'/oauth2/token' => Http::response(['error' => 'invalid_grant'], 400),
-        config('trypost.platforms.x.api').'/users/me' => Http::response(['data' => ['id' => '123']], 200),
+        config('postastudio.platforms.x.api').'/oauth2/token' => Http::response(['error' => 'invalid_grant'], 400),
+        config('postastudio.platforms.x.api').'/users/me' => Http::response(['data' => ['id' => '123']], 200),
     ]);
 
     $this->account->update([

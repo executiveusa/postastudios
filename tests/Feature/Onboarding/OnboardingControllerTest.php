@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Event;
 
 beforeEach(function () {
     config([
-        'trypost.self_hosted' => false,
+        'postastudio.self_hosted' => false,
         'services.posthog.enabled' => true,
         'services.posthog.api_key' => 'phc_test',
     ]);
@@ -53,7 +53,7 @@ test('onboarding renders activation status and connection props', function () {
             ->where('status.show_progress', true)
             ->where('status.completed_at', null)
             ->where('status.dismissed_at', null)
-            ->where('mcpUrl', route('mcp.trypost'))
+            ->where('mcpUrl', route('mcp.postastudio'))
             ->where('canSkipSteps', true)
             ->where('canManageAccounts', true)
             ->where('canCreatePost', true)
@@ -442,7 +442,7 @@ test('viewers cannot manage social accounts or create posts from onboarding', fu
             ->where('canManageAccounts', false)
             ->where('canCreatePost', false)
             // MCP setup stays visible even without createPost — only write CTAs are gated.
-            ->where('mcpUrl', route('mcp.trypost')));
+            ->where('mcpUrl', route('mcp.postastudio')));
 });
 
 test('only the account owner can skip onboarding steps', function (Role $role) {
@@ -596,7 +596,7 @@ test('unsubscribed accounts are redirected to welcome by middleware', function (
 ]);
 
 test('self hosted activation endpoints remain available', function (string $routeName, string $method, array|string $params = []) {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
     $this->actingAs($this->user);
 
     $response = $method === 'get'
@@ -629,7 +629,7 @@ test('self hosted activation endpoints remain available', function (string $rout
 ]);
 
 test('self hosted owners can open onboarding without a subscription', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
     $this->user->account->subscriptions()->delete();
 
     expect($this->user->account->fresh()->hasAppAccess())->toBeTrue();

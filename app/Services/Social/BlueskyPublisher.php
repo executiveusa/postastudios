@@ -54,7 +54,7 @@ class BlueskyPublisher
         $content = $postPlatform->post->content ? app(ContentSanitizer::class)->sanitize($postPlatform->post->content, $postPlatform->platform) : null;
 
         $account = $postPlatform->socialAccount;
-        $service = $account->meta['service'] ?? config('trypost.platforms.bluesky.default_service');
+        $service = $account->meta['service'] ?? config('postastudio.platforms.bluesky.default_service');
 
         // Refresh token if needed
         if ($account->needsProactiveTokenRefresh()) {
@@ -347,7 +347,7 @@ class BlueskyPublisher
 
             // Bluesky caps videos at 100MB; skip oversized files rather than
             // burning an upload that the service will reject.
-            if ($fileSize > (int) config('trypost.platforms.bluesky.video_max_bytes')) {
+            if ($fileSize > (int) config('postastudio.platforms.bluesky.video_max_bytes')) {
                 Log::error('Bluesky video exceeds size limit', ['url' => $url, 'size' => $fileSize]);
 
                 return null;
@@ -368,7 +368,7 @@ class BlueskyPublisher
             //     user's PDS, so its audience is the PDS itself;
             //   - status: lets us poll the video service for the transcode job.
             $uploadToken = $this->getServiceAuth($account, $pds, "did:web:{$pdsHost}", BlueskyLexicon::UPLOAD_BLOB);
-            $statusToken = $this->getServiceAuth($account, $pds, (string) config('trypost.platforms.bluesky.video_service_did'), BlueskyLexicon::VIDEO_GET_JOB_STATUS);
+            $statusToken = $this->getServiceAuth($account, $pds, (string) config('postastudio.platforms.bluesky.video_service_did'), BlueskyLexicon::VIDEO_GET_JOB_STATUS);
 
             if ($uploadToken === null || $statusToken === null) {
                 return null;
@@ -426,7 +426,7 @@ class BlueskyPublisher
         }
 
         [$contentType, $extension] = $this->videoUploadFormat($mimeType);
-        $videoService = (string) config('trypost.platforms.bluesky.video_service');
+        $videoService = (string) config('postastudio.platforms.bluesky.video_service');
         $name = bin2hex(random_bytes(8)).'.'.$extension;
         $uploadUrl = "{$videoService}/xrpc/".BlueskyLexicon::VIDEO_UPLOAD
             .'?did='.rawurlencode($account->platform_user_id).'&name='.rawurlencode($name);
@@ -477,7 +477,7 @@ class BlueskyPublisher
      */
     private function pollVideoJob(string $statusToken, string $jobId, CarbonInterface $deadline): ?array
     {
-        $statusUrl = (string) config('trypost.platforms.bluesky.video_service').'/xrpc/'.BlueskyLexicon::VIDEO_GET_JOB_STATUS;
+        $statusUrl = (string) config('postastudio.platforms.bluesky.video_service').'/xrpc/'.BlueskyLexicon::VIDEO_GET_JOB_STATUS;
         // Processing usually finishes within seconds. State is checked before
         // sleeping so an already-complete job returns at once. The attempt cap
         // and the wall-clock deadline both bound the loop.
@@ -523,8 +523,8 @@ class BlueskyPublisher
 
     private function videoPollDelaySeconds(int $attempt): int
     {
-        $initialSeconds = max(0, (int) config('trypost.platforms.bluesky.video_poll_seconds'));
-        $maxSeconds = max($initialSeconds, (int) config('trypost.platforms.bluesky.video_poll_max_seconds'));
+        $initialSeconds = max(0, (int) config('postastudio.platforms.bluesky.video_poll_seconds'));
+        $maxSeconds = max($initialSeconds, (int) config('postastudio.platforms.bluesky.video_poll_max_seconds'));
         $multiplier = 2 ** intdiv($attempt, 3);
 
         return min($initialSeconds * $multiplier, $maxSeconds);
@@ -604,7 +604,7 @@ class BlueskyPublisher
         try {
             $docUrl = null;
             if (str_starts_with($did, 'did:plc:')) {
-                $directory = (string) config('trypost.platforms.bluesky.plc_directory');
+                $directory = (string) config('postastudio.platforms.bluesky.plc_directory');
                 $docUrl = "{$directory}/".rawurlencode($did);
             } elseif (str_starts_with($did, 'did:web:')) {
                 // Per the did:web spec, colon-separated segments map to a host
@@ -750,7 +750,7 @@ class BlueskyPublisher
      */
     private function resolveHandleToDid(string $handle): ?string
     {
-        $appView = (string) config('trypost.platforms.bluesky.public_appview');
+        $appView = (string) config('postastudio.platforms.bluesky.public_appview');
 
         try {
             $response = $this->socialHttp()->get(
@@ -768,7 +768,7 @@ class BlueskyPublisher
 
     private function buildPostUrl(string $handle, string $postId): string
     {
-        $webApp = (string) config('trypost.platforms.bluesky.web_app');
+        $webApp = (string) config('postastudio.platforms.bluesky.web_app');
 
         return "{$webApp}/profile/{$handle}/post/{$postId}";
     }

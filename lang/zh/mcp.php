@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 return [
     'title' => 'MCP',
-    'subtitle' => '连接 AI 助手，让它们用你的 TryPost 账户创建和管理帖子。',
-    'copy_step' => '复制你的 TryPost 服务器 URL',
+    'subtitle' => '连接 AI 助手，让它们用你的 Posta Studio 账户创建和管理帖子。',
+    'copy_step' => '复制你的 Posta Studio 服务器 URL',
     'open_step' => '打开你的 AI 助手',
     'copy' => '复制 URL',
     'connect' => '连接 :client',
@@ -18,7 +18,7 @@ return [
     'connected_empty' => '还没有连接。请使用上方的 Claude、ChatGPT 或其他客户端。',
     'disconnect' => '断开连接',
     'disconnect_title' => '断开应用',
-    'disconnect_confirm' => '这将使应用退出 TryPost。再次使用 MCP 前需要重新连接。',
+    'disconnect_confirm' => '这将使应用退出 Posta Studio。再次使用 MCP 前需要重新连接。',
     'disconnected' => '应用已断开连接。',
     'copied' => '已复制',
     'last_used' => '最近使用',
@@ -26,10 +26,10 @@ return [
     'documentation_title' => '文档',
     'documentation_description' => '各客户端设置指南、可用工具和问题排查。',
     'view_docs' => '查看文档',
-    'connector_name' => 'TryPost',
+    'connector_name' => 'Posta Studio',
 
     'authorize' => [
-        'page_title' => 'Authorize Application - TryPost',
+        'page_title' => 'Authorize Application - Posta Studio',
         'app_title' => 'Authorize MCP',
         'heading' => 'Authorize :client',
         'intro' => 'This application will be able to:',
@@ -45,7 +45,7 @@ return [
         'search_workspace' => 'Search workspaces...',
         'no_workspace_found' => 'No workspace found',
         'scope_mcp_use' => 'Use MCP server',
-        'error_page_title' => '授权失败 - TryPost',
+        'error_page_title' => '授权失败 - Posta Studio',
         'error_title' => '无法连接',
         'error_body' => '此授权请求无效或已过期。请关闭此窗口，然后从 MCP 客户端重新连接。',
         'error_code' => '错误：:error',
@@ -57,7 +57,7 @@ return [
     'clients' => [
         'claude' => '打开 Settings → Connectors，添加自定义连接器，然后粘贴上方 URL。',
         'chatgpt' => '打开 Settings → Apps & Connectors，创建自定义连接器，然后粘贴上方 URL。',
-        'cursor' => '在 Cursor 中将 TryPost 添加为远程 MCP 服务器。',
+        'cursor' => '在 Cursor 中将 Posta Studio 添加为远程 MCP 服务器。',
         'cursor_name' => 'Cursor',
         'vscode' => '将下方配置粘贴到 VS Code 的 MCP 设置中。',
         'vscode_name' => 'VS Code',

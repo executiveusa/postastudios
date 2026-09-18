@@ -17,7 +17,7 @@ beforeEach(function () {
 
 function managedPagesGraphApi(): string
 {
-    return (string) config('trypost.platforms.facebook.graph_api');
+    return (string) config('postastudio.platforms.facebook.graph_api');
 }
 
 function managedPagesWalk(array $extraFakes = [], array $granted = ['business_management']): ManagedPageList
@@ -164,7 +164,7 @@ test('a throttled portfolio index leaves the walk unable to vouch for itself', f
 });
 
 test('the walk gives up on time rather than outliving the request', function () {
-    config()->set('trypost.meta_page_walk_seconds', 0);
+    config()->set('postastudio.meta_page_walk_seconds', 0);
 
     $graphApi = managedPagesGraphApi();
 
@@ -490,7 +490,7 @@ test('the cursor budget stops a walk that would never end', function () {
 });
 
 test('the deadline stops me/accounts from paginating forever', function () {
-    config()->set('trypost.meta_page_walk_seconds', 0);
+    config()->set('postastudio.meta_page_walk_seconds', 0);
 
     $graphApi = managedPagesGraphApi();
 

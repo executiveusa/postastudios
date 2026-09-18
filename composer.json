@@ -1,6 +1,6 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "trypost-it/trypost",
+    "name": "postastudios/posta-studio",
     "type": "project",
     "description": "Open-source social media scheduling for creators and teams",
     "keywords": [
@@ -21,10 +21,10 @@
         "pinterest"
     ],
     "license": "AGPL-3.0-only",
-    "homepage": "https://trypost.it",
+    "homepage": "https://postastudios.com",
     "support": {
-        "issues": "https://github.com/trypost-it/trypost/issues",
-        "source": "https://github.com/trypost-it/trypost"
+        "issues": "https://github.com/executiveusa/postastudios/issues",
+        "source": "https://github.com/executiveusa/postastudios"
     },
     "authors": [
         {

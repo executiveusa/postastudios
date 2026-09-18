@@ -13,7 +13,7 @@ test('social auth provider has values and labels', function () {
 });
 
 test('isEnabled reflects the matching config key', function () {
-    config(['trypost.google_auth_enabled' => true, 'trypost.github_auth_enabled' => false]);
+    config(['postastudio.google_auth_enabled' => true, 'postastudio.github_auth_enabled' => false]);
 
     expect(SocialAuthProvider::Google->isEnabled())->toBeTrue();
     expect(SocialAuthProvider::GitHub->isEnabled())->toBeFalse();

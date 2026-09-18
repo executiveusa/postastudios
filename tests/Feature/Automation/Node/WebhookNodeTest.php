@@ -20,7 +20,7 @@ it('posts interpolated payload to the configured url', function () {
     $result = app(RunWebhookNode::class)($run, [
         'url' => 'https://1.1.1.1/test',
         'method' => 'POST',
-        'headers' => ['X-Source' => 'TryPost'],
+        'headers' => ['X-Source' => 'Posta Studio'],
         'payload_template' => '{"title":"{{ trigger.title }}","post_url":"{{ generated.post_url }}"}',
     ]);
 
@@ -42,7 +42,7 @@ it('sends the branded user-agent header', function () {
         'payload_template' => '{}',
     ]);
 
-    Http::assertSent(fn ($request) => $request->hasHeader('User-Agent', config('trypost.user_agent')));
+    Http::assertSent(fn ($request) => $request->hasHeader('User-Agent', config('postastudio.user_agent')));
 });
 
 it('escapes special characters in templated payload values so the JSON stays valid', function () {

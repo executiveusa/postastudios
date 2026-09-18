@@ -64,16 +64,8 @@ const canNavigateTo = (stepNumber: number): boolean =>
                         :href="personaRoute()"
                         class="flex flex-col items-center gap-2 font-medium"
                     >
-                        <img
-                            src="/images/trypost/logo-light.png"
-                            alt="Posta Studio"
-                            class="h-8 w-auto dark:hidden"
-                        />
-                        <img
-                            src="/images/trypost/logo-dark.png"
-                            alt="Posta Studio"
-                            class="hidden h-8 w-auto dark:block"
-                        />
+                        <span class="dark:hidden text-xl font-semibold tracking-tight">Posta Studio</span>
+                        <span class="hidden   dark:block text-xl font-semibold tracking-tight">Posta Studio</span>
                     </Link>
 
                     <nav

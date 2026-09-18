@@ -1,10 +1,10 @@
 # syntax=docker/dockerfile:1.7
 
 # ----------------------------------------------------------------------------
-# TryPost Dockerfile — multi-stage with `dev` and `production` targets.
+# Posta Studio Dockerfile — multi-stage with `dev` and `production` targets.
 #
-#   docker build --target dev        -t trypost:dev  -f docker/Dockerfile .
-#   docker build --target production -t trypost:prod -f docker/Dockerfile .
+#   docker build --target dev        -t postastudio:dev  -f docker/Dockerfile .
+#   docker build --target production -t postastudio:prod -f docker/Dockerfile .
 # ----------------------------------------------------------------------------
 
 ARG PHP_VERSION=8.4
@@ -99,7 +99,7 @@ FROM composer-deps AS asset-build
 # Node 22 for Vite + npm scripts.
 RUN apk add --no-cache nodejs npm
 
-ARG VITE_APP_NAME=TryPost
+ARG VITE_APP_NAME=Posta Studio
 ARG VITE_REVERB_APP_KEY=
 ARG VITE_REVERB_HOST=localhost
 ARG VITE_REVERB_PORT=8080
@@ -156,13 +156,13 @@ RUN groupmod -g "${GID}" www-data 2>/dev/null || groupadd -g "${GID}" app \
     && chown -R "${UID}:${GID}" /var/www/html
 
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
-COPY docker/php.dev.ini /usr/local/etc/php/conf.d/99-trypost.ini
+COPY docker/php.dev.ini /usr/local/etc/php/conf.d/99-postastudio.ini
 COPY docker/supervisord.dev.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY docker/.env.docker.example /var/www/html/.env.docker.example
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-ENV TRYPOST_TARGET=dev
+ENV POSTASTUDIO_TARGET=dev
 
 EXPOSE 80 5173 8080
 
@@ -181,7 +181,7 @@ FROM system-base AS production
 # session files, view cache, etc.
 
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
-COPY docker/php.prod.ini /usr/local/etc/php/conf.d/99-trypost.ini
+COPY docker/php.prod.ini /usr/local/etc/php/conf.d/99-postastudio.ini
 COPY docker/supervisord.prod.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
@@ -202,7 +202,7 @@ COPY --from=composer-deps-prod /var/www/html/vendor /var/www/html/vendor
 RUN composer dump-autoload --optimize --classmap-authoritative --no-scripts \
     && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-ENV TRYPOST_TARGET=production
+ENV POSTASTUDIO_TARGET=production
 
 EXPOSE 80 8080
 

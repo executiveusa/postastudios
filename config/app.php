@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://app.trypost.it'),
+    'url' => env('APP_URL', 'https://app.postastudios.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'webhook_url' => env('WEBHOOK_URL', env('APP_URL', 'https://app.trypost.it')),
+    'webhook_url' => env('WEBHOOK_URL', env('APP_URL', 'https://app.postastudios.com')),
 
     /*
     |--------------------------------------------------------------------------

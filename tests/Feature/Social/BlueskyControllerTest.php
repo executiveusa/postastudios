@@ -81,7 +81,7 @@ test('user cannot connect bluesky with invalid credentials', function () {
 });
 
 test('user can connect multiple bluesky accounts when multiple social accounts are allowed', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->bluesky()->create([
         'workspace_id' => $this->workspace->id,
@@ -114,7 +114,7 @@ test('user can connect multiple bluesky accounts when multiple social accounts a
 });
 
 test('bluesky store shows network_taken when the network is already connected', function () {
-    config()->set('trypost.allow_multiple_social_accounts', false);
+    config()->set('postastudio.allow_multiple_social_accounts', false);
 
     SocialAccount::factory()->bluesky()->create([
         'workspace_id' => $this->workspace->id,
@@ -168,7 +168,7 @@ test('bluesky store reconnects the original card', function () {
 
     session(['social_reconnect_id' => $account->id]);
 
-    $service = config('trypost.platforms.bluesky.default_service');
+    $service = config('postastudio.platforms.bluesky.default_service');
 
     Http::fake([
         "{$service}/xrpc/com.atproto.server.createSession" => Http::response([
@@ -211,7 +211,7 @@ test('bluesky reconnect that authenticates another handle says so instead of con
 
     session(['social_reconnect_id' => $account->id]);
 
-    $service = config('trypost.platforms.bluesky.default_service');
+    $service = config('postastudio.platforms.bluesky.default_service');
 
     Http::fake([
         "{$service}/xrpc/com.atproto.server.createSession" => Http::response([

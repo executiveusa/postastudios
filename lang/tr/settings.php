@@ -151,7 +151,7 @@ return [
         'delete_only_description' => 'Tek workspace’inizi silemezsiniz. Ödemeyi durdurmak için faturalandırmadan aboneliği iptal edin veya her şeyi kalıcı olarak silmek için Kimlik doğrulama ayarlarından hesabınızı silin.',
         'delete_go_to_billing' => 'Faturalandırmaya git',
         'delete_go_to_delete_account' => 'Hesabı sil',
-        'delete_members_warning' => '{1}:count diğer üye erişimi kaybedecek. Başka bir TryPost workspace’i olmayan üyeler kalıcı olarak silinir.|[2,*]:count diğer üye erişimi kaybedecek. Başka bir TryPost workspace’i olmayan üyeler kalıcı olarak silinir.',
+        'delete_members_warning' => '{1}:count diğer üye erişimi kaybedecek. Başka bir Posta Studio workspace’i olmayan üyeler kalıcı olarak silinir.|[2,*]:count diğer üye erişimi kaybedecek. Başka bir Posta Studio workspace’i olmayan üyeler kalıcı olarak silinir.',
         'delete_action' => 'Workspace’i sil',
         'delete_cancel' => 'İptal',
         'delete_confirm_title' => 'Workspace silinsin mi?',
@@ -294,7 +294,7 @@ return [
 
         'errors' => [
             'invite_exists' => 'Bu e-posta için zaten bir davet var.',
-            'email_belongs_to_account' => 'Bu e-posta zaten başka bir TryPost hesabına ait. Bunun yerine özel bir iş e-postası isteyin.',
+            'email_belongs_to_account' => 'Bu e-posta zaten başka bir Posta Studio hesabına ait. Bunun yerine özel bir iş e-postası isteyin.',
         ],
 
         'flash' => [

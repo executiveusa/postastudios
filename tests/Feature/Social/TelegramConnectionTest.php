@@ -22,9 +22,9 @@ use Illuminate\Support\Facades\Storage;
 
 beforeEach(function () {
     config([
-        'trypost.platforms.telegram.bot_token' => 'TESTTOKEN',
-        'trypost.platforms.telegram.bot_username' => 'TryPostBot',
-        'trypost.platforms.telegram.webhook_secret' => 'shh-secret',
+        'postastudio.platforms.telegram.bot_token' => 'TESTTOKEN',
+        'postastudio.platforms.telegram.bot_username' => 'Posta StudioBot',
+        'postastudio.platforms.telegram.webhook_secret' => 'shh-secret',
     ]);
 
     $this->workspace = Workspace::factory()->create();
@@ -58,7 +58,7 @@ it('issues a signed connect code carrying the workspace', function () {
         ->assertOk()
         ->assertJsonStructure(['code', 'nonce', 'bot_username', 'expires_at']);
 
-    expect($response->json('bot_username'))->toBe('TryPostBot');
+    expect($response->json('bot_username'))->toBe('Posta StudioBot');
     expect(data_get(TelegramConnectCode::decode($response->json('code')), 'workspace_id'))
         ->toBe($this->workspace->id);
     expect($response->json('nonce'))
@@ -123,8 +123,8 @@ it('links a private channel that has no username', function () {
 
 it('does not connect a second telegram channel when one is already connected', function () {
     config([
-        'trypost.self_hosted' => false,
-        'trypost.allow_multiple_social_accounts' => false,
+        'postastudio.self_hosted' => false,
+        'postastudio.allow_multiple_social_accounts' => false,
     ]);
     Event::fake([TelegramConnectFailed::class]);
 
@@ -153,7 +153,7 @@ it('does not connect a second telegram channel when one is already connected', f
 
 it('connects a second telegram channel when multiple social accounts are allowed', function () {
     Http::fake();
-    config(['trypost.allow_multiple_social_accounts' => true]);
+    config(['postastudio.allow_multiple_social_accounts' => true]);
 
     SocialAccount::factory()->telegram()->create([
         'workspace_id' => $this->workspace->id,
@@ -174,7 +174,7 @@ it('connects a second telegram channel when multiple social accounts are allowed
 
 it('reconnects an existing telegram channel', function () {
     Http::fake();
-    config(['trypost.allow_multiple_social_accounts' => false]);
+    config(['postastudio.allow_multiple_social_accounts' => false]);
 
     SocialAccount::factory()->telegram()->create([
         'workspace_id' => $this->workspace->id,
@@ -209,7 +209,7 @@ it('issues a connect code that carries the reconnect card', function () {
 it('keeps the reconnect card on its own chat when a different channel posts the code', function () {
     Http::fake();
     Event::fake([TelegramConnectFailed::class]);
-    config(['trypost.allow_multiple_social_accounts' => false]);
+    config(['postastudio.allow_multiple_social_accounts' => false]);
 
     $account = SocialAccount::factory()->telegram()->create([
         'workspace_id' => $this->workspace->id,
@@ -234,7 +234,7 @@ it('keeps the reconnect card on its own chat when a different channel posts the 
 
 it('lets the user retry in the right chat with the same code', function () {
     Http::fake();
-    config(['trypost.allow_multiple_social_accounts' => false]);
+    config(['postastudio.allow_multiple_social_accounts' => false]);
 
     $account = SocialAccount::factory()->telegram()->create([
         'workspace_id' => $this->workspace->id,
@@ -258,7 +258,7 @@ it('lets the user retry in the right chat with the same code', function () {
 
 it('reconnects the card when its own chat posts the code', function () {
     Http::fake();
-    config(['trypost.allow_multiple_social_accounts' => false]);
+    config(['postastudio.allow_multiple_social_accounts' => false]);
 
     $account = SocialAccount::factory()->telegram()->create([
         'workspace_id' => $this->workspace->id,
@@ -449,7 +449,7 @@ it('does not broadcast when the code is tampered or already used', function () {
 });
 
 it('verifies a connected telegram account via getChat', function () {
-    config(['trypost.platforms.telegram.bot_token' => 'TESTTOKEN']);
+    config(['postastudio.platforms.telegram.bot_token' => 'TESTTOKEN']);
 
     $account = SocialAccount::factory()->telegram()->create(['workspace_id' => $this->workspace->id]);
 
@@ -461,7 +461,7 @@ it('verifies a connected telegram account via getChat', function () {
 });
 
 it('throws TokenExpiredException when getChat reports the chat is no longer reachable', function () {
-    config(['trypost.platforms.telegram.bot_token' => 'TESTTOKEN']);
+    config(['postastudio.platforms.telegram.bot_token' => 'TESTTOKEN']);
 
     $account = SocialAccount::factory()->telegram()->create(['workspace_id' => $this->workspace->id]);
 
@@ -479,7 +479,7 @@ it('throws TokenExpiredException when getChat reports the chat is no longer reac
 });
 
 it('throws PlatformUnavailableException when getChat fails transiently', function () {
-    config(['trypost.platforms.telegram.bot_token' => 'TESTTOKEN']);
+    config(['postastudio.platforms.telegram.bot_token' => 'TESTTOKEN']);
 
     $account = SocialAccount::factory()->telegram()->create(['workspace_id' => $this->workspace->id]);
 
@@ -492,7 +492,7 @@ it('throws PlatformUnavailableException when getChat fails transiently', functio
 });
 
 it('throws PlatformUnavailableException, not TokenExpiredException, when the shared bot token is rejected', function () {
-    config(['trypost.platforms.telegram.bot_token' => 'TESTTOKEN']);
+    config(['postastudio.platforms.telegram.bot_token' => 'TESTTOKEN']);
 
     $account = SocialAccount::factory()->telegram()->create(['workspace_id' => $this->workspace->id]);
 

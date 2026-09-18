@@ -15,7 +15,7 @@ beforeEach(function () {
     $this->account = Account::factory()->create();
 
     config([
-        'trypost.billing.require_card_for_trial' => true,
+        'postastudio.billing.require_card_for_trial' => true,
         'cashier.trial_days' => 8,
         'cashier.first_month_coupon_id' => '',
         'cashier.allow_promotion_codes' => false,
@@ -178,7 +178,7 @@ test('empty coupon with card required does not throw and still applies trial', f
 
 test('skips the coupon and allows promotion codes when a card is not required', function () {
     config([
-        'trypost.billing.require_card_for_trial' => false,
+        'postastudio.billing.require_card_for_trial' => false,
         'cashier.first_month_coupon_id' => 'TRIAL1USD',
         'cashier.allow_promotion_codes' => true,
     ]);

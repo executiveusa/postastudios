@@ -25,7 +25,7 @@ class XAnalytics
 
     public function __construct()
     {
-        $this->baseUrl = config('trypost.platforms.x.api');
+        $this->baseUrl = config('postastudio.platforms.x.api');
     }
 
     public function getMetrics(SocialAccount $account, ?CarbonInterface $since = null, ?CarbonInterface $until = null): array

@@ -13,7 +13,7 @@ beforeEach(function () {
         'platform_user_id' => '4242',
         'token_expires_at' => now()->addHours(2),
     ]);
-    $this->api = config('trypost.platforms.x.api');
+    $this->api = config('postastudio.platforms.x.api');
 });
 
 test('metrics come from the timeline itself instead of a second lookup of the same posts', function () {

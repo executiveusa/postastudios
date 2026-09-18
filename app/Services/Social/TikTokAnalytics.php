@@ -20,7 +20,7 @@ class TikTokAnalytics
 
     public function __construct()
     {
-        $this->baseUrl = config('trypost.platforms.tiktok.api');
+        $this->baseUrl = config('postastudio.platforms.tiktok.api');
     }
 
     public function getMetrics(SocialAccount $account): array

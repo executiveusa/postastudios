@@ -200,7 +200,7 @@ test('youtube callback fails with expired session', function () {
 });
 
 test('user can connect multiple youtube accounts when multiple social accounts are allowed', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->youtube()->create([
         'workspace_id' => $this->workspace->id,
@@ -267,7 +267,7 @@ test('youtube callback handles oauth errors gracefully', function () {
 });
 
 test('youtube callback shows network_taken when the network is already connected', function () {
-    config()->set('trypost.allow_multiple_social_accounts', false);
+    config()->set('postastudio.allow_multiple_social_accounts', false);
 
     SocialAccount::factory()->youtube()->create([
         'workspace_id' => $this->workspace->id,
@@ -470,7 +470,7 @@ test('youtube reconnect narrows a multi channel response to its own card', funct
 });
 
 test('youtube skips an already connected channel and takes the next one', function () {
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     SocialAccount::factory()->youtube()->create([
         'workspace_id' => $this->workspace->id,

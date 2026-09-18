@@ -25,10 +25,10 @@ return [
         'other' => 'Diğer',
     ],
     'goals_title' => 'Hedefiniz nedir?',
-    'goals_description' => 'Size uyan her şeyi seçin, biz de TryPost\'u sizin için ayarlayalım.',
+    'goals_description' => 'Size uyan her şeyi seçin, biz de Posta Studio\'u sizin için ayarlayalım.',
     'goals' => [
         'save_time' => 'Her yere aynı anda paylaşarak zaman kazanmak',
-        'ai_content' => 'TryPost AI ile gönderi oluşturmak',
+        'ai_content' => 'Posta Studio AI ile gönderi oluşturmak',
         'use_mcp' => 'Claude, ChatGPT veya Cursor ile gönderi oluşturmak',
         'plan_calendar' => 'Gönderilerimi bir takvimde planlamak',
         'stay_on_brand' => 'Her gönderiyi marka çizgisinde tutmak',
@@ -39,7 +39,7 @@ return [
         'other' => 'Başka bir şey',
     ],
     'referral_source_title' => 'Bizi nasıl buldunuz?',
-    'referral_source_description' => 'İnsanların TryPost\'u nasıl keşfettiğini anlamamıza yardımcı olur.',
+    'referral_source_description' => 'İnsanların Posta Studio\'u nasıl keşfettiğini anlamamıza yardımcı olur.',
     'referral_source' => [
         'google' => 'Google',
         'x' => 'X (Twitter)',
@@ -61,7 +61,7 @@ return [
     ],
     'connect' => [
         'title' => 'Bir sosyal hesap bağla',
-        'description' => 'TryPost’un içeriğini yayınlayabileceği en az bir ağ seç.',
+        'description' => 'Posta Studio’un içeriğini yayınlayabileceği en az bir ağ seç.',
         'required' => 'Devam etmek için en az bir sosyal hesap bağla.',
     ],
 ];

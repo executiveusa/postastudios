@@ -45,7 +45,7 @@ test('accounts index shows platforms and connected accounts', function () {
 });
 
 test('accounts index still lists every same-network account when multiples are disabled', function () {
-    config()->set('trypost.allow_multiple_social_accounts', false);
+    config()->set('postastudio.allow_multiple_social_accounts', false);
 
     [$first, $second] = SocialAccount::withoutEvents(fn () => [
         SocialAccount::factory()->create([
@@ -101,8 +101,8 @@ test('accounts index offers a single linkedin card and no standalone linkedin pa
 });
 
 test('the linkedin card still shows when only company pages are enabled', function () {
-    config(['trypost.platforms.linkedin.enabled' => false]);
-    config(['trypost.platforms.linkedin-page.enabled' => true]);
+    config(['postastudio.platforms.linkedin.enabled' => false]);
+    config(['postastudio.platforms.linkedin-page.enabled' => true]);
 
     $response = $this->actingAs($this->user)->get(route('app.accounts'));
 
@@ -113,8 +113,8 @@ test('the linkedin card still shows when only company pages are enabled', functi
 });
 
 test('the linkedin card disappears only when both capabilities are disabled', function () {
-    config(['trypost.platforms.linkedin.enabled' => false]);
-    config(['trypost.platforms.linkedin-page.enabled' => false]);
+    config(['postastudio.platforms.linkedin.enabled' => false]);
+    config(['postastudio.platforms.linkedin-page.enabled' => false]);
 
     $response = $this->actingAs($this->user)->get(route('app.accounts'));
 
@@ -154,8 +154,8 @@ test('accounts index offers a single instagram card and no instagram-facebook ca
 });
 
 test('the instagram card still shows when only facebook business is enabled', function () {
-    config(['trypost.platforms.instagram.enabled' => false]);
-    config(['trypost.platforms.instagram-facebook.enabled' => true]);
+    config(['postastudio.platforms.instagram.enabled' => false]);
+    config(['postastudio.platforms.instagram-facebook.enabled' => true]);
 
     $response = $this->actingAs($this->user)->get(route('app.accounts'));
 
@@ -171,8 +171,8 @@ test('the instagram card still shows when only facebook business is enabled', fu
 });
 
 test('instagram card connect methods omit disabled facebook business entry', function () {
-    config(['trypost.platforms.instagram.enabled' => true]);
-    config(['trypost.platforms.instagram-facebook.enabled' => false]);
+    config(['postastudio.platforms.instagram.enabled' => true]);
+    config(['postastudio.platforms.instagram-facebook.enabled' => false]);
 
     $response = $this->actingAs($this->user)->get(route('app.accounts'));
 
@@ -187,8 +187,8 @@ test('instagram card connect methods omit disabled facebook business entry', fun
 });
 
 test('the instagram card disappears only when both capabilities are disabled', function () {
-    config(['trypost.platforms.instagram.enabled' => false]);
-    config(['trypost.platforms.instagram-facebook.enabled' => false]);
+    config(['postastudio.platforms.instagram.enabled' => false]);
+    config(['postastudio.platforms.instagram-facebook.enabled' => false]);
 
     $response = $this->actingAs($this->user)->get(route('app.accounts'));
 
@@ -216,7 +216,7 @@ test('a connected instagram-facebook account is still returned so it surfaces un
 });
 
 test('an unsubscribed account can disconnect during onboarding (no active subscription required)', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $account = SocialAccount::factory()->create(['workspace_id' => $this->workspace->id]);
 

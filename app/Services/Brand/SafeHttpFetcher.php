@@ -17,7 +17,7 @@ use Symfony\Component\DomCrawler\UriResolver;
  */
 final class SafeHttpFetcher
 {
-    private const string USER_AGENT = 'TryPostBot/1.0 (+https://trypost.it)';
+    private const string USER_AGENT = 'Posta StudioBot/1.0 (+https://postastudios.com)';
 
     private const int TIMEOUT_SECONDS = 10;
 
@@ -147,7 +147,7 @@ final class SafeHttpFetcher
         // Self-hosted operators can opt into fetching their own internal
         // network. Only the private/reserved-IP rejection below is skipped;
         // the scheme and host checks above still always apply.
-        if ((bool) config('trypost.security.allow_private_network')) {
+        if ((bool) config('postastudio.security.allow_private_network')) {
             return;
         }
 

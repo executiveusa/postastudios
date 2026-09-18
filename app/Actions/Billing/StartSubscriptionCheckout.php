@@ -15,7 +15,7 @@ class StartSubscriptionCheckout
      * Create a Stripe Checkout session for the given price and return an Inertia
      * redirect to it. Quantity tracks the account's workspace count. Trial days,
      * optional first-month coupon, and promotion codes come from cashier /
-     * trypost billing env config via ConfigureSubscriptionCheckout.
+     * postastudio billing env config via ConfigureSubscriptionCheckout.
      */
     public function redirect(Account $account, string $priceId, string $cancelUrl): Response
     {

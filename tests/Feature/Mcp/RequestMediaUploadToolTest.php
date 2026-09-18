@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\Media\Type as MediaType;
 use App\Enums\UserWorkspace\Role;
-use App\Mcp\Servers\TryPostServer;
+use App\Mcp\Servers\PostaStudioServer;
 use App\Mcp\Tools\Post\RequestMediaUploadTool;
 use App\Models\User;
 use App\Models\Workspace;
@@ -19,7 +19,7 @@ beforeEach(function () {
 });
 
 test('returns a single-use signed upload URL', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(RequestMediaUploadTool::class, []);
 
     $response->assertOk()
@@ -39,7 +39,7 @@ test('returns a single-use signed upload URL', function () {
 test('signed URL is valid against the api.uploads.store route', function () {
     $uploadUrl = null;
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(RequestMediaUploadTool::class, [])
         ->assertOk()
         ->assertStructuredContent(function (AssertableJson $json) use (&$uploadUrl) {
@@ -56,7 +56,7 @@ test('each call returns a distinct upload_token', function () {
     $firstToken = null;
     $secondToken = null;
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(RequestMediaUploadTool::class, [])
         ->assertOk()
         ->assertStructuredContent(function (AssertableJson $json) use (&$firstToken) {
@@ -64,7 +64,7 @@ test('each call returns a distinct upload_token', function () {
             $firstToken = $json->toArray()['upload_token'];
         });
 
-    TryPostServer::actingAs($this->user)
+    PostaStudioServer::actingAs($this->user)
         ->tool(RequestMediaUploadTool::class, [])
         ->assertOk()
         ->assertStructuredContent(function (AssertableJson $json) use (&$secondToken) {

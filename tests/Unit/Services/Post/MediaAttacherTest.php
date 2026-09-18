@@ -58,7 +58,7 @@ test('blocks a private-network url and never requests it', function () {
 });
 
 test('attempts the internal fetch when allow_private_network is enabled', function () {
-    config(['trypost.security.allow_private_network' => true]);
+    config(['postastudio.security.allow_private_network' => true]);
 
     Http::fake([
         'http://127.0.0.1/internal.png' => Http::response(

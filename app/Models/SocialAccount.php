@@ -89,7 +89,7 @@ class SocialAccount extends Model
 
     public static function occupiesNetwork(string $workspaceId, SocialPlatform $platform): bool
     {
-        return ! config('trypost.allow_multiple_social_accounts')
+        return ! config('postastudio.allow_multiple_social_accounts')
             && static::query()
                 ->where('workspace_id', $workspaceId)
                 ->whereIn('platform', $platform->networkPlatformValues())

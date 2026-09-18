@@ -45,7 +45,7 @@ function gridOwnerWithLinkedIn(): User
 }
 
 test('a taken network offers no second card when multiples are disabled', function () {
-    config(['trypost.allow_multiple_social_accounts' => false]);
+    config(['postastudio.allow_multiple_social_accounts' => false]);
 
     $this->actingAs(gridOwnerWithLinkedIn());
 
@@ -59,7 +59,7 @@ test('a taken network offers no second card when multiples are disabled', functi
 });
 
 test('a taken network offers another card when multiples are allowed', function () {
-    config(['trypost.allow_multiple_social_accounts' => true]);
+    config(['postastudio.allow_multiple_social_accounts' => true]);
 
     $this->actingAs(gridOwnerWithLinkedIn());
 

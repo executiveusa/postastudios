@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 return [
     'title' => '시작하기',
-    'welcome' => 'TryPost에 오신 걸 환영해요, :name',
-    'description' => '아래 단계를 따라 TryPost 사용법을 확인하고 첫 게시물을 발행하세요.',
+    'welcome' => 'Posta Studio에 오신 걸 환영해요, :name',
+    'description' => '아래 단계를 따라 Posta Studio 사용법을 확인하고 첫 게시물을 발행하세요.',
     'skip_step' => '이 단계 건너뛰기',
-    'continue' => 'TryPost로 계속',
+    'continue' => 'Posta Studio로 계속',
     'status' => [
         'complete' => '완료',
         'todo' => '할 일',
@@ -15,17 +15,17 @@ return [
     ],
     'mcp' => [
         'title' => 'AI 어시스턴트 연결',
-        'description' => 'TryPost를 MCP 서버로 추가하면 어시스턴트가 소셜 게시물을 만들고 관리할 수 있어요.',
+        'description' => 'Posta Studio를 MCP 서버로 추가하면 어시스턴트가 소셜 게시물을 만들고 관리할 수 있어요.',
         'copied' => 'MCP URL이 복사되었어요.',
     ],
     'social' => [
         'title' => '소셜 계정 연결',
-        'description' => 'TryPost가 콘텐츠를 발행할 네트워크를 하나 이상 선택하세요.',
+        'description' => 'Posta Studio가 콘텐츠를 발행할 네트워크를 하나 이상 선택하세요.',
         'connected_elsewhere' => '다른 워크스페이스에서 이미 계정을 연결했으므로 이 단계는 완료되었습니다.',
     ],
     'first_post' => [
         'title' => '첫 게시물 만들기',
-        'description' => '연결된 어시스턴트에서 이 시작 프롬프트를 써 보거나, TryPost에서 바로 게시물을 만드세요.',
+        'description' => '연결된 어시스턴트에서 이 시작 프롬프트를 써 보거나, Posta Studio에서 바로 게시물을 만드세요.',
         'prompt_label' => '샘플 프롬프트',
         'sample_prompt' => '내 브랜드를 소개하는 친근한 소셜 게시물을 만들고 연결된 각 네트워크에 맞게 조정해 주세요.',
         'copy_prompt' => '프롬프트 복사',
@@ -35,6 +35,6 @@ return [
     ],
     'ready' => [
         'title' => '발행할 준비가 됐어요',
-        'description' => '설정이 끝났어요. TryPost로 가서 콘텐츠 계획을 시작하세요.',
+        'description' => '설정이 끝났어요. Posta Studio로 가서 콘텐츠 계획을 시작하세요.',
     ],
 ];

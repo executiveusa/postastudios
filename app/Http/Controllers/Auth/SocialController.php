@@ -29,7 +29,7 @@ class SocialController extends Controller
     /** The platform's API host, keyed in config by the enum value. */
     protected function graphApi(): string
     {
-        return (string) config("trypost.platforms.{$this->platform->value}.graph_api");
+        return (string) config("postastudio.platforms.{$this->platform->value}.graph_api");
     }
 
     protected function ensurePlatformEnabled(): void
@@ -162,7 +162,7 @@ class SocialController extends Controller
     protected function noConnectableIdentities(?SocialAccount $reconnect, string $missingKey, bool $listingComplete = true): Response
     {
         $key = match (true) {
-            ! (bool) config('trypost.allow_multiple_social_accounts') && $reconnect === null => 'network_taken',
+            ! (bool) config('postastudio.allow_multiple_social_accounts') && $reconnect === null => 'network_taken',
             $listingComplete => $reconnect !== null ? $missingKey : 'all_connected',
             default => 'pages_read_incomplete',
         };

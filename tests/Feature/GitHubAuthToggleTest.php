@@ -7,10 +7,10 @@ use App\Models\Invite;
 use App\Models\User;
 use App\Models\Workspace;
 
-beforeEach(fn () => config()->set('trypost.self_hosted', false));
+beforeEach(fn () => config()->set('postastudio.self_hosted', false));
 
 test('login page shares github auth enabled prop as false when disabled', function () {
-    config(['trypost.github_auth_enabled' => false]);
+    config(['postastudio.github_auth_enabled' => false]);
 
     $response = $this->get(route('login'));
 
@@ -21,7 +21,7 @@ test('login page shares github auth enabled prop as false when disabled', functi
 });
 
 test('login page shares github auth enabled prop as true when enabled', function () {
-    config(['trypost.github_auth_enabled' => true]);
+    config(['postastudio.github_auth_enabled' => true]);
 
     $response = $this->get(route('login'));
 
@@ -32,7 +32,7 @@ test('login page shares github auth enabled prop as true when enabled', function
 });
 
 test('register page shares github auth enabled prop', function () {
-    config(['trypost.github_auth_enabled' => true]);
+    config(['postastudio.github_auth_enabled' => true]);
 
     $response = $this->get(route('register'));
 
@@ -43,10 +43,10 @@ test('register page shares github auth enabled prop', function () {
 });
 
 test('github auth redirect route exists', function () {
-    config(['trypost.github_auth_enabled' => true]);
+    config(['postastudio.github_auth_enabled' => true]);
     config(['services.github.client_id' => 'test-id']);
     config(['services.github.client_secret' => 'test-secret']);
-    config(['services.github.redirect' => 'https://app.trypost.test/auth/github/callback']);
+    config(['services.github.redirect' => 'https://app.postastudio.test/auth/github/callback']);
 
     $response = $this->get(route('auth.github.redirect'));
 
@@ -55,7 +55,7 @@ test('github auth redirect route exists', function () {
 });
 
 test('github auth redirect route 404s when github auth is disabled', function () {
-    config(['trypost.github_auth_enabled' => false]);
+    config(['postastudio.github_auth_enabled' => false]);
 
     $this->get(route('auth.github.redirect'))->assertNotFound();
 });
@@ -68,8 +68,8 @@ test('github auth callback route exists', function () {
 });
 
 test('register page still shares github auth enabled prop when self_hosted (via pending invite)', function () {
-    config()->set('trypost.self_hosted', true);
-    config()->set('trypost.github_auth_enabled', true);
+    config()->set('postastudio.self_hosted', true);
+    config()->set('postastudio.github_auth_enabled', true);
 
     $account = Account::factory()->create();
     $owner = User::factory()->create(['account_id' => $account->id]);

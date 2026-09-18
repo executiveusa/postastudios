@@ -18,11 +18,11 @@ return [
     'throttle' => '로그인 시도가 너무 많습니다. :seconds초 후에 다시 시도해 주세요.',
 
     'flash' => [
-        'welcome' => 'TryPost에 오신 것을 환영합니다!',
-        'welcome_trial' => 'TryPost에 오신 것을 환영합니다! 체험이 시작되었습니다.',
+        'welcome' => 'Posta Studio에 오신 것을 환영합니다!',
+        'welcome_trial' => 'Posta Studio에 오신 것을 환영합니다! 체험이 시작되었습니다.',
     ],
 
-    'legal' => '계속 진행하면 <a href="https://trypost.it/terms" target="_blank">서비스 약관</a> 및 <a href="https://trypost.it/privacy" target="_blank">개인정보 처리방침</a>에 동의하는 것입니다.',
+    'legal' => '계속 진행하면 <a href="https://postastudios.com/terms" target="_blank">서비스 약관</a> 및 <a href="https://postastudios.com/privacy" target="_blank">개인정보 처리방침</a>에 동의하는 것입니다.',
 
     'slides' => [
         'calendar' => [

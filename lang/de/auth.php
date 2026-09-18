@@ -20,11 +20,11 @@ return [
     'throttle' => 'Zu viele Anmeldeversuche. Bitte versuche es in :seconds Sekunden erneut.',
 
     'flash' => [
-        'welcome' => 'Willkommen bei TryPost!',
-        'welcome_trial' => 'Willkommen bei TryPost! Deine Testphase hat begonnen.',
+        'welcome' => 'Willkommen bei Posta Studio!',
+        'welcome_trial' => 'Willkommen bei Posta Studio! Deine Testphase hat begonnen.',
     ],
 
-    'legal' => 'Indem du fortfährst, stimmst du unseren <a href="https://trypost.it/terms" target="_blank">Nutzungsbedingungen</a> und unserer <a href="https://trypost.it/privacy" target="_blank">Datenschutzerklärung</a> zu.',
+    'legal' => 'Indem du fortfährst, stimmst du unseren <a href="https://postastudios.com/terms" target="_blank">Nutzungsbedingungen</a> und unserer <a href="https://postastudios.com/privacy" target="_blank">Datenschutzerklärung</a> zu.',
 
     'slides' => [
         'calendar' => [

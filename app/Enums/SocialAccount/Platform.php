@@ -383,14 +383,14 @@ enum Platform: string
     public function instagramGraphBaseUrl(): string
     {
         return match ($this) {
-            self::InstagramFacebook => (string) config('trypost.platforms.instagram-facebook.graph_api'),
-            default => (string) config('trypost.platforms.instagram.graph_api'),
+            self::InstagramFacebook => (string) config('postastudio.platforms.instagram-facebook.graph_api'),
+            default => (string) config('postastudio.platforms.instagram.graph_api'),
         };
     }
 
     public function isEnabled(): bool
     {
-        return config("trypost.platforms.{$this->value}.enabled", true);
+        return config("postastudio.platforms.{$this->value}.enabled", true);
     }
 
     /**

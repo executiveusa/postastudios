@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Exceptions;
 use Illuminate\Support\Facades\Route;
 
 beforeEach(function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
     $this->user = User::factory()->create();
 });
 
@@ -580,7 +580,7 @@ test('welcome steps redirect to calendar for subscribed accounts', function (str
 ]);
 
 test('welcome redirects generic-trial accounts with app access to calendar', function () {
-    config(['trypost.billing.require_card_for_trial' => false]);
+    config(['postastudio.billing.require_card_for_trial' => false]);
 
     $this->user->account->forceFill([
         'trial_ends_at' => now()->addDays(8),
@@ -595,7 +595,7 @@ test('welcome redirects generic-trial accounts with app access to calendar', fun
 });
 
 test('welcome steps redirect to calendar in self hosted mode', function (string $routeName, string $method, array $payload = []) {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $this->actingAs($this->user);
 
@@ -719,7 +719,7 @@ test('subscription required screen sends members with app access to the calendar
 });
 
 test('subscription required screen redirects to calendar in self hosted mode', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $member = User::factory()->create(['account_id' => $this->user->account_id]);
 

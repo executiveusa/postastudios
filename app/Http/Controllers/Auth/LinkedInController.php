@@ -308,11 +308,11 @@ class LinkedInController extends SocialController
         $scopes = [];
 
         if ($this->personEnabled()) {
-            $scopes = array_merge($scopes, config('trypost.platforms.linkedin.scopes'));
+            $scopes = array_merge($scopes, config('postastudio.platforms.linkedin.scopes'));
         }
 
         if ($this->organizationEnabled()) {
-            $scopes = array_merge($scopes, config('trypost.platforms.linkedin-page.scopes'));
+            $scopes = array_merge($scopes, config('postastudio.platforms.linkedin-page.scopes'));
         }
 
         return array_values(array_unique($scopes));
@@ -346,7 +346,7 @@ class LinkedInController extends SocialController
         try {
             $response = Http::withToken($accessToken)
                 ->withHeaders(['X-RestLi-Protocol-Version' => '2.0.0'])
-                ->get(config('trypost.platforms.linkedin.api').'/v2/me', [
+                ->get(config('postastudio.platforms.linkedin.api').'/v2/me', [
                     'projection' => '(id,vanityName,localizedFirstName,localizedLastName)',
                 ]);
 
@@ -371,7 +371,7 @@ class LinkedInController extends SocialController
     private function fetchOrganizations(string $accessToken): array
     {
         $response = Http::withToken($accessToken)
-            ->get(config('trypost.platforms.linkedin.api').'/v2/organizationAcls', [
+            ->get(config('postastudio.platforms.linkedin.api').'/v2/organizationAcls', [
                 'q' => 'roleAssignee',
                 'role' => 'ADMINISTRATOR',
                 'projection' => '(elements*(organization~(id,localizedName,vanityName,logoV2(original~:playableStreams))))',

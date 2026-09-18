@@ -16,7 +16,7 @@ class UsageController extends Controller
 {
     public function index(Request $request): Response|RedirectResponse
     {
-        if (config('trypost.self_hosted')) {
+        if (config('postastudio.self_hosted')) {
             return redirect()->route('app.calendar');
         }
 

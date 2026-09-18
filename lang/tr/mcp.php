@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 return [
     'title' => 'MCP',
-    'subtitle' => 'TryPost hesabınızla gönderi oluşturup yönetmeleri için yapay zeka asistanlarını bağlayın.',
-    'copy_step' => 'TryPost sunucu URL’ini kopyala',
+    'subtitle' => 'Posta Studio hesabınızla gönderi oluşturup yönetmeleri için yapay zeka asistanlarını bağlayın.',
+    'copy_step' => 'Posta Studio sunucu URL’ini kopyala',
     'open_step' => 'AI asistanını aç',
     'copy' => 'URL’yi kopyala',
     'connect' => ':client bağla',
@@ -18,7 +18,7 @@ return [
     'connected_empty' => 'Henüz bağlı bir şey yok. Yukarıdan Claude, ChatGPT veya başka bir istemci kullanın.',
     'disconnect' => 'Bağlantıyı kes',
     'disconnect_title' => 'Uygulama bağlantısını kes',
-    'disconnect_confirm' => 'Bu, uygulamayı TryPost’tan çıkarır. MCP’yi yeniden kullanmak için tekrar bağlanması gerekir.',
+    'disconnect_confirm' => 'Bu, uygulamayı Posta Studio’tan çıkarır. MCP’yi yeniden kullanmak için tekrar bağlanması gerekir.',
     'disconnected' => 'Uygulama bağlantısı kesildi.',
     'copied' => 'Kopyalandı',
     'last_used' => 'Son kullanım',
@@ -26,10 +26,10 @@ return [
     'documentation_title' => 'Dokümantasyon',
     'documentation_description' => 'İstemci kurulum rehberleri, kullanılabilir tools ve sorun giderme.',
     'view_docs' => 'Dokümantasyonu görüntüle',
-    'connector_name' => 'TryPost',
+    'connector_name' => 'Posta Studio',
 
     'authorize' => [
-        'page_title' => 'Authorize Application - TryPost',
+        'page_title' => 'Authorize Application - Posta Studio',
         'app_title' => 'Authorize MCP',
         'heading' => 'Authorize :client',
         'intro' => 'This application will be able to:',
@@ -45,7 +45,7 @@ return [
         'search_workspace' => 'Search workspaces...',
         'no_workspace_found' => 'No workspace found',
         'scope_mcp_use' => 'Use MCP server',
-        'error_page_title' => 'Yetkilendirme başarısız - TryPost',
+        'error_page_title' => 'Yetkilendirme başarısız - Posta Studio',
         'error_title' => 'Bağlantı kurulamadı',
         'error_body' => 'Bu yetkilendirme isteği geçersiz veya süresi dolmuş. Bu pencereyi kapatın ve MCP istemcinizden yeniden bağlanmayı deneyin.',
         'error_code' => 'Hata: :error',
@@ -57,7 +57,7 @@ return [
     'clients' => [
         'claude' => 'Settings → Connectors’ı aç, özel bir connector ekle ve yukarıdaki URL’yi yapıştır.',
         'chatgpt' => 'Settings → Apps & Connectors’ı aç, özel bir connector oluştur ve yukarıdaki URL’yi yapıştır.',
-        'cursor' => 'Cursor’da TryPost’u uzak MCP sunucusu olarak ekleyin.',
+        'cursor' => 'Cursor’da Posta Studio’u uzak MCP sunucusu olarak ekleyin.',
         'cursor_name' => 'Cursor',
         'vscode' => 'Aşağıdaki yapılandırmayı VS Code\'un MCP ayarlarına yapıştırın.',
         'vscode_name' => 'VS Code',

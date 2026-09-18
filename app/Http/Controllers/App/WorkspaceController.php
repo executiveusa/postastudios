@@ -97,7 +97,7 @@ class WorkspaceController extends Controller
             abort(403);
         }
 
-        if (! config('trypost.self_hosted')
+        if (! config('postastudio.self_hosted')
             && $user->ownedWorkspacesCount() > 0
             && ! $user->account?->hasActiveSubscription()) {
             return redirect()->route('app.billing.index')
@@ -166,7 +166,7 @@ class WorkspaceController extends Controller
 
         return Inertia::render('settings/workspace/Workspace', [
             'workspace' => $workspace,
-            'isOnlyWorkspace' => ! config('trypost.self_hosted')
+            'isOnlyWorkspace' => ! config('postastudio.self_hosted')
                 && $workspace->account->workspaces()->count() <= 1,
             'otherMemberCount' => $workspace->members()
                 ->where('users.id', '!=', $user->id)

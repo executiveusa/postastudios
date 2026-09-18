@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\UserWorkspace\Role;
-use App\Mcp\Servers\TryPostServer;
+use App\Mcp\Servers\PostaStudioServer;
 use App\Mcp\Tools\ApiKey\CreateApiKeyTool;
 use App\Mcp\Tools\ApiKey\DeleteApiKeyTool;
 use App\Mcp\Tools\ApiKey\ListApiKeysTool;
@@ -36,7 +36,7 @@ test('list api keys returns wrapped api_keys array with ApiKeyResource shape', f
     attachToken($this->user, $this->workspace);
     attachToken($this->user, $this->workspace);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(ListApiKeysTool::class, []);
 
     $response->assertOk()
@@ -56,7 +56,7 @@ test('list api keys excludes workspace-bound MCP OAuth grants', function () {
 
     mcpAccessToken($this->user, mcpOauthClient('ChatGPT'), $this->workspace);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(ListApiKeysTool::class, []);
 
     $response->assertOk()
@@ -66,7 +66,7 @@ test('list api keys excludes workspace-bound MCP OAuth grants', function () {
 });
 
 test('create api key returns plain token only at creation', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreateApiKeyTool::class, ['name' => 'My Key']);
 
     $response->assertOk()
@@ -88,15 +88,15 @@ test('workspace members cannot manage api keys through mcp', function () {
     $member->update(['current_workspace_id' => $this->workspace->id]);
     $token = attachToken($member, $this->workspace);
 
-    TryPostServer::actingAs($member)
+    PostaStudioServer::actingAs($member)
         ->tool(ListApiKeysTool::class, [])
         ->assertHasErrors();
 
-    TryPostServer::actingAs($member)
+    PostaStudioServer::actingAs($member)
         ->tool(CreateApiKeyTool::class, ['name' => 'Escalation Key'])
         ->assertHasErrors();
 
-    TryPostServer::actingAs($member)
+    PostaStudioServer::actingAs($member)
         ->tool(DeleteApiKeyTool::class, ['api_key_id' => $token->id])
         ->assertHasErrors();
 
@@ -105,14 +105,14 @@ test('workspace members cannot manage api keys through mcp', function () {
 });
 
 test('create api key validates name required', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreateApiKeyTool::class, []);
 
     $response->assertHasErrors();
 });
 
 test('create api key rejects expires_at in the past', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreateApiKeyTool::class, [
             'name' => 'Past Key',
             'expires_at' => '2020-01-01',
@@ -122,7 +122,7 @@ test('create api key rejects expires_at in the past', function () {
 });
 
 test('create api key omits expiration when not provided', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreateApiKeyTool::class, [
             'name' => 'Never Expires',
         ]);
@@ -145,7 +145,7 @@ test('create api key omits expiration when not provided', function () {
 test('create api key stores expiration at end of day', function () {
     $expiresAt = now()->addDays(14)->startOfDay();
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreateApiKeyTool::class, [
             'name' => 'Expiring Key',
             'expires_at' => $expiresAt->toDateString(),
@@ -166,7 +166,7 @@ test('create api key stores expiration at end of day', function () {
 test('create api key allows an expiration of today', function () {
     $today = now()->toDateString();
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(CreateApiKeyTool::class, [
             'name' => 'Expires Today',
             'expires_at' => $today,
@@ -187,7 +187,7 @@ test('create api key allows an expiration of today', function () {
 test('delete api key marks revoked', function () {
     $token = attachToken($this->user, $this->workspace);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(DeleteApiKeyTool::class, ['api_key_id' => $token->id]);
 
     $response->assertOk()
@@ -204,7 +204,7 @@ test('cannot delete api key from another user', function () {
     ]);
     $token = attachToken($otherUser, $otherWorkspace);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(DeleteApiKeyTool::class, ['api_key_id' => $token->id]);
 
     $response->assertHasErrors(['API key not found.']);
@@ -213,7 +213,7 @@ test('cannot delete api key from another user', function () {
 test('cannot delete workspace-bound MCP OAuth through the api key tool', function () {
     $oauthToken = mcpAccessToken($this->user, mcpOauthClient('ChatGPT'), $this->workspace);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(DeleteApiKeyTool::class, ['api_key_id' => $oauthToken->id]);
 
     $response->assertHasErrors(['API key not found.']);
@@ -221,7 +221,7 @@ test('cannot delete workspace-bound MCP OAuth through the api key tool', functio
 });
 
 test('delete api key validates api_key_id required', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(DeleteApiKeyTool::class, []);
 
     $response->assertHasErrors();

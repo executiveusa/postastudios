@@ -11,12 +11,12 @@ use Laravel\Socialite\Two\User as SocialiteUser;
 
 beforeEach(function () {
     config([
-        'trypost.self_hosted' => false,
-        'trypost.google_auth_enabled' => true,
-        'trypost.github_auth_enabled' => true,
+        'postastudio.self_hosted' => false,
+        'postastudio.google_auth_enabled' => true,
+        'postastudio.github_auth_enabled' => true,
         'services.google-auth.client_id' => 'test-client-id',
         'services.google-auth.client_secret' => 'test-client-secret',
-        'services.google-auth.redirect' => 'https://app.trypost.test/auth/google/callback',
+        'services.google-auth.redirect' => 'https://app.postastudio.test/auth/google/callback',
     ]);
 });
 
@@ -392,7 +392,7 @@ test('a stale invite id from an aborted oauth attempt does not leak into a later
 // ========================================
 
 test('google registration 404s in self-hosted mode without an invite param', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
 
     $socialiteUser = new SocialiteUser;
     $socialiteUser->map([
@@ -412,7 +412,7 @@ test('google registration 404s in self-hosted mode without an invite param', fun
 });
 
 test('google registration succeeds in self-hosted mode with an invite param', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
 
     $inviterAccount = Account::factory()->create();
     $inviter = User::factory()->create(['account_id' => $inviterAccount->id]);
@@ -449,7 +449,7 @@ test('google registration succeeds in self-hosted mode with an invite param', fu
 });
 
 test('google login for an existing user is never blocked by the self-hosted gate', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
 
     $user = User::factory()->create(['email' => 'existing-self-hosted@example.com']);
 
@@ -472,7 +472,7 @@ test('google login for an existing user is never blocked by the self-hosted gate
 });
 
 test('github registration 404s in self-hosted mode without an invite param', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
 
     $socialiteUser = new SocialiteUser;
     $socialiteUser->map([
@@ -492,7 +492,7 @@ test('github registration 404s in self-hosted mode without an invite param', fun
 });
 
 test('github registration succeeds in self-hosted mode with an invite param', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
 
     $inviterAccount = Account::factory()->create();
     $inviter = User::factory()->create(['account_id' => $inviterAccount->id]);
@@ -529,7 +529,7 @@ test('github registration succeeds in self-hosted mode with an invite param', fu
 });
 
 test('github login for an existing user is never blocked by the self-hosted gate', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
 
     $user = User::factory()->create(['email' => 'gh-existing-self-hosted@example.com']);
 

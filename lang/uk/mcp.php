@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 return [
     'title' => 'MCP',
-    'subtitle' => 'Підключіть ІІ-асистентів, щоб вони створювали та керували постами у вашому обліковому записі TryPost.',
-    'copy_step' => 'Скопіюйте URL сервера TryPost',
+    'subtitle' => 'Підключіть ІІ-асистентів, щоб вони створювали та керували постами у вашому обліковому записі Posta Studio.',
+    'copy_step' => 'Скопіюйте URL сервера Posta Studio',
     'open_step' => 'Відкрийте свого ІІ-асистента',
     'copy' => 'Скопіювати URL',
     'connect' => 'Підключити :client',
@@ -18,7 +18,7 @@ return [
     'connected_empty' => 'Ще нічого не підключено. Скористайтеся Claude, ChatGPT або іншим клієнтом вище.',
     'disconnect' => 'Від’єднати',
     'disconnect_title' => 'Від’єднати застосунок',
-    'disconnect_confirm' => 'Це вийде з TryPost у застосунку. Потрібно буде підключитися знову, щоб знову використовувати MCP.',
+    'disconnect_confirm' => 'Це вийде з Posta Studio у застосунку. Потрібно буде підключитися знову, щоб знову використовувати MCP.',
     'disconnected' => 'Застосунок від’єднано.',
     'copied' => 'Скопійовано',
     'last_used' => 'Востаннє використано',
@@ -26,10 +26,10 @@ return [
     'documentation_title' => 'Документація',
     'documentation_description' => 'Гайди клієнтів, доступні tools і усунення несправностей.',
     'view_docs' => 'Відкрити документацію',
-    'connector_name' => 'TryPost',
+    'connector_name' => 'Posta Studio',
 
     'authorize' => [
-        'page_title' => 'Authorize Application - TryPost',
+        'page_title' => 'Authorize Application - Posta Studio',
         'app_title' => 'Authorize MCP',
         'heading' => 'Authorize :client',
         'intro' => 'This application will be able to:',
@@ -45,7 +45,7 @@ return [
         'search_workspace' => 'Search workspaces...',
         'no_workspace_found' => 'No workspace found',
         'scope_mcp_use' => 'Use MCP server',
-        'error_page_title' => 'Помилка авторизації - TryPost',
+        'error_page_title' => 'Помилка авторизації - Posta Studio',
         'error_title' => 'Не вдалося підключитися',
         'error_body' => 'Цей запит на авторизацію недійсний або застарів. Закрийте це вікно й спробуйте підключитися знову з MCP-клієнта.',
         'error_code' => 'Помилка: :error',
@@ -57,7 +57,7 @@ return [
     'clients' => [
         'claude' => 'Відкрийте Settings → Connectors, додайте власний connector і вставте URL вище.',
         'chatgpt' => 'Відкрийте Settings → Apps & Connectors, створіть власний connector і вставте URL вище.',
-        'cursor' => 'Додайте TryPost як віддалений MCP-сервер у Cursor.',
+        'cursor' => 'Додайте Posta Studio як віддалений MCP-сервер у Cursor.',
         'cursor_name' => 'Cursor',
         'vscode' => 'Вставте config нижче в налаштування MCP VS Code.',
         'vscode_name' => 'VS Code',

@@ -48,7 +48,7 @@ function welcomeOwnerOnConnectStep(): User
 }
 
 test('connect step shows the grid and keeps continue disabled without a social account', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $user = welcomeOwnerOnConnectStep();
 
@@ -67,7 +67,7 @@ test('connect step shows the grid and keeps continue disabled without a social a
 });
 
 test('connect step enables continue when a social account is connected', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $user = welcomeOwnerOnConnectStep();
     SocialAccount::factory()->linkedin()->create([
@@ -87,7 +87,7 @@ test('connect step enables continue when a social account is connected', functio
 });
 
 test('connect step can go back to referral', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $user = welcomeOwnerOnConnectStep();
 
@@ -107,7 +107,7 @@ test('connect step can go back to referral', function () {
 });
 
 test('connect step redirects to persona when prior steps are missing', function () {
-    config(['trypost.self_hosted' => false]);
+    config(['postastudio.self_hosted' => false]);
 
     $user = User::factory()->create();
 

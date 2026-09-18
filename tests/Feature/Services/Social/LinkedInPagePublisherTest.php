@@ -47,7 +47,7 @@ beforeEach(function () {
 
 test('linkedin page publisher can publish text-only post', function () {
     Http::fake([
-        config('trypost.platforms.linkedin-page.api').'/rest/posts' => Http::response(null, 201, [
+        config('postastudio.platforms.linkedin-page.api').'/rest/posts' => Http::response(null, 201, [
             'x-restli-id' => 'urn:li:share:1234567890',
         ]),
     ]);
@@ -69,7 +69,7 @@ test('linkedin page publisher can publish text-only post', function () {
 
 test('linkedin page publisher uses organization urn', function () {
     Http::fake([
-        config('trypost.platforms.linkedin-page.api').'/rest/posts' => Http::response(null, 201, [
+        config('postastudio.platforms.linkedin-page.api').'/rest/posts' => Http::response(null, 201, [
             'x-restli-id' => 'urn:li:share:1234567890',
         ]),
     ]);
@@ -94,7 +94,7 @@ test('linkedin page publisher throws exception when organization id missing', fu
 
 test('linkedin page publisher uses correct headers', function () {
     Http::fake([
-        config('trypost.platforms.linkedin-page.api').'/rest/posts' => Http::response(null, 201, [
+        config('postastudio.platforms.linkedin-page.api').'/rest/posts' => Http::response(null, 201, [
             'x-restli-id' => 'urn:li:share:1234567890',
         ]),
     ]);
@@ -111,7 +111,7 @@ test('linkedin page publisher uses correct headers', function () {
 
 test('linkedin page publisher throws exception on api error', function () {
     Http::fake([
-        config('trypost.platforms.linkedin-page.api').'/rest/posts' => Http::response([
+        config('postastudio.platforms.linkedin-page.api').'/rest/posts' => Http::response([
             'message' => 'Invalid request',
             'status' => 400,
         ], 400),
@@ -123,11 +123,11 @@ test('linkedin page publisher throws exception on api error', function () {
 
 test('linkedin page publisher throws token expired exception on auth error after retry', function () {
     Http::fake([
-        config('trypost.platforms.linkedin-page.api').'/rest/posts' => Http::response([
+        config('postastudio.platforms.linkedin-page.api').'/rest/posts' => Http::response([
             'code' => 'EXPIRED_ACCESS_TOKEN',
             'message' => 'The token used in the request has expired',
         ], 401),
-        config('trypost.platforms.linkedin.oauth_api').'/oauth/v2/accessToken' => Http::response([
+        config('postastudio.platforms.linkedin.oauth_api').'/oauth/v2/accessToken' => Http::response([
             'error' => 'invalid_grant',
             'error_description' => 'The refresh token is invalid',
         ], 400),
@@ -141,12 +141,12 @@ test('linkedin page publisher refreshes token when expired', function () {
     $this->socialAccount->update(['token_expires_at' => now()->subHour()]);
 
     Http::fake([
-        config('trypost.platforms.linkedin.oauth_api').'/oauth/v2/accessToken' => Http::response([
+        config('postastudio.platforms.linkedin.oauth_api').'/oauth/v2/accessToken' => Http::response([
             'access_token' => 'new-access-token',
             'refresh_token' => 'new-refresh-token',
             'expires_in' => 5184000,
         ], 200),
-        config('trypost.platforms.linkedin-page.api').'/rest/posts' => Http::response(null, 201, [
+        config('postastudio.platforms.linkedin-page.api').'/rest/posts' => Http::response(null, 201, [
             'x-restli-id' => 'urn:li:share:1234567890',
         ]),
     ]);
@@ -175,7 +175,7 @@ test('linkedin page publisher throws TokenExpiredException when refresh_token is
     $this->socialAccount->update(['token_expires_at' => now()->subHour()]);
 
     Http::fake([
-        config('trypost.platforms.linkedin.oauth_api').'/oauth/v2/accessToken' => Http::response([
+        config('postastudio.platforms.linkedin.oauth_api').'/oauth/v2/accessToken' => Http::response([
             'error' => 'invalid_grant',
             'error_description' => 'The refresh token is invalid',
         ], 400),
@@ -189,7 +189,7 @@ test('linkedin page publisher handles empty content', function () {
     $this->post->update(['content' => '']);
 
     Http::fake([
-        config('trypost.platforms.linkedin-page.api').'/rest/posts' => Http::response(null, 201, [
+        config('postastudio.platforms.linkedin-page.api').'/rest/posts' => Http::response(null, 201, [
             'x-restli-id' => 'urn:li:share:1234567890',
         ]),
     ]);
@@ -207,7 +207,7 @@ test('linkedin page publisher builds feed url from the post id regardless of use
     $this->socialAccount->update(['username' => $username]);
 
     Http::fake([
-        config('trypost.platforms.linkedin-page.api').'/rest/posts' => Http::response(null, 201, [
+        config('postastudio.platforms.linkedin-page.api').'/rest/posts' => Http::response(null, 201, [
             'x-restli-id' => 'urn:li:share:1234567890',
         ]),
     ]);
@@ -222,7 +222,7 @@ test('linkedin page publisher builds feed url from the post id regardless of use
 
 test('linkedin page publisher returns a null url when the response has no post id', function () {
     Http::fake([
-        config('trypost.platforms.linkedin-page.api').'/rest/posts' => Http::response(null, 201),
+        config('postastudio.platforms.linkedin-page.api').'/rest/posts' => Http::response(null, 201),
     ]);
 
     $result = $this->publisher->publish($this->postPlatform);

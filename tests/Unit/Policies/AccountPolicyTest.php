@@ -35,7 +35,7 @@ test('swapPlan denies a non-owner', function () {
 });
 
 test('useAi allows when subscribed and credits remain', function () {
-    config()->set('trypost.self_hosted', false);
+    config()->set('postastudio.self_hosted', false);
     Workspace::factory()->create([
         'account_id' => $this->account->id,
         'user_id' => $this->owner->id,
@@ -48,7 +48,7 @@ test('useAi allows when subscribed and credits remain', function () {
 });
 
 test('useAi denies when there is no active subscription', function () {
-    config()->set('trypost.self_hosted', false);
+    config()->set('postastudio.self_hosted', false);
     Workspace::factory()->create([
         'account_id' => $this->account->id,
         'user_id' => $this->owner->id,
@@ -61,7 +61,7 @@ test('useAi denies when there is no active subscription', function () {
 });
 
 test('useAi denies when monthly credits are exhausted', function () {
-    config()->set('trypost.self_hosted', false);
+    config()->set('postastudio.self_hosted', false);
     $workspace = Workspace::factory()->create([
         'account_id' => $this->account->id,
         'user_id' => $this->owner->id,
@@ -82,7 +82,7 @@ test('useAi denies when monthly credits are exhausted', function () {
 });
 
 test('useAi always allows when self-hosted', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
 
     $response = $this->policy->useAi($this->owner, $this->account);
 

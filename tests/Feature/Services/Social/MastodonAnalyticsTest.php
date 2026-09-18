@@ -22,7 +22,7 @@ beforeEach(function () {
 });
 
 test('mastodon analytics falls back to configured default instance', function () {
-    $defaultInstance = (string) config('trypost.platforms.mastodon.default_instance');
+    $defaultInstance = (string) config('postastudio.platforms.mastodon.default_instance');
 
     Http::fake([
         "{$defaultInstance}/api/v1/statuses/*" => Http::response([

@@ -1,4 +1,4 @@
-# TryPost — self-hosted production stack.
+# Posta Studio — self-hosted production stack.
 #
 #   1. Generate an app key:   docker compose -f compose.prod.yaml run --rm app php artisan key:generate --show
 #      Paste the value into APP_KEY below.
@@ -15,14 +15,14 @@ services:
     restart: unless-stopped
     environment:
       # ===== Required =====
-      APP_NAME: TryPost
+      APP_NAME: Posta Studio
       APP_ENV: production
       APP_DEBUG: "false"
       APP_KEY: ""                       # <- run key:generate (see header) and paste here
       APP_URL: http://localhost:8000    # <- your public URL, e.g. https://post.yourdomain.com
       SELF_HOSTED: "true"
       ALLOW_MULTIPLE_SOCIAL_ACCOUNTS: "true"
-      TRYPOST_TARGET: production
+      POSTASTUDIO_TARGET: production
 
       # ===== Database (bundled postgres service below) =====
       DB_CONNECTION: pgsql
@@ -30,7 +30,7 @@ services:
       DB_PORT: "5432"
       DB_DATABASE: trypost
       DB_USERNAME: trypost
-      DB_PASSWORD: trypost-password     # <- change me (must match POSTGRES_PASSWORD below)
+      DB_PASSWORD: postastudio-password     # <- change me (must match POSTGRES_PASSWORD below)
 
       # ===== Redis / queue / cache / broadcasting =====
       REDIS_HOST: redis
@@ -45,7 +45,7 @@ services:
       # domain, rebuild the image with --build-arg VITE_REVERB_HOST=<domain>
       # VITE_REVERB_PORT=443 VITE_REVERB_SCHEME=https.
       REVERB_APP_ID: "1001"
-      REVERB_APP_KEY: trypost-reverb-key           # must match the key baked into the published image
+      REVERB_APP_KEY: postastudio-reverb-key           # must match the key baked into the published image
       REVERB_APP_SECRET: change-me-reverb-secret   # <- change me
       REVERB_HOST: localhost
       REVERB_PORT: "8080"
@@ -84,7 +84,7 @@ services:
       # for real password-reset / team-invite emails.
       MAIL_MAILER: log
       MAIL_FROM_ADDRESS: hello@example.com
-      MAIL_FROM_NAME: TryPost
+      MAIL_FROM_NAME: Posta Studio
       # MAIL_MAILER: smtp
       # MAIL_HOST: ""
       # MAIL_PORT: "587"
@@ -130,12 +130,12 @@ services:
 
   pgsql:
     image: postgres:16-alpine
-    container_name: trypost-pgsql
+    container_name: postastudio-pgsql
     restart: unless-stopped
     environment:
       POSTGRES_DB: trypost
       POSTGRES_USER: trypost
-      POSTGRES_PASSWORD: trypost-password   # <- must match DB_PASSWORD above
+      POSTGRES_PASSWORD: postastudio-password   # <- must match DB_PASSWORD above
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -146,7 +146,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: trypost-redis
+    container_name: postastudio-redis
     restart: unless-stopped
     command: redis-server --appendonly yes
     volumes:
@@ -166,7 +166,7 @@ services:
   # Without the profile, the app is served directly on http://localhost:8000.
   caddy:
     image: caddy:2-alpine
-    container_name: trypost-caddy
+    container_name: postastudio-caddy
     restart: unless-stopped
     profiles: [proxy]
     environment:

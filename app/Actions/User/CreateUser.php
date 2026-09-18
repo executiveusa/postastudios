@@ -25,7 +25,7 @@ class CreateUser
         $isInviteRegistration = (bool) data_get($data, 'is_invite', false);
 
         $user = DB::transaction(function () use ($data, $attributionParameters, $isInviteRegistration): User {
-            $requiresCardForTrial = (bool) config('trypost.billing.require_card_for_trial', true);
+            $requiresCardForTrial = (bool) config('postastudio.billing.require_card_for_trial', true);
             $accountAttributes = [
                 'name' => data_get($data, 'name')."'s Account",
                 'billing_email' => data_get($data, 'email'),

@@ -22,7 +22,7 @@ class TelegramWebhookController extends Controller
      */
     public function handle(Request $request): Response
     {
-        $secret = (string) config('trypost.platforms.telegram.webhook_secret');
+        $secret = (string) config('postastudio.platforms.telegram.webhook_secret');
 
         abort_if(
             $secret === '' || ! hash_equals($secret, (string) $request->header('X-Telegram-Bot-Api-Secret-Token')),

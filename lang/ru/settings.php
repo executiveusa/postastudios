@@ -149,7 +149,7 @@ return [
         'delete_only_description' => 'Вы не можете удалить свой единственный workspace. Отмените подписку в разделе оплаты, чтобы перестать платить, или удалите аккаунт в Аутентификации, чтобы отменить оплату и навсегда удалить всё.',
         'delete_go_to_billing' => 'Перейти к оплате',
         'delete_go_to_delete_account' => 'Удалить аккаунт',
-        'delete_members_warning' => '{1}:count другой участник потеряет доступ. Участники без другого workspace в TryPost будут удалены навсегда.|[2,*]:count других участников потеряют доступ. Участники без другого workspace в TryPost будут удалены навсегда.',
+        'delete_members_warning' => '{1}:count другой участник потеряет доступ. Участники без другого workspace в Posta Studio будут удалены навсегда.|[2,*]:count других участников потеряют доступ. Участники без другого workspace в Posta Studio будут удалены навсегда.',
         'delete_action' => 'Удалить workspace',
         'delete_cancel' => 'Отмена',
         'delete_confirm_title' => 'Удалить workspace?',
@@ -292,7 +292,7 @@ return [
 
         'errors' => [
             'invite_exists' => 'Для этого e-mail уже существует приглашение.',
-            'email_belongs_to_account' => 'Этот e-mail уже принадлежит другому аккаунту TryPost. Попросите выделенный рабочий e-mail.',
+            'email_belongs_to_account' => 'Этот e-mail уже принадлежит другому аккаунту Posta Studio. Попросите выделенный рабочий e-mail.',
         ],
 
         'flash' => [

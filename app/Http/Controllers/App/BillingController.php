@@ -21,7 +21,7 @@ class BillingController extends Controller
 
     public function processing(Request $request): Response|RedirectResponse
     {
-        if (config('trypost.self_hosted')) {
+        if (config('postastudio.self_hosted')) {
             return redirect()->route('app.calendar');
         }
 
@@ -40,7 +40,7 @@ class BillingController extends Controller
 
     public function index(Request $request): Response|RedirectResponse
     {
-        if (config('trypost.self_hosted')) {
+        if (config('postastudio.self_hosted')) {
             return redirect()->route('app.calendar');
         }
 
@@ -73,7 +73,7 @@ class BillingController extends Controller
 
     public function swapToYearly(Request $request): RedirectResponse
     {
-        if (config('trypost.self_hosted')) {
+        if (config('postastudio.self_hosted')) {
             return redirect()->route('app.calendar');
         }
 
@@ -109,7 +109,7 @@ class BillingController extends Controller
 
     public function portal(Request $request): RedirectResponse
     {
-        if (config('trypost.self_hosted')) {
+        if (config('postastudio.self_hosted')) {
             return redirect()->route('app.calendar');
         }
 

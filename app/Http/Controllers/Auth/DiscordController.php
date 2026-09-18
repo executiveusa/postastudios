@@ -23,7 +23,7 @@ class DiscordController extends SocialController
 
         $this->authorize('manageAccounts', $workspace);
 
-        return $this->redirectToProvider($request, $this->driver, config('trypost.platforms.discord.scopes'));
+        return $this->redirectToProvider($request, $this->driver, config('postastudio.platforms.discord.scopes'));
     }
 
     public function callback(Request $request): InertiaResponse

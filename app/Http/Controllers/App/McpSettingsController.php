@@ -21,7 +21,7 @@ class McpSettingsController extends Controller
         $this->authorize('view', $workspace);
 
         return Inertia::render('settings/workspace/Mcp', [
-            'mcpUrl' => route('mcp.trypost'),
+            'mcpUrl' => route('mcp.postastudio'),
             'connectedClients' => ListConnectedMcpClients::forUser($user, $workspace),
         ]);
     }

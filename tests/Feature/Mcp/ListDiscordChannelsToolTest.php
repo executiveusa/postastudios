@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\SocialAccount\Platform;
 use App\Enums\UserWorkspace\Role;
-use App\Mcp\Servers\TryPostServer;
+use App\Mcp\Servers\PostaStudioServer;
 use App\Mcp\Tools\SocialAccount\ListDiscordChannelsTool;
 use App\Models\SocialAccount;
 use App\Models\User;
@@ -16,7 +16,7 @@ use Illuminate\Testing\Fluent\AssertableJson;
 beforeEach(function () {
     Cache::flush();
     config([
-        'trypost.platforms.discord.bot_token' => 'BOTTOKEN',
+        'postastudio.platforms.discord.bot_token' => 'BOTTOKEN',
         'services.discord.client_id' => '999000111',
     ]);
 
@@ -33,17 +33,17 @@ test('lists discord channels as id and name', function () {
     ]);
 
     Http::fake([
-        config('trypost.platforms.discord.api').'/guilds/111222333/channels' => Http::response([
+        config('postastudio.platforms.discord.api').'/guilds/111222333/channels' => Http::response([
             ['id' => '1', 'name' => 'general', 'type' => 0],
             ['id' => '2', 'name' => 'voice', 'type' => 2],
         ], 200),
-        config('trypost.platforms.discord.api').'/guilds/111222333/roles' => Http::response([
+        config('postastudio.platforms.discord.api').'/guilds/111222333/roles' => Http::response([
             ['id' => '111222333', 'name' => '@everyone', 'permissions' => '3072'],
         ], 200),
-        config('trypost.platforms.discord.api').'/guilds/111222333/members/999000111' => Http::response(['roles' => []], 200),
+        config('postastudio.platforms.discord.api').'/guilds/111222333/members/999000111' => Http::response(['roles' => []], 200),
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(ListDiscordChannelsTool::class, ['account_id' => $account->id]);
 
     $response->assertOk()
@@ -61,10 +61,10 @@ test('returns an actionable error when discord is unavailable', function () {
     ]);
 
     Http::fake([
-        config('trypost.platforms.discord.api').'/guilds/111222333/channels' => Http::response('upstream down', 500),
+        config('postastudio.platforms.discord.api').'/guilds/111222333/channels' => Http::response('upstream down', 500),
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(ListDiscordChannelsTool::class, ['account_id' => $account->id]);
 
     $response->assertHasErrors(['Discord channel lookup failed (500).']);
@@ -76,7 +76,7 @@ test('rejects non-discord accounts', function () {
         'platform' => Platform::LinkedIn,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(ListDiscordChannelsTool::class, ['account_id' => $account->id]);
 
     $response->assertHasErrors(['This tool only works with Discord social accounts.']);
@@ -88,7 +88,7 @@ test('cannot list channels for another workspace account', function () {
         'workspace_id' => $otherWorkspace->id,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(ListDiscordChannelsTool::class, ['account_id' => $account->id]);
 
     $response->assertHasErrors(['Social account not found.']);

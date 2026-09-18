@@ -11,11 +11,11 @@ use Laravel\Socialite\Two\User as SocialiteUser;
 
 test('login page displays the wrong-invite-email error flashed from the oauth callback', function () {
     config([
-        'trypost.self_hosted' => false,
-        'trypost.google_auth_enabled' => true,
+        'postastudio.self_hosted' => false,
+        'postastudio.google_auth_enabled' => true,
         'services.google-auth.client_id' => 'test-client-id',
         'services.google-auth.client_secret' => 'test-client-secret',
-        'services.google-auth.redirect' => 'https://app.trypost.test/auth/google/callback',
+        'services.google-auth.redirect' => 'https://app.postastudio.test/auth/google/callback',
     ]);
 
     $inviterAccount = Account::factory()->create();

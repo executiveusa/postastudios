@@ -20,7 +20,7 @@ class PinterestAnalytics
 
     public function __construct()
     {
-        $this->baseUrl = config('trypost.platforms.pinterest.api');
+        $this->baseUrl = config('postastudio.platforms.pinterest.api');
     }
 
     private string $accessToken;

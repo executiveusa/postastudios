@@ -16,7 +16,7 @@ test('login screen can be rendered', function () {
 });
 
 test('login page exposes selfHosted as false when SELF_HOSTED is off', function () {
-    config()->set('trypost.self_hosted', false);
+    config()->set('postastudio.self_hosted', false);
 
     $response = $this->get(route('login'));
 
@@ -26,7 +26,7 @@ test('login page exposes selfHosted as false when SELF_HOSTED is off', function 
 });
 
 test('login page exposes selfHosted as true when SELF_HOSTED is on', function () {
-    config()->set('trypost.self_hosted', true);
+    config()->set('postastudio.self_hosted', true);
 
     $response = $this->get(route('login'));
 
@@ -36,8 +36,8 @@ test('login page exposes selfHosted as true when SELF_HOSTED is on', function ()
 });
 
 test('login page exposes allowMultipleSocialAccounts independently of selfHosted', function () {
-    config()->set('trypost.self_hosted', false);
-    config()->set('trypost.allow_multiple_social_accounts', true);
+    config()->set('postastudio.self_hosted', false);
+    config()->set('postastudio.allow_multiple_social_accounts', true);
 
     $response = $this->get(route('login'));
 

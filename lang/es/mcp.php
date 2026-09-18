@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 return [
     'title' => 'MCP',
-    'subtitle' => 'Conecta asistentes de IA a tu workspace de TryPost. Usan los mismos permisos que cada usuario conectado.',
-    'copy_step' => 'Copia la URL del servidor TryPost',
+    'subtitle' => 'Conecta asistentes de IA a tu workspace de Posta Studio. Usan los mismos permisos que cada usuario conectado.',
+    'copy_step' => 'Copia la URL del servidor Posta Studio',
     'open_step' => 'Abre tu asistente de IA',
     'copy' => 'Copiar URL',
     'connect' => 'Conectar :client',
@@ -18,7 +18,7 @@ return [
     'connected_empty' => 'Nada conectado aún. Usa Claude, ChatGPT u otro cliente arriba.',
     'disconnect' => 'Desconectar',
     'disconnect_title' => 'Desconectar app',
-    'disconnect_confirm' => 'Esto cierra la sesión de la app en TryPost. Tendrá que reconectar para usar MCP otra vez.',
+    'disconnect_confirm' => 'Esto cierra la sesión de la app en Posta Studio. Tendrá que reconectar para usar MCP otra vez.',
     'disconnected' => 'App desconectada.',
     'copied' => 'Copiado',
     'last_used' => 'Último uso',
@@ -26,10 +26,10 @@ return [
     'documentation_title' => 'Documentación',
     'documentation_description' => 'Guías por cliente, tools disponibles y solución de problemas.',
     'view_docs' => 'Ver documentación',
-    'connector_name' => 'TryPost',
+    'connector_name' => 'Posta Studio',
 
     'authorize' => [
-        'page_title' => 'Authorize Application - TryPost',
+        'page_title' => 'Authorize Application - Posta Studio',
         'app_title' => 'Authorize MCP',
         'heading' => 'Authorize :client',
         'intro' => 'This application will be able to:',
@@ -45,7 +45,7 @@ return [
         'search_workspace' => 'Search workspaces...',
         'no_workspace_found' => 'No workspace found',
         'scope_mcp_use' => 'Use MCP server',
-        'error_page_title' => 'Error de autorización - TryPost',
+        'error_page_title' => 'Error de autorización - Posta Studio',
         'error_title' => 'No se pudo conectar',
         'error_body' => 'Esta solicitud de autorización no es válida o ha caducado. Cierra esta ventana e intenta conectar de nuevo desde tu cliente MCP.',
         'error_code' => 'Error: :error',
@@ -57,7 +57,7 @@ return [
     'clients' => [
         'claude' => 'Abre Settings → Connectors, añade un conector personalizado y pega la URL de arriba.',
         'chatgpt' => 'Abre Settings → Apps & Connectors, crea un conector personalizado y pega la URL de arriba.',
-        'cursor' => 'Añade TryPost como servidor MCP remoto en Cursor.',
+        'cursor' => 'Añade Posta Studio como servidor MCP remoto en Cursor.',
         'cursor_name' => 'Cursor',
         'vscode' => 'Pega la configuración de abajo en los ajustes MCP de VS Code.',
         'vscode_name' => 'VS Code',

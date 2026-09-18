@@ -12,8 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 beforeEach(function () {
     config([
-        'trypost.self_hosted' => false,
-        'trypost.billing.require_card_for_trial' => true,
+        'postastudio.self_hosted' => false,
+        'postastudio.billing.require_card_for_trial' => true,
     ]);
 
     $result = createApiTestToken();
@@ -54,7 +54,7 @@ test('rejects a personal access token after its stored expiration', function () 
 });
 
 test('allows api requests for generic-trial accounts with app access', function () {
-    config(['trypost.billing.require_card_for_trial' => false]);
+    config(['postastudio.billing.require_card_for_trial' => false]);
 
     $this->user->account->update([
         'trial_ends_at' => now()->addDays(8),
@@ -69,7 +69,7 @@ test('allows api requests for generic-trial accounts with app access', function 
 });
 
 test('allows personal access tokens without a subscription in self-hosted mode', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     expect($this->user->account->subscribed(Account::SUBSCRIPTION_NAME))->toBeFalse();
 
@@ -79,14 +79,14 @@ test('allows personal access tokens without a subscription in self-hosted mode',
 });
 
 test('allows scoped mcp oauth without a subscription in self-hosted mode', function () {
-    config(['trypost.self_hosted' => true]);
+    config(['postastudio.self_hosted' => true]);
 
     $issued = mcpBearerToken($this->user, $this->workspace);
 
     $this->withHeaders([
         'Authorization' => "Bearer {$issued['plain_token']}",
         'Accept' => 'application/json, text/event-stream',
-    ])->postJson(route('mcp.trypost'), [
+    ])->postJson(route('mcp.postastudio'), [
         'jsonrpc' => '2.0',
         'id' => 1,
         'method' => 'initialize',
@@ -180,7 +180,7 @@ test('rejects personal access tokens on the mcp endpoint', function () {
     $this->withHeaders([
         'Authorization' => 'Bearer '.$this->plainToken,
         'Accept' => 'application/json, text/event-stream',
-    ])->postJson(route('mcp.trypost'), [
+    ])->postJson(route('mcp.postastudio'), [
         'jsonrpc' => '2.0',
         'id' => 1,
         'method' => 'initialize',
@@ -206,7 +206,7 @@ test('rejects oauth grants without the mcp scope on the mcp endpoint', function 
     $this->withHeaders([
         'Authorization' => "Bearer {$issued['plain_token']}",
         'Accept' => 'application/json, text/event-stream',
-    ])->postJson(route('mcp.trypost'), [
+    ])->postJson(route('mcp.postastudio'), [
         'jsonrpc' => '2.0',
         'id' => 1,
         'method' => 'initialize',
@@ -230,7 +230,7 @@ test('allows scoped oauth grants for workspace members on the mcp endpoint', fun
     $this->withHeaders([
         'Authorization' => "Bearer {$issued['plain_token']}",
         'Accept' => 'application/json, text/event-stream',
-    ])->postJson(route('mcp.trypost'), [
+    ])->postJson(route('mcp.postastudio'), [
         'jsonrpc' => '2.0',
         'id' => 1,
         'method' => 'initialize',
@@ -254,7 +254,7 @@ test('allows scoped oauth grants for workspace viewers on the mcp endpoint', fun
     $this->withHeaders([
         'Authorization' => "Bearer {$issued['plain_token']}",
         'Accept' => 'application/json, text/event-stream',
-    ])->postJson(route('mcp.trypost'), [
+    ])->postJson(route('mcp.postastudio'), [
         'jsonrpc' => '2.0',
         'id' => 1,
         'method' => 'initialize',
@@ -308,7 +308,7 @@ test('rejects mcp oauth without a bound workspace', function () {
     $this->withHeaders([
         'Authorization' => "Bearer {$issued['plain_token']}",
         'Accept' => 'application/json, text/event-stream',
-    ])->postJson(route('mcp.trypost'), [
+    ])->postJson(route('mcp.postastudio'), [
         'jsonrpc' => '2.0',
         'id' => 1,
         'method' => 'initialize',
@@ -349,7 +349,7 @@ test('mcp oauth uses its bound workspace even when the user switched current wor
     $this->withHeaders([
         'Authorization' => "Bearer {$issued['plain_token']}",
         'Accept' => 'application/json, text/event-stream',
-    ])->postJson(route('mcp.trypost'), $payload)->assertSuccessful();
+    ])->postJson(route('mcp.postastudio'), $payload)->assertSuccessful();
 
     expect($this->user->fresh()->current_workspace_id)->toBe($otherWorkspace->id);
     expect($issued['token']->fresh()->workspace_id)->toBe($this->workspace->id);
@@ -385,12 +385,12 @@ test('same mcp client can stay connected to two workspaces independently', funct
     $this->withHeaders([
         'Authorization' => "Bearer {$onA['plain_token']}",
         'Accept' => 'application/json, text/event-stream',
-    ])->postJson(route('mcp.trypost'), $payload)->assertSuccessful();
+    ])->postJson(route('mcp.postastudio'), $payload)->assertSuccessful();
 
     $this->withHeaders([
         'Authorization' => "Bearer {$onB['plain_token']}",
         'Accept' => 'application/json, text/event-stream',
-    ])->postJson(route('mcp.trypost'), $payload)->assertSuccessful();
+    ])->postJson(route('mcp.postastudio'), $payload)->assertSuccessful();
 
     expect($onA['token']->fresh()->revoked)->toBeFalse()
         ->and($onA['token']->fresh()->workspace_id)->toBe($this->workspace->id)
@@ -411,7 +411,7 @@ test('rejects mcp oauth bound to a workspace the user no longer belongs to', fun
     $this->withHeaders([
         'Authorization' => "Bearer {$issued['plain_token']}",
         'Accept' => 'application/json, text/event-stream',
-    ])->postJson(route('mcp.trypost'), [
+    ])->postJson(route('mcp.postastudio'), [
         'jsonrpc' => '2.0',
         'id' => 1,
         'method' => 'initialize',
@@ -469,7 +469,7 @@ test('rejects an expired mcp oauth grant on the mcp endpoint', function () {
     $this->withHeaders([
         'Authorization' => "Bearer {$issued['plain_token']}",
         'Accept' => 'application/json, text/event-stream',
-    ])->postJson(route('mcp.trypost'), [
+    ])->postJson(route('mcp.postastudio'), [
         'jsonrpc' => '2.0',
         'id' => 1,
         'method' => 'initialize',

@@ -664,7 +664,7 @@ test('pinterest publisher can get boards', function () {
 
 test('pinterest publisher paginates boards via bookmark', function () {
     Http::fake([
-        config('trypost.platforms.pinterest.api').'/boards*' => Http::sequence()
+        config('postastudio.platforms.pinterest.api').'/boards*' => Http::sequence()
             ->push([
                 'items' => [
                     ['id' => 'board_1', 'name' => 'Board 1'],
@@ -697,7 +697,7 @@ test('pinterest publisher paginates boards via bookmark', function () {
 
 test('pinterest publisher stops board pagination on a repeated bookmark', function () {
     Http::fake([
-        config('trypost.platforms.pinterest.api').'/boards*' => Http::sequence()
+        config('postastudio.platforms.pinterest.api').'/boards*' => Http::sequence()
             ->push([
                 'items' => [['id' => 'board_1', 'name' => 'Board 1']],
                 'bookmark' => 'stuck',
@@ -780,7 +780,7 @@ test('pinterest publisher can publish video pin', function () {
     expect($result['id'])->toBe('video_pin_999');
     expect($result['url'])->toBe('https://pinterest.com/pin/video_pin_999');
 
-    Http::assertSent(fn ($request) => $request->url() === config('trypost.platforms.pinterest.api').'/pins'
+    Http::assertSent(fn ($request) => $request->url() === config('postastudio.platforms.pinterest.api').'/pins'
         && data_get($request->data(), 'media_source.source_type') === 'video_id'
         && data_get($request->data(), 'media_source.cover_image_key_frame_time') === 0);
 });
@@ -838,7 +838,7 @@ test('pinterest publisher includes title description and link on video pins', fu
 
     $this->publisher->publish($this->postPlatform->fresh());
 
-    Http::assertSent(fn ($request) => $request->url() === config('trypost.platforms.pinterest.api').'/pins'
+    Http::assertSent(fn ($request) => $request->url() === config('postastudio.platforms.pinterest.api').'/pins'
         && data_get($request->data(), 'title') === 'Video Title'
         && data_get($request->data(), 'description') === 'Video pin caption'
         && data_get($request->data(), 'link') === 'https://example.com/video'
@@ -932,7 +932,7 @@ test('pinterest video pin uses the provided cover image url over the default fra
 
     $this->publisher->publish($this->postPlatform);
 
-    Http::assertSent(fn ($request) => $request->url() === config('trypost.platforms.pinterest.api').'/pins'
+    Http::assertSent(fn ($request) => $request->url() === config('postastudio.platforms.pinterest.api').'/pins'
         && data_get($request->data(), 'media_source.cover_image_url') === 'https://example.com/cover.jpg'
         && data_get($request->data(), 'media_source.cover_image_key_frame_time') === null);
 });

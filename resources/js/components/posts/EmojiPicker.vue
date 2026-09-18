@@ -5,7 +5,7 @@ import { computed, nextTick, onBeforeUnmount, ref, useTemplateRef, watch } from 
 import { Input } from '@/components/ui/input';
 import { CATEGORY_ICON, EMOJIS, EMOJI_CATEGORIES, type Emoji, type EmojiCategory } from '@/data/emojis';
 
-const RECENTS_KEY = 'trypost.emoji.recents';
+const RECENTS_KEY = 'postastudio.emoji.recents';
 const RECENTS_MAX = 24;
 
 const emit = defineEmits<{

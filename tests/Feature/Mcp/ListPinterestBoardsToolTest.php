@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\SocialAccount\Platform;
 use App\Enums\UserWorkspace\Role;
-use App\Mcp\Servers\TryPostServer;
+use App\Mcp\Servers\PostaStudioServer;
 use App\Mcp\Tools\SocialAccount\ListPinterestBoardsTool;
 use App\Models\SocialAccount;
 use App\Models\User;
@@ -26,7 +26,7 @@ test('lists pinterest boards as id and name', function () {
     ]);
 
     Http::fake([
-        config('trypost.platforms.pinterest.api').'/boards*' => Http::response([
+        config('postastudio.platforms.pinterest.api').'/boards*' => Http::response([
             'items' => [
                 ['id' => 'board_1', 'name' => 'Ideas', 'privacy' => 'PUBLIC'],
                 ['id' => 'board_2', 'name' => 'Product'],
@@ -34,7 +34,7 @@ test('lists pinterest boards as id and name', function () {
         ], 200),
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(ListPinterestBoardsTool::class, ['account_id' => $account->id]);
 
     $response->assertOk()
@@ -55,12 +55,12 @@ test('returns an actionable error when pinterest token is expired', function () 
     ]);
 
     Http::fake([
-        config('trypost.platforms.pinterest.api').'/boards*' => Http::response([
+        config('postastudio.platforms.pinterest.api').'/boards*' => Http::response([
             'message' => 'Access token has expired or been revoked',
         ], 401),
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(ListPinterestBoardsTool::class, ['account_id' => $account->id]);
 
     $response->assertHasErrors(['Access token has expired or been revoked']);
@@ -72,7 +72,7 @@ test('rejects non-pinterest accounts', function () {
         'platform' => Platform::LinkedIn,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(ListPinterestBoardsTool::class, ['account_id' => $account->id]);
 
     $response->assertHasErrors(['This tool only works with Pinterest social accounts.']);
@@ -84,14 +84,14 @@ test('cannot list boards for another workspace account', function () {
         'workspace_id' => $otherWorkspace->id,
     ]);
 
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(ListPinterestBoardsTool::class, ['account_id' => $account->id]);
 
     $response->assertHasErrors(['Social account not found.']);
 });
 
 test('validates account_id is required', function () {
-    $response = TryPostServer::actingAs($this->user)
+    $response = PostaStudioServer::actingAs($this->user)
         ->tool(ListPinterestBoardsTool::class, []);
 
     $response->assertHasErrors();

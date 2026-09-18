@@ -6,11 +6,11 @@ return [
     'throttle' => 'Demasiados intentos de inicio de sesión. Inténtalo de nuevo en :seconds segundos.',
 
     'flash' => [
-        'welcome' => '¡Bienvenido a TryPost!',
-        'welcome_trial' => '¡Bienvenido a TryPost! Tu prueba ha comenzado.',
+        'welcome' => '¡Bienvenido a Posta Studio!',
+        'welcome_trial' => '¡Bienvenido a Posta Studio! Tu prueba ha comenzado.',
     ],
 
-    'legal' => 'Al continuar, aceptas nuestros <a href="https://trypost.it/terms" target="_blank">Términos de Servicio</a> y <a href="https://trypost.it/privacy" target="_blank">Política de Privacidad</a>.',
+    'legal' => 'Al continuar, aceptas nuestros <a href="https://postastudios.com/terms" target="_blank">Términos de Servicio</a> y <a href="https://postastudios.com/privacy" target="_blank">Política de Privacidad</a>.',
 
     'slides' => [
         'calendar' => [

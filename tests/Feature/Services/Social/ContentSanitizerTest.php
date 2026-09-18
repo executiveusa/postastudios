@@ -103,6 +103,6 @@ test('it drops anchors without an href for telegram', function () {
 
 test('it preserves @username mentions as plain text for telegram', function () {
     $sanitizer = new ContentSanitizer;
-    $result = $sanitizer->sanitize('<p>Hey @durov and @TryPostBot</p>', Platform::Telegram);
-    expect($result)->toBe('Hey @durov and @TryPostBot');
+    $result = $sanitizer->sanitize('<p>Hey @durov and @Posta StudioBot</p>', Platform::Telegram);
+    expect($result)->toBe('Hey @durov and @Posta StudioBot');
 });

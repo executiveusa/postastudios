@@ -7,8 +7,8 @@ use App\Enums\Plan\Slug;
 use Database\Seeders\PlanSeeder;
 
 beforeEach(function () {
-    config(['trypost.self_hosted' => false]);
-    config(['trypost.billing.require_card_for_trial' => true]);
+    config(['postastudio.self_hosted' => false]);
+    config(['postastudio.billing.require_card_for_trial' => true]);
     $this->seed(PlanSeeder::class);
 });
 
@@ -26,7 +26,7 @@ test('new signup does not create a trial before checkout', function () {
 });
 
 test('new signup creates generic trial when card is not required', function () {
-    config(['trypost.billing.require_card_for_trial' => false]);
+    config(['postastudio.billing.require_card_for_trial' => false]);
 
     $user = CreateUser::execute([
         'name' => 'Alice',

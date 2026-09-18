@@ -64,7 +64,7 @@ class LoadWorkspaceFromToken
 
         // Match web access (EnsureAccountReady): Stripe subscription OR generic
         // no-card trial when REQUIRE_CARD_FOR_TRIAL is disabled.
-        if (! config('trypost.self_hosted') && ! $workspace->account?->hasAppAccess()) {
+        if (! config('postastudio.self_hosted') && ! $workspace->account?->hasAppAccess()) {
             return response()->json(['message' => 'Active subscription required.'], Response::HTTP_PAYMENT_REQUIRED);
         }
 

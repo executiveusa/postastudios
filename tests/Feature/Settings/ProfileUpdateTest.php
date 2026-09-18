@@ -246,7 +246,7 @@ test('delete account requires authentication', function () {
 });
 
 test('member deleting profile does NOT destroy the shared account', function (bool $selfHosted) {
-    config()->set('trypost.self_hosted', $selfHosted);
+    config()->set('postastudio.self_hosted', $selfHosted);
 
     $owner = User::factory()->create();
     $member = User::factory()->create(['account_id' => $owner->account_id]);
@@ -289,7 +289,7 @@ test('member deleting profile does not delete shared workspaces they created', f
 });
 
 test('member deleting profile detaches them from workspaces', function (bool $selfHosted) {
-    config()->set('trypost.self_hosted', $selfHosted);
+    config()->set('postastudio.self_hosted', $selfHosted);
 
     $owner = User::factory()->create();
     $member = User::factory()->create(['account_id' => $owner->account_id]);
@@ -327,7 +327,7 @@ test('owner deleting profile deletes remaining members of the account', function
 });
 
 test('owner deleting profile destroys the account and cascades', function (bool $selfHosted) {
-    config()->set('trypost.self_hosted', $selfHosted);
+    config()->set('postastudio.self_hosted', $selfHosted);
 
     $owner = User::factory()->create();
     $accountId = $owner->account_id;
