@@ -45,6 +45,16 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->report(function (Throwable $e): void {
+            error_log(sprintf(
+                '[posta-runtime] %s: %s in %s:%d',
+                $e::class,
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine(),
+            ));
+        });
+
         $exceptions->dontReportWhen(function (Throwable $e) {
             return $e instanceof OAuthServerException && $e->getHttpStatusCode() < 500;
         });
