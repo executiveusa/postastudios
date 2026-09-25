@@ -1,0 +1,12 @@
+[build]
+  command = "mkdir -p netlify-dist"
+  publish = "netlify-dist"
+
+[build.environment]
+  COMPOSER_IGNORE_PLATFORM_REQS = "1"
+
+[[redirects]]
+  from = "/*"
+  to = "https://postastudios-the-pauli-effect.vercel.app/:splat"
+  status = 302
+  force = true
