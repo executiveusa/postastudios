@@ -5,6 +5,10 @@ declare(strict_types=1);
 use App\Enums\SocialAccount\Platform;
 use Illuminate\Support\Str;
 
+// Self-hosted installs run on a single small container, so keep Horizon
+// worker counts fixed and tiny there. Cloud production keeps autoscaling.
+$selfHosted = env('SELF_HOSTED', true);
+
 return [
 
     /*
@@ -275,25 +279,25 @@ return [
     'environments' => [
         'production' => [
             'supervisor-1' => [
-                'maxProcesses' => 10,
+                'maxProcesses' => env('HORIZON_MAX_PROCESSES_DEFAULT', $selfHosted ? 2 : 10),
                 'balanceMaxShift' => 1,
                 'balanceCooldown' => 3,
             ],
 
             'social-publishing' => [
-                'maxProcesses' => 10,
+                'maxProcesses' => env('HORIZON_MAX_PROCESSES_SOCIAL', $selfHosted ? 2 : 10),
                 'balanceMaxShift' => 1,
                 'balanceCooldown' => 3,
             ],
 
             'ai-assistant' => [
-                'maxProcesses' => 5,
+                'maxProcesses' => env('HORIZON_MAX_PROCESSES_AI', $selfHosted ? 1 : 5),
                 'balanceMaxShift' => 1,
                 'balanceCooldown' => 3,
             ],
 
             'automations' => [
-                'maxProcesses' => 5,
+                'maxProcesses' => env('HORIZON_MAX_PROCESSES_AUTOMATIONS', $selfHosted ? 1 : 5),
                 'balanceMaxShift' => 1,
                 'balanceCooldown' => 3,
             ],
