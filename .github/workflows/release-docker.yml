@@ -152,6 +152,33 @@ jobs:
           cache-to: type=gha,mode=max,scope=linux-amd64
           outputs: type=docker,dest=/tmp/postastudios-amd64.tar
 
+      - name: Verify self-hosted Horizon supervisor plan in built image
+        run: |
+          set -euo pipefail
+          LOAD_OUT=$(docker load -i /tmp/postastudios-amd64.tar)
+          echo "$LOAD_OUT"
+          IMAGE_ID=$(echo "$LOAD_OUT" | sed -n 's/^Loaded image ID: //p; s/^Loaded image: //p' | head -1)
+          if [ -z "$IMAGE_ID" ]; then
+            echo "::error::Could not determine loaded image id"
+            exit 1
+          fi
+          OUT=$(docker run --rm             -e APP_ENV=production             -e SELF_HOSTED=true             -e APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=             --entrypoint php "$IMAGE_ID"             /var/www/html/artisan tinker --execute='
+              $d = config("horizon.defaults");
+              $e = config("horizon.environments.production");
+              echo "PLAN=" . json_encode([
+                "defaults" => array_keys($d),
+                "production" => array_keys($e ?? []),
+                "balance" => $d["supervisor-1"]["balance"] ?? null,
+                "maxProcesses" => $d["supervisor-1"]["maxProcesses"] ?? null,
+                "queueCount" => count($d["supervisor-1"]["queue"] ?? []),
+              ]) . PHP_EOL;')
+          echo "$OUT"
+          PLAN=$(echo "$OUT" | grep '^PLAN=' | tail -1)
+          echo "$PLAN" | grep -q '"defaults":\["supervisor-1"\]' || { echo "::error::self-hosted defaults must contain only supervisor-1"; exit 1; }
+          echo "$PLAN" | grep -q '"balance":"simple"' || { echo "::error::self-hosted balance must be simple"; exit 1; }
+          echo "$PLAN" | grep -q '"maxProcesses":2' || { echo "::error::self-hosted maxProcesses must default to 2"; exit 1; }
+          echo "Self-hosted Horizon plan verified: 1 supervisor, balance=simple, maxProcesses=2"
+
       - name: Upload image tar artifact
         uses: actions/upload-artifact@v7
         with:

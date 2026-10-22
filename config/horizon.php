@@ -5,9 +5,153 @@ declare(strict_types=1);
 use App\Enums\SocialAccount\Platform;
 use Illuminate\Support\Str;
 
-// Self-hosted installs run on a single small container, so keep Horizon
-// worker counts fixed and tiny there. Cloud production keeps autoscaling.
+// Self-hosted runs the whole stack in one small container. A single
+// supervisor with simple balancing spawns exactly maxProcesses workers
+// total. Do NOT use balance=auto here: it creates one process pool per
+// queue with at least minProcesses workers each, so N queues spawn at
+// least N workers no matter how low maxProcesses is (the social-publishing
+// supervisor alone listens on 7 platform queues).
 $selfHosted = env('SELF_HOSTED', true);
+
+if ($selfHosted) {
+    $supervisors = [
+        'supervisor-1' => [
+            'connection' => 'redis',
+            'queue' => array_merge(
+                ['default', 'posthog', 'broadcasts', 'ai', 'automations'],
+                Platform::allQueues()
+            ),
+            'balance' => 'simple',
+            'minProcesses' => 1,
+            'maxProcesses' => (int) env('HORIZON_MAX_PROCESSES', 2),
+            'maxTime' => 0,
+            'maxJobs' => 0,
+            'memory' => 256,
+            'tries' => 1,
+            'timeout' => 930,
+            'nice' => 0,
+        ],
+    ];
+
+    $environments = [
+        'production' => [
+            'supervisor-1' => [],
+        ],
+
+        'local' => [
+            'supervisor-1' => [
+                'maxProcesses' => 1,
+            ],
+        ],
+    ];
+} else {
+    $supervisors = [
+        'supervisor-1' => [
+            'connection' => 'redis',
+            'queue' => ['default', 'posthog', 'broadcasts'],
+            'balance' => 'auto',
+            'autoScalingStrategy' => 'time',
+            'maxProcesses' => 1,
+            'maxTime' => 0,
+            'maxJobs' => 0,
+            'memory' => 128,
+            'tries' => 1,
+            'timeout' => 630,
+            'nice' => 0,
+        ],
+
+        'social-publishing' => [
+            'connection' => 'redis',
+            'queue' => Platform::allQueues(),
+            'balance' => 'auto',
+            'autoScalingStrategy' => 'time',
+            'minProcesses' => 1,
+            'maxProcesses' => 3,
+            'timeout' => 930,
+            'maxTime' => 0,
+            'maxJobs' => 0,
+            'memory' => 256,
+            'tries' => 1,
+            'nice' => 0,
+        ],
+
+        'ai-assistant' => [
+            'connection' => 'redis',
+            'queue' => ['ai'],
+            'balance' => 'auto',
+            'autoScalingStrategy' => 'time',
+            'minProcesses' => 1,
+            'maxProcesses' => 2,
+            'timeout' => 930,
+            'maxTime' => 0,
+            'maxJobs' => 0,
+            'memory' => 512,
+            'tries' => 1,
+            'nice' => 0,
+        ],
+
+        'automations' => [
+            'connection' => 'redis',
+            'queue' => ['automations'],
+            'balance' => 'auto',
+            'autoScalingStrategy' => 'time',
+            'minProcesses' => 1,
+            'maxProcesses' => 3,
+            'timeout' => 630,
+            'maxTime' => 0,
+            'maxJobs' => 0,
+            'memory' => 256,
+            'tries' => 1,
+            'nice' => 0,
+        ],
+    ];
+
+    $environments = [
+        'production' => [
+            'supervisor-1' => [
+                'maxProcesses' => 10,
+                'balanceMaxShift' => 1,
+                'balanceCooldown' => 3,
+            ],
+
+            'social-publishing' => [
+                'maxProcesses' => 10,
+                'balanceMaxShift' => 1,
+                'balanceCooldown' => 3,
+            ],
+
+            'ai-assistant' => [
+                'maxProcesses' => 5,
+                'balanceMaxShift' => 1,
+                'balanceCooldown' => 3,
+            ],
+
+            'automations' => [
+                'maxProcesses' => 5,
+                'balanceMaxShift' => 1,
+                'balanceCooldown' => 3,
+            ],
+        ],
+
+        'local' => [
+            'supervisor-1' => [
+                'maxProcesses' => 3,
+            ],
+
+            'social-publishing' => [
+                'maxProcesses' => 3,
+            ],
+
+            'ai-assistant' => [
+                'maxProcesses' => 2,
+            ],
+
+            'automations' => [
+                'maxProcesses' => 2,
+            ],
+        ],
+    ];
+}
 
 return [
 
@@ -215,110 +359,7 @@ return [
     |
     */
 
-    'defaults' => [
-        'supervisor-1' => [
-            'connection' => 'redis',
-            'queue' => ['default', 'posthog', 'broadcasts'],
-            'balance' => 'auto',
-            'autoScalingStrategy' => 'time',
-            'maxProcesses' => 1,
-            'maxTime' => 0,
-            'maxJobs' => 0,
-            'memory' => 128,
-            'tries' => 1,
-            'timeout' => 630,
-            'nice' => 0,
-        ],
+    'defaults' => $supervisors,
 
-        'social-publishing' => [
-            'connection' => 'redis',
-            'queue' => Platform::allQueues(),
-            'balance' => 'auto',
-            'autoScalingStrategy' => 'time',
-            'minProcesses' => 1,
-            'maxProcesses' => 3,
-            'timeout' => 930,
-            'maxTime' => 0,
-            'maxJobs' => 0,
-            'memory' => 256,
-            'tries' => 1,
-            'nice' => 0,
-        ],
-
-        'ai-assistant' => [
-            'connection' => 'redis',
-            'queue' => ['ai'],
-            'balance' => 'auto',
-            'autoScalingStrategy' => 'time',
-            'minProcesses' => 1,
-            'maxProcesses' => 2,
-            'timeout' => 930,
-            'maxTime' => 0,
-            'maxJobs' => 0,
-            'memory' => 512,
-            'tries' => 1,
-            'nice' => 0,
-        ],
-
-        'automations' => [
-            'connection' => 'redis',
-            'queue' => ['automations'],
-            'balance' => 'auto',
-            'autoScalingStrategy' => 'time',
-            'minProcesses' => 1,
-            'maxProcesses' => 3,
-            'timeout' => 630,
-            'maxTime' => 0,
-            'maxJobs' => 0,
-            'memory' => 256,
-            'tries' => 1,
-            'nice' => 0,
-        ],
-    ],
-
-    'environments' => [
-        'production' => [
-            'supervisor-1' => [
-                'maxProcesses' => env('HORIZON_MAX_PROCESSES_DEFAULT', $selfHosted ? 2 : 10),
-                'balanceMaxShift' => 1,
-                'balanceCooldown' => 3,
-            ],
-
-            'social-publishing' => [
-                'maxProcesses' => env('HORIZON_MAX_PROCESSES_SOCIAL', $selfHosted ? 2 : 10),
-                'balanceMaxShift' => 1,
-                'balanceCooldown' => 3,
-            ],
-
-            'ai-assistant' => [
-                'maxProcesses' => env('HORIZON_MAX_PROCESSES_AI', $selfHosted ? 1 : 5),
-                'balanceMaxShift' => 1,
-                'balanceCooldown' => 3,
-            ],
-
-            'automations' => [
-                'maxProcesses' => env('HORIZON_MAX_PROCESSES_AUTOMATIONS', $selfHosted ? 1 : 5),
-                'balanceMaxShift' => 1,
-                'balanceCooldown' => 3,
-            ],
-        ],
-
-        'local' => [
-            'supervisor-1' => [
-                'maxProcesses' => 3,
-            ],
-
-            'social-publishing' => [
-                'maxProcesses' => 3,
-            ],
-
-            'ai-assistant' => [
-                'maxProcesses' => 2,
-            ],
-
-            'automations' => [
-                'maxProcesses' => 2,
-            ],
-        ],
-    ],
+    'environments' => $environments,
 ];
