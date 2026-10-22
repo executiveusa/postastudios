@@ -183,8 +183,10 @@ FROM system-base AS production
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 COPY docker/php.prod.ini /usr/local/etc/php/conf.d/99-postastudios.ini
 COPY docker/supervisord.prod.conf /etc/supervisor/conf.d/supervisord.conf
+COPY docker/supervisord.selfhosted.conf /etc/supervisor/conf.d/supervisord.selfhosted.conf
+COPY docker/queue-worker.sh /usr/local/bin/queue-worker.sh
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/queue-worker.sh
 
 # Application source + generated wayfinder TS + built assets — all from
 # asset-build (the merged stage that ran php artisan wayfinder:generate,

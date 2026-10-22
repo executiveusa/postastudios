@@ -5,25 +5,22 @@ declare(strict_types=1);
 use App\Enums\SocialAccount\Platform;
 use Illuminate\Support\Str;
 
-// Self-hosted runs the whole stack in one small container. One supervisor,
-// one process pool, exactly maxProcesses workers. The queue list MUST stay
-// a single comma-joined string: Horizon creates one process pool per queue
-// array entry and always keeps at least one worker per pool, so N queue
-// entries spawn at least N workers no matter how maxProcesses is set (14
-// social queues + 5 core queues = 19 workers = OOM on small containers).
+// Self-hosted containers do NOT run Horizon at all: supervisord runs a
+// fixed number of plain queue:work workers instead (see
+// docker/queue-worker.sh). Horizon spawns at least one worker process per
+// queue name, and PostaStudios dispatches to 19 queues, so any Horizon
+// setup big enough to cover all queues OOMs a small container. This minimal
+// config only keeps artisan horizon:* commands and the dashboard bootable.
 $selfHosted = env('SELF_HOSTED', true);
 
 if ($selfHosted) {
     $supervisors = [
         'supervisor-1' => [
             'connection' => 'redis',
-            'queue' => [implode(',', array_merge(
-                ['default', 'posthog', 'broadcasts', 'ai', 'automations'],
-                Platform::allQueues()
-            ))],
+            'queue' => ['default'],
             'balance' => 'simple',
             'minProcesses' => 1,
-            'maxProcesses' => (int) env('HORIZON_MAX_PROCESSES', 2),
+            'maxProcesses' => 1,
             'maxTime' => 0,
             'maxJobs' => 0,
             'memory' => 256,
@@ -39,12 +36,9 @@ if ($selfHosted) {
         ],
 
         'local' => [
-            'supervisor-1' => [
-                'maxProcesses' => 1,
-            ],
+            'supervisor-1' => [],
         ],
     ];
-} else {
     $supervisors = [
         'supervisor-1' => [
             'connection' => 'redis',

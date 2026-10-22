@@ -152,7 +152,7 @@ jobs:
           cache-to: type=gha,mode=max,scope=linux-amd64
           outputs: type=docker,dest=/tmp/postastudios-amd64.tar
 
-      - name: Verify self-hosted Horizon plan in built image (config + live worker count)
+      - name: Verify self-hosted queue workers in built image (live smoke)
         run: |
           set -euo pipefail
           LOAD_OUT=$(docker load -i /tmp/postastudios-amd64.tar)
@@ -163,62 +163,49 @@ jobs:
             exit 1
           fi
 
-          # 1) Resolved config: one supervisor, ONE comma-joined queue pool
-          #    (a multi-entry queue array spawns one worker pool per entry),
-          #    simple balancing, 2 workers.
-          OUT=$(docker run --rm \
-            -e APP_ENV=production \
-            -e APP_URL=https://postastudios.test \
-            -e SELF_HOSTED=true \
-            -e APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= \
-            --entrypoint php "$IMAGE_ID" \
-            /var/www/html/artisan tinker --execute='
-              $d = config("horizon.defaults");
-              echo "PLAN=" . json_encode([
-                "defaults" => array_keys($d),
-                "balance" => $d["supervisor-1"]["balance"] ?? null,
-                "maxProcesses" => $d["supervisor-1"]["maxProcesses"] ?? null,
-                "pools" => count($d["supervisor-1"]["queue"] ?? []),
-                "queue" => $d["supervisor-1"]["queue"][0] ?? null,
-              ]) . PHP_EOL;')
-          echo "$OUT"
-          PLAN=$(echo "$OUT" | grep '^PLAN=' | tail -1)
-          echo "$PLAN" | grep -q '"defaults":\["supervisor-1"\]' || { echo "::error::defaults must contain only supervisor-1"; exit 1; }
-          echo "$PLAN" | grep -q '"balance":"simple"' || { echo "::error::balance must be simple"; exit 1; }
-          echo "$PLAN" | grep -q '"maxProcesses":2' || { echo "::error::maxProcesses must default to 2"; exit 1; }
-          echo "$PLAN" | grep -q '"pools":1' || { echo "::error::queue must be ONE comma-joined pool string"; exit 1; }
-          echo "$PLAN" | grep -q 'social-x' || { echo "::error::queue string must include social platform queues"; exit 1; }
-          echo "Config plan verified: $PLAN"
+          # Static: the self-hosted supervisord conf and worker script must
+          # be in the image, and the worker must derive its queue list from
+          # the Platform enum (never a hardcoded drift-prone copy).
+          docker run --rm --entrypoint sh "$IMAGE_ID" -c \
+            'grep -q "program:queue-worker" /etc/supervisor/conf.d/supervisord.selfhosted.conf \
+             && grep -q "Platform::allQueues" /usr/local/bin/queue-worker.sh \
+             && grep -q "supervisord.selfhosted.conf" /usr/local/bin/entrypoint.sh' \
+            || { echo "::error::self-hosted queue-worker wiring missing from image"; exit 1; }
+          echo "Static wiring verified"
 
-          # 2) Live smoke: boot a real Horizon master against a throwaway
-          #    redis and count the workers it actually spawns.
+          # Live: run the real self-hosted supervisord config against a
+          # throwaway redis and count actual worker processes. This is the
+          # exact failure mode that OOMed 209 twice: more workers than
+          # expected. Fail unless exactly 2 queue:work and 0 horizon masters.
           docker network create horizon-verify
           docker run -d --rm --name horizon-verify-redis --network horizon-verify redis:7-alpine
           docker run -d --name horizon-verify-app --network horizon-verify \
             -e APP_ENV=production \
             -e APP_URL=https://postastudios.test \
             -e SELF_HOSTED=true \
+            -e HORIZON_MAX_PROCESSES=2 \
             -e APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= \
             -e REDIS_HOST=horizon-verify-redis \
-            --entrypoint php "$IMAGE_ID" \
-            /var/www/html/artisan horizon
-          sleep 30
-          docker exec horizon-verify-app php /var/www/html/artisan horizon:status || true
+            --entrypoint sh "$IMAGE_ID" -c \
+            'cp /etc/supervisor/conf.d/supervisord.selfhosted.conf /etc/supervisor/conf.d/supervisord.conf && exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf'
+          sleep 35
           docker exec horizon-verify-app ps || true
-          WORKERS=$(docker exec horizon-verify-app ps | grep -c "[h]orizon:work" || true)
-          MASTERS=$(docker exec horizon-verify-app ps | grep -c "[a]rtisan horizon" || true)
+          WORKERS=$(docker exec horizon-verify-app ps | grep -c "[q]ueue:work" || true)
+          MASTERS=$(docker exec horizon-verify-app ps | grep -c "[a]rtisan horizon " || true)
+          WORKER_QUEUES=$(docker exec horizon-verify-app ps | grep "[q]ueue:work" | head -1 || true)
           echo "masters=$MASTERS workers=$WORKERS"
           docker rm -f horizon-verify-app horizon-verify-redis >/dev/null || true
           docker network rm horizon-verify >/dev/null || true
-          if [ "$MASTERS" -ne 1 ]; then
-            echo "::error::expected exactly 1 live horizon master, got $MASTERS"
+          if [ "$MASTERS" -ne 0 ]; then
+            echo "::error::self-hosted must not run a Horizon master, got $MASTERS"
             exit 1
           fi
           if [ "$WORKERS" -ne 2 ]; then
-            echo "::error::expected exactly 2 horizon:work workers, got $WORKERS"
+            echo "::error::expected exactly 2 queue:work workers, got $WORKERS"
             exit 1
           fi
-          echo "Live smoke verified: 1 master, exactly 2 workers, master alive after 30s"
+          echo "$WORKER_QUEUES" | grep -q 'social-discord' || { echo "::error::worker queue list missing social platform queues"; exit 1; }
+          echo "Live smoke verified: 0 horizon masters, exactly 2 queue:work workers covering all 19 queues"
 
       - name: Upload image tar artifact
         uses: actions/upload-artifact@v7

@@ -133,5 +133,13 @@ else
     chown -R "${APP_UID}:${APP_GID}" storage bootstrap/cache 2>/dev/null || true
 fi
 
+# Self-hosted containers are small; swap Horizon for fixed plain queue
+# workers (see docker/queue-worker.sh for why Horizon can't stay small).
+if [ "${SELF_HOSTED:-true}" = "true" ]; then
+    echo "[entrypoint] SELF_HOSTED=true - using fixed queue workers (no Horizon)"
+    cp /etc/supervisor/conf.d/supervisord.selfhosted.conf /etc/supervisor/conf.d/supervisord.conf
+fi
+export HORIZON_MAX_PROCESSES="${HORIZON_MAX_PROCESSES:-2}"
+
 echo "[entrypoint] ready — handing off to supervisord"
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
