@@ -5,22 +5,22 @@ declare(strict_types=1);
 use App\Enums\SocialAccount\Platform;
 use Illuminate\Support\Str;
 
-// Self-hosted runs the whole stack in one small container. A single
-// supervisor with simple balancing spawns exactly maxProcesses workers
-// total. Do NOT use balance=auto here: it creates one process pool per
-// queue with at least minProcesses workers each, so N queues spawn at
-// least N workers no matter how low maxProcesses is (the social-publishing
-// supervisor alone listens on 7 platform queues).
+// Self-hosted runs the whole stack in one small container. One supervisor,
+// one process pool, exactly maxProcesses workers. The queue list MUST stay
+// a single comma-joined string: Horizon creates one process pool per queue
+// array entry and always keeps at least one worker per pool, so N queue
+// entries spawn at least N workers no matter how maxProcesses is set (14
+// social queues + 5 core queues = 19 workers = OOM on small containers).
 $selfHosted = env('SELF_HOSTED', true);
 
 if ($selfHosted) {
     $supervisors = [
         'supervisor-1' => [
             'connection' => 'redis',
-            'queue' => array_merge(
+            'queue' => [implode(',', array_merge(
                 ['default', 'posthog', 'broadcasts', 'ai', 'automations'],
                 Platform::allQueues()
-            ),
+            ))],
             'balance' => 'simple',
             'minProcesses' => 1,
             'maxProcesses' => (int) env('HORIZON_MAX_PROCESSES', 2),
