@@ -703,7 +703,10 @@ test('publish skips platforms that are already failed', function () {
 
 test('publish job timeout leaves headroom above the pinterest media poll budget', function () {
     $job = new PublishToSocialPlatform($this->postPlatform);
-    $horizonTimeout = (int) config('horizon.defaults.social-publishing.timeout');
+    // Cloud runs a dedicated social-publishing supervisor; self-hosted runs a
+    // single supervisor-1 covering every queue. Both use timeout 930.
+    $horizonTimeout = (int) (config('horizon.defaults.social-publishing.timeout')
+        ?? config('horizon.defaults.supervisor-1.timeout'));
     $retryAfter = (int) config('queue.connections.redis.retry_after');
 
     expect($job->timeout)->toBe(900)
