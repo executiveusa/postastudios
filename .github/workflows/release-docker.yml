@@ -128,3 +128,34 @@ jobs:
 
       - name: Inspect published image
         run: docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
+
+  export-tar:
+    name: Build amd64 and export docker tar artifact
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image and export docker tar
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          target: production
+          platforms: linux/amd64
+          build-args: |
+            VITE_REVERB_APP_KEY=postastudios-reverb-key
+          cache-from: type=gha,scope=linux-amd64
+          cache-to: type=gha,mode=max,scope=linux-amd64
+          outputs: type=docker,dest=/tmp/postastudios-amd64.tar
+
+      - name: Upload image tar artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: postastudios-image-amd64
+          path: /tmp/postastudios-amd64.tar
+          retention-days: 7
+          compression-level: 0
