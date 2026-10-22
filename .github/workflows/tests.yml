@@ -8,7 +8,7 @@ on:
 
 env:
   DB_CONNECTION: pgsql
-  DB_DATABASE: trypost_test
+  DB_DATABASE: postastudios_test
   DB_USERNAME: postgres
   DB_PASSWORD: password
   BROADCAST_CONNECTION: "null"
@@ -26,7 +26,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
-          POSTGRES_DB: trypost_test
+          POSTGRES_DB: postastudios_test
         ports:
           - 5432/tcp
         options: >-
@@ -70,7 +70,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
-          POSTGRES_DB: trypost_test
+          POSTGRES_DB: postastudios_test
         ports:
           - 5432/tcp
         options: >-

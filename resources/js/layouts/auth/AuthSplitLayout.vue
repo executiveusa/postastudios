@@ -89,8 +89,8 @@ const platforms = [
         <div class="flex min-w-0 flex-col gap-4 p-6 md:p-10 lg:p-12">
             <div class="flex items-start">
                 <img
-                    src="/images/posta/wordmark.svg"
-                    alt="Posta Studio"
+                    src="/images/postastudios/wordmark.svg"
+                    alt="PostaStudios"
                     class="h-8 w-auto"
                 />
             </div>
@@ -155,7 +155,7 @@ const platforms = [
                                         <div
                                             class="ml-2 truncate text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground"
                                         >
-                                            Posta Studio
+                                            PostaStudios
                                         </div>
                                         <span
                                             class="ml-auto inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground"

@@ -1,7 +1,7 @@
-# Posta Studio autonomous rebrand loop
+# PostaStudios autonomous rebrand loop
 
 ## Goal
-Rebrand the existing TryPost-derived application to Posta Studio with AdPanel as the primary page-by-page visual bar while preserving the existing application behavior, routes, publishing flows, calendar mechanics, automations, and backend architecture.
+Rebrand the existing PostaStudios-derived application to PostaStudios with AdPanel as the primary page-by-page visual bar while preserving the existing application behavior, routes, publishing flows, calendar mechanics, automations, and backend architecture.
 
 ## Operating rules
 
@@ -21,7 +21,7 @@ One bounded task per branch. Finish, review, merge, then start the next task fro
 
 ### Gauntlet
 Primary visual bar: https://www.adpanel.io/
-Functional behavior bar: https://trypost.it/en
+Functional behavior bar: https://postastudios.com/en
 Density/hierarchy bar: Linear
 Interaction craft bar: Emil Kowalski design-engineering principles
 

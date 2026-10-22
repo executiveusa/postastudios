@@ -4,9 +4,9 @@ subject: "Changelog v1.0.7 — Reliable uploads, safer connections, and Ukrainia
 
 # Changelog v1.0.7 — Reliable uploads, safer connections, and Ukrainian support
 
-By TryPost Product Team • [Release v1.0.7](https://github.com/trypostit/trypost/releases/tag/v1.0.7)
+By PostaStudios Product Team • [Release v1.0.7](https://github.com/executiveusa/postastudios/releases/tag/v1.0.7)
 
-Hello! Welcome to this week's update. Here's what's new in TryPost.
+Hello! Welcome to this week's update. Here's what's new in PostaStudios.
 
 ## More reliable uploads
 
@@ -14,11 +14,11 @@ Chunked uploads got hardened this week. Filenames with unicode characters or inv
 
 ## Catching connection problems before they cost you a post
 
-TryPost now checks your connected accounts ahead of anything scheduled soon, so you hear about a broken connection before the post fails, not after. We also got better at spotting dead Threads, Instagram, and Facebook tokens, and fixed a pagination bug that was hiding some of your Facebook Pages from the connection list.
+PostaStudios now checks your connected accounts ahead of anything scheduled soon, so you hear about a broken connection before the post fails, not after. We also got better at spotting dead Threads, Instagram, and Facebook tokens, and fixed a pagination bug that was hiding some of your Facebook Pages from the connection list.
 
 ## A more personal workspace
 
-TryPost now speaks Ukrainian. Calendar date pickers follow your chosen language instead of defaulting to English, and the sidebar's workspace and account menus are now one menu instead of two.
+PostaStudios now speaks Ukrainian. Calendar date pickers follow your chosen language instead of defaulting to English, and the sidebar's workspace and account menus are now one menu instead of two.
 
 ## New features
 
@@ -35,7 +35,7 @@ TryPost now speaks Ukrainian. Calendar date pickers follow your chosen language 
 - Pinterest video processing gets a longer timeout, so slow videos aren't marked failed too early
 
 Cheers,
-Paulo from TryPost.it
+Paulo from PostaStudios
 
 ---
 

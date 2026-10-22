@@ -34,8 +34,8 @@ beforeEach(function () {
 });
 
 test('linkedin page analytics refresh hits the configured oauth host', function () {
-    $oauthApi = config('trypost.platforms.linkedin.oauth_api');
-    $api = config('trypost.platforms.linkedin-page.api');
+    $oauthApi = config('postastudios.platforms.linkedin.oauth_api');
+    $api = config('postastudios.platforms.linkedin-page.api');
 
     Http::fake([
         "{$oauthApi}/oauth/v2/accessToken" => Http::response([

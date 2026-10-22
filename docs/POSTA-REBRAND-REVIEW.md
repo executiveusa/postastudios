@@ -1,10 +1,10 @@
-# Posta Studio rebrand review
+# PostaStudios rebrand review
 
 ## Outcome
-The 12-phase rebrand converted the visible TryPost-derived product into Posta Studio while preserving the application’s existing Laravel/Inertia architecture and core behavior.
+The 12-phase rebrand converted the visible PostaStudios-derived product into PostaStudios while preserving the application’s existing Laravel/Inertia architecture and core behavior.
 
 Primary visual bar: AdPanel.
-Functional behavior bar: TryPost.
+Functional behavior bar: PostaStudios.
 Density/hierarchy reference: Linear.
 Interaction reference: Emil Kowalski design-engineering principles.
 
@@ -16,10 +16,10 @@ Operating methods:
 - Humanizer: tighten copy without inventing facts or capabilities.
 
 ## Phases
-1. Visible brand name: replaced user-facing TryPost/TryPost.it references with Posta Studio while preserving internal/protocol identifiers and upstream/legal attribution.
+1. Visible brand name: replaced user-facing PostaStudios/PostaStudios references with PostaStudios while preserving internal/protocol identifiers and upstream/legal attribution.
 2. Global color tokens: replaced the warm cream/black/violet palette with a neutral canvas, restrained violet accent, softer semantic colors, and neutral sidebar/chart tokens.
 3. Borders and shadows: replaced hard offset shadows with quiet elevation tokens.
-4. Logo system: added a reusable Posta Studio SVG wordmark and applied it to public/onboarding shells.
+4. Logo system: added a reusable PostaStudios SVG wordmark and applied it to public/onboarding shells.
 5. Browser/app identity: replaced favicon SVG, favicon ICO, and Apple touch icon with Posta identity assets.
 6. Typography: moved the global sans/display stack toward a tighter modern grotesk system with restrained editorial tracking.
 7. Buttons and controls: reduced heavy borders, tightened transitions, and added subtle press feedback using the existing primitives.
@@ -27,7 +27,7 @@ Operating methods:
 9. Sidebar/navigation skin: quieted menu weight and selected/hover states without changing destinations, permissions, or collapse behavior.
 10. Interaction chrome: refined existing Sonner, Vaul, and Reka toast/dialog/drawer surfaces without changing interaction logic.
 11. Login presentation: reworked the auth shell presentation while preserving auth submission, OAuth, carousel timing/state, and routes.
-12. Copy and positioning: removed the remaining visible TryPost auth flash, tightened login/register language, and reframed feature slides around content operations using only existing capabilities.
+12. Copy and positioning: removed the remaining visible PostaStudios auth flash, tightened login/register language, and reframed feature slides around content operations using only existing capabilities.
 
 ## Preserved behavior
 The rebrand deliberately did not modify:
@@ -55,7 +55,7 @@ The linked Vercel project treats the repository as a Node/Vite application. Lara
 GitHub does not allow a pull-request author to approve their own PR. Phase reviews therefore used explicit scope/diff checks and merge guards rather than a self-approval review event.
 
 ### Legal/upstream URLs
-The application still contains upstream TryPost legal/documentation/community URLs where no approved Posta Studio replacement exists. Those references were preserved rather than inventing destinations or silently breaking legal/support links.
+The application still contains upstream PostaStudios legal/documentation/community URLs where no approved PostaStudios replacement exists. Those references were preserved rather than inventing destinations or silently breaking legal/support links.
 
 ### Visual gauntlet limitation
 The named visual bars guided the design decisions, but the available GitHub/Vercel connector path did not provide a reliable authenticated full-app screenshot harness for every phase. The phase gates therefore proved atomic source scope and preserved behavior at the code level. A final browser screenshot pass against AdPanel should be run after the latest `main` is deployed to the VPS.
@@ -64,7 +64,7 @@ The named visual bars guided the design decisions, but the available GitHub/Verc
 - Build and deploy the final `main` commit to the VPS as a new immutable image, then verify `/up`, login, Reverb, Supervisor, and key authenticated pages.
 - Capture desktop/mobile screenshots of login, dashboard, calendar, composer, assets, analytics, automations, accounts, team/approval, and MCP/agent surfaces for a true page-by-page AdPanel gauntlet.
 - Replace remaining upstream legal/docs/community links only after Posta-owned destinations exist.
-- Audit remaining legacy TryPost image assets and remove only those no longer required by email templates or compatibility surfaces.
+- Audit remaining legacy PostaStudios image assets and remove only those no longer required by email templates or compatibility surfaces.
 - Treat a dedicated marketing-site redesign as separate work if the live marketing site is not served from this application repository.
 
 ## Rollback model

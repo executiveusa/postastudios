@@ -1,4 +1,4 @@
-# TryPost — Compose override example.
+# PostaStudios — Compose override example.
 #
 # Compose automatically merges `compose.override.yaml` (gitignored, per-developer)
 # on top of `compose.yaml`. Copy this file to start customizing:

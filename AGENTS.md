@@ -210,7 +210,7 @@ Checkout options are configured only via env — do not hardcode trial/coupon/pr
 
 | Env | Config | Default | Effect |
 | --- | --- | --- | --- |
-| `REQUIRE_CARD_FOR_TRIAL` | `trypost.billing.require_card_for_trial` | `true` | `true`: app access only after Stripe Checkout (no generic signup trial). `false`: generic `accounts.trial_ends_at` trial without a card |
+| `REQUIRE_CARD_FOR_TRIAL` | `postastudios.billing.require_card_for_trial` | `true` | `true`: app access only after Stripe Checkout (no generic signup trial). `false`: generic `accounts.trial_ends_at` trial without a card |
 | `CASHIER_TRIAL_DAYS` | `cashier.trial_days` | `8` | Card-required Checkout: `trialDays(N)` for **first-time** subscribers when no first-month coupon is applied (`0` = off). Re-subscribers skip trial. No-card mode: length of the generic signup trial |
 | `STRIPE_FIRST_MONTH_COUPON_ID` | `cashier.first_month_coupon_id` | empty | Optional. When set for a qualifying first-time single-workspace checkout, applies `withCoupon` and **skips** trial. Empty = trial mode |
 | `CASHIER_ALLOW_PROMOTION_CODES` | `cashier.allow_promotion_codes` | `false` | When `true` and no coupon is applied, show the Checkout promo-code field |
@@ -228,7 +228,7 @@ One connected identity per social network per workspace is the Cloud default. Th
 
 | Env | Config | Default | Effect |
 | --- | --- | --- | --- |
-| `ALLOW_MULTIPLE_SOCIAL_ACCOUNTS` | `trypost.allow_multiple_social_accounts` | `false` (falls back to `SELF_HOSTED` when unset) | `true`: a workspace may connect more than one account of the same network (two LinkedIns, two Instagrams, …). `false`: one per network (LinkedIn profile + page count as one; Instagram standalone + Instagram-via-Facebook count as one). Reconnecting the same `platform` + `platform_user_id` still updates the existing row. Shared to Inertia as `allowMultipleSocialAccounts`. |
+| `ALLOW_MULTIPLE_SOCIAL_ACCOUNTS` | `postastudios.allow_multiple_social_accounts` | `false` (falls back to `SELF_HOSTED` when unset) | `true`: a workspace may connect more than one account of the same network (two LinkedIns, two Instagrams, …). `false`: one per network (LinkedIn profile + page count as one; Instagram standalone + Instagram-via-Facebook count as one). Reconnecting the same `platform` + `platform_user_id` still updates the existing row. Shared to Inertia as `allowMultipleSocialAccounts`. |
 
 Self-hosted compose / `.env.example` set this `true`. When the env is unset, the config falls back to `SELF_HOSTED` so existing self-hosted installs keep multiple accounts. Do **not** use `selfHosted` for the occupancy check (observer, Telegram connect, `NetworkConnectGrid`).
 

@@ -10,9 +10,9 @@ use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
 
 beforeEach(fn () => config([
-    'trypost.self_hosted' => false,
-    'trypost.google_auth_enabled' => true,
-    'trypost.github_auth_enabled' => true,
+    'postastudios.self_hosted' => false,
+    'postastudios.google_auth_enabled' => true,
+    'postastudios.github_auth_enabled' => true,
 ]));
 
 test('email registration saves utm parameters from the register page query string', function () {

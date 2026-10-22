@@ -8,11 +8,11 @@ alwaysApply: false
 
 ## Named routes (IMPORTANT)
 
-ALWAYS use named routes via the `route()` helper. NEVER hardcode URLs like `'https://trypost.test/login'`.
+ALWAYS use named routes via the `route()` helper. NEVER hardcode URLs like `'https://postastudios.test/login'`.
 
 ```php
 // BAD
-$browser->visit('https://trypost.test/login');
+$browser->visit('https://postastudios.test/login');
 
 // GOOD
 $browser->visit(route('login'));

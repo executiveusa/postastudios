@@ -18,7 +18,7 @@ beforeEach(function () {
 
     $this->service = new TikTokCreatorInfo;
 
-    $this->api = config('trypost.platforms.tiktok.api');
+    $this->api = config('postastudios.platforms.tiktok.api');
 });
 
 test('it returns full creator payload from api response', function () {

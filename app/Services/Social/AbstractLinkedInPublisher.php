@@ -552,7 +552,7 @@ abstract class AbstractLinkedInPublisher
 
     private function baseUrl(): string
     {
-        return config("trypost.platforms.{$this->platform()->value}.api");
+        return config("postastudios.platforms.{$this->platform()->value}.api");
     }
 
     private function label(): string

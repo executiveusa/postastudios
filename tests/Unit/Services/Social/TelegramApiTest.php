@@ -6,8 +6,8 @@ use App\Services\Social\Telegram\TelegramApi;
 
 beforeEach(function () {
     config([
-        'trypost.platforms.telegram.bot_token' => 'TESTTOKEN',
-        'trypost.platforms.telegram.api' => 'https://api.telegram.org',
+        'postastudios.platforms.telegram.bot_token' => 'TESTTOKEN',
+        'postastudios.platforms.telegram.api' => 'https://api.telegram.org',
     ]);
 });
 
@@ -22,7 +22,7 @@ it('builds a file download url', function () {
 });
 
 it('trims a trailing slash from the configured host', function () {
-    config(['trypost.platforms.telegram.api' => 'https://api.telegram.org/']);
+    config(['postastudios.platforms.telegram.api' => 'https://api.telegram.org/']);
 
     expect(TelegramApi::endpoint('getChat'))
         ->toBe('https://api.telegram.org/botTESTTOKEN/getChat');

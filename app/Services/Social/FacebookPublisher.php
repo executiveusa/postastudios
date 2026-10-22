@@ -26,7 +26,7 @@ class FacebookPublisher
 
     public function __construct()
     {
-        $this->baseUrl = config('trypost.platforms.facebook.graph_api');
+        $this->baseUrl = config('postastudios.platforms.facebook.graph_api');
     }
 
     /**

@@ -238,7 +238,7 @@ Checkout options are configured only via env — do not hardcode trial/coupon/pr
 
 | Env | Config | Default | Effect |
 | --- | --- | --- | --- |
-| `REQUIRE_CARD_FOR_TRIAL` | `trypost.billing.require_card_for_trial` | `true` | `true`: app access only after Stripe Checkout (no generic signup trial). `false`: generic `accounts.trial_ends_at` trial without a card |
+| `REQUIRE_CARD_FOR_TRIAL` | `postastudios.billing.require_card_for_trial` | `true` | `true`: app access only after Stripe Checkout (no generic signup trial). `false`: generic `accounts.trial_ends_at` trial without a card |
 | `CASHIER_TRIAL_DAYS` | `cashier.trial_days` | `8` | Card-required Checkout: `trialDays(N)` for **first-time** subscribers when no first-month coupon is applied (`0` = off). Re-subscribers skip trial. No-card mode: length of the generic signup trial |
 | `STRIPE_FIRST_MONTH_COUPON_ID` | `cashier.first_month_coupon_id` | empty | Optional. When set for a qualifying first-time single-workspace checkout, applies `withCoupon` and **skips** trial. Empty = trial mode |
 | `CASHIER_ALLOW_PROMOTION_CODES` | `cashier.allow_promotion_codes` | `false` | When `true` and no coupon is applied, show the Checkout promo-code field |
@@ -256,7 +256,7 @@ One connected identity per social network per workspace is the Cloud default. Th
 
 | Env | Config | Default | Effect |
 | --- | --- | --- | --- |
-| `ALLOW_MULTIPLE_SOCIAL_ACCOUNTS` | `trypost.allow_multiple_social_accounts` | `false` (falls back to `SELF_HOSTED` when unset) | `true`: a workspace may connect more than one account of the same network (two LinkedIns, two Instagrams, …). `false`: one per network (LinkedIn profile + page count as one; Instagram standalone + Instagram-via-Facebook count as one). Reconnecting the same `platform` + `platform_user_id` still updates the existing row. Shared to Inertia as `allowMultipleSocialAccounts`. |
+| `ALLOW_MULTIPLE_SOCIAL_ACCOUNTS` | `postastudios.allow_multiple_social_accounts` | `false` (falls back to `SELF_HOSTED` when unset) | `true`: a workspace may connect more than one account of the same network (two LinkedIns, two Instagrams, …). `false`: one per network (LinkedIn profile + page count as one; Instagram standalone + Instagram-via-Facebook count as one). Reconnecting the same `platform` + `platform_user_id` still updates the existing row. Shared to Inertia as `allowMultipleSocialAccounts`. |
 
 Self-hosted compose / `.env.example` set this `true`. When the env is unset, the config falls back to `SELF_HOSTED` so existing self-hosted installs keep multiple accounts. Do **not** use `selfHosted` for the occupancy check (observer, Telegram connect, `NetworkConnectGrid`).
 
@@ -324,7 +324,7 @@ Self-hosted compose / `.env.example` set this `true`. When the env is unset, the
 
 Browser tests live in `tests/Browser` and run on `pestphp/pest-plugin-browser` driving Playwright. **Laravel Dusk is not installed** — there is no `DuskTestCase`, no `$browser` object, and no `browse()`. Do not add `dusk="..."` attributes; they select nothing.
 
-- ALWAYS use named routes via `route()`. NEVER hardcode URLs like `'https://trypost.test/login'`.
+- ALWAYS use named routes via `route()`. NEVER hardcode URLs like `'https://postastudios.test/login'`.
     - Example: `visit(route('login'))`.
 - ALWAYS target elements by `data-testid`. NEVER use CSS classes (`.text-red-600`), tag names, or text strings.
     - `@my-element` resolves to `[data-testid="my-element"]`, so add `data-testid="my-element"` in the Vue component and use `$page->click('@my-element')`.
@@ -366,9 +366,9 @@ Browser tests live in `tests/Browser` and run on `pestphp/pest-plugin-browser` d
 
 ## External Service URLs
 
-- NEVER hardcode third-party API hosts, OAuth endpoints, or per-platform service URLs (e.g. `https://api.x.com/2`, `https://www.linkedin.com/oauth/v2/accessToken`, `https://bsky.social`). They live in `config/trypost.php` under `platforms.<name>` with a matching `env(...)` default, so self-hosted users can override them and we have a single source of truth.
-    - Production code: `config('trypost.platforms.linkedin.oauth_api').'/oauth/v2/accessToken'`, never the literal URL.
-    - Tests: use the same `config(...)` value in `Http::fake([...])` — `Http::fake([config('trypost.platforms.x.api').'/oauth2/token' => ...])`. Tests with hardcoded URLs drift silently when the config changes.
+- NEVER hardcode third-party API hosts, OAuth endpoints, or per-platform service URLs (e.g. `https://api.x.com/2`, `https://www.linkedin.com/oauth/v2/accessToken`, `https://bsky.social`). They live in `config/postastudios.php` under `platforms.<name>` with a matching `env(...)` default, so self-hosted users can override them and we have a single source of truth.
+    - Production code: `config('postastudios.platforms.linkedin.oauth_api').'/oauth/v2/accessToken'`, never the literal URL.
+    - Tests: use the same `config(...)` value in `Http::fake([...])` — `Http::fake([config('postastudios.platforms.x.api').'/oauth2/token' => ...])`. Tests with hardcoded URLs drift silently when the config changes.
     - Path/route segments after the host (e.g. `/oauth/v2/accessToken`, `/xrpc/com.atproto.server.refreshSession`) are part of the provider's protocol spec — those stay inline next to the call. Only the host comes from config.
 
 ## Social Platform API Documentation (official sources)
@@ -393,9 +393,9 @@ Browser tests live in `tests/Browser` and run on `pestphp/pest-plugin-browser` d
 - **Discord**: Webhook resource (used for our webhook-based publishing) — https://docs.discord.com/developers/resources/webhook
 - **Telegram**: Bot API — https://core.telegram.org/bots/api
 
-## TryPost.it Documentation
+## PostaStudios Documentation
 
-- All our documentation to final user it's under https://docs.trypost.it
+- All our documentation to final user it's under https://docs.postastudios.com
 
 ## Git
 

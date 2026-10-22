@@ -15,7 +15,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  /* Posta Studio design tokens — neutral canvas, restrained violet accent,
+  /* PostaStudios design tokens — neutral canvas, restrained violet accent,
      soft structural contrast, and lightweight elevation. */
   --background: #f6f7f8;
   --foreground: #17181b;
@@ -157,6 +157,6 @@
   @apply text-pretty text-2xl font-semibold tracking-[-0.025em] sm:text-4xl;
 }
 
-.trypost-container {
+.postastudios-container {
   @apply relative max-w-7xl w-full flex-1 mx-auto flex flex-col justify-center;
 }

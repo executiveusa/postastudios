@@ -10,7 +10,7 @@ test('seeder creates the admin user and a workspace when database is empty', fun
 
     $this->seed(UserSeeder::class);
 
-    $admin = User::where('email', 'admin@trypost.it')->first();
+    $admin = User::where('email', 'admin@postastudios.com')->first();
 
     expect($admin)->not->toBeNull();
     expect($admin->account_id)->not->toBeNull();
@@ -22,5 +22,5 @@ test('seeder is idempotent when a user already exists', function () {
 
     $this->seed(UserSeeder::class);
 
-    expect(User::where('email', 'admin@trypost.it')->exists())->toBeFalse();
+    expect(User::where('email', 'admin@postastudios.com')->exists())->toBeFalse();
 });

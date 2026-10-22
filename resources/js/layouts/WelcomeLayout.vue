@@ -65,8 +65,8 @@ const canNavigateTo = (stepNumber: number): boolean =>
                         class="flex flex-col items-center gap-2 font-medium"
                     >
                         <img
-                            src="/images/posta/wordmark.svg"
-                            alt="Posta Studio"
+                            src="/images/postastudios/wordmark.svg"
+                            alt="PostaStudios"
                             class="h-8 w-auto"
                         />
                     </Link>

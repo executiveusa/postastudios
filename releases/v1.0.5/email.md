@@ -4,13 +4,13 @@ subject: "Changelog v1.0.5 — LinkedIn PDFs, video, team roles, Discord posting
 
 # Changelog v1.0.5 — LinkedIn PDFs, video, team roles, Discord posting & more
 
-By TryPost Product Team • [Release v1.0.5](https://github.com/trypostit/trypost/releases/tag/v1.0.5)
+By PostaStudios Product Team • [Release v1.0.5](https://github.com/executiveusa/postastudios/releases/tag/v1.0.5)
 
-Hey, it's been a few weeks, so this is a bigger catch-up than usual. Here's everything that's shipped in TryPost.
+Hey, it's been a few weeks, so this is a bigger catch-up than usual. Here's everything that's shipped in PostaStudios.
 
 ## LinkedIn PDF carousels
 
-You can post swipeable PDF carousels to LinkedIn now, the format people actually stop to read. Attach a PDF and TryPost sets the post up as a document for you, with nothing extra to configure. You can also preview PDFs right in the media gallery, so you don't have to open them in a new tab to check you grabbed the right file.
+You can post swipeable PDF carousels to LinkedIn now, the format people actually stop to read. Attach a PDF and PostaStudios sets the post up as a document for you, with nothing extra to configure. You can also preview PDFs right in the media gallery, so you don't have to open them in a new tab to check you grabbed the right file.
 
 ## Better video publishing
 
@@ -46,7 +46,7 @@ Generating a post with AI starts with picking a format now: a single image card,
 - Per-platform settings (aspect ratio, TikTok privacy, Pinterest boards, Discord channel) carry through the API and MCP now, not just the app
 - Telegram connection problems show a clear message instead of failing quietly
 
-Questions or ideas? Join the conversation in [GitHub Discussions](https://github.com/orgs/trypostit/discussions).
+Questions or ideas? Join the conversation in [GitHub Discussions](https://github.com/orgs/postastudios/discussions).
 
 Cheers,
-Paulo from TryPost.it
+Paulo from PostaStudios

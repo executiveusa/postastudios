@@ -21,7 +21,7 @@ class EnsureAccountReady
             return $next($request);
         }
 
-        if (! config('trypost.self_hosted')) {
+        if (! config('postastudios.self_hosted')) {
             $account = $user->account;
 
             if (! $account?->hasAppAccess()) {

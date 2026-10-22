@@ -41,7 +41,7 @@ class DeleteWorkspace
                 ->where('account_id', $workspace->account_id)
                 ->count();
 
-            if (! config('trypost.self_hosted') && $workspaceCount <= 1) {
+            if (! config('postastudios.self_hosted') && $workspaceCount <= 1) {
                 return;
             }
 

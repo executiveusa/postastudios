@@ -1,4 +1,4 @@
-# TryPost — Code Review Instructions
+# PostaStudios — Code Review Instructions
 
 Laravel 13 + Inertia 3 (Vue 3 + TypeScript) + Tailwind 4, PHP 8.4, Pest 5. Flag violations of these project conventions; cite `file:line`. Skip nits the linters (Pint/ESLint) already catch.
 
@@ -20,7 +20,7 @@ Laravel 13 + Inertia 3 (Vue 3 + TypeScript) + Tailwind 4, PHP 8.4, Pest 5. Flag 
 
 ## Storage & external URLs
 - Never pass a disk name to `Storage::` or `->store()` — use the default disk.
-- Third-party API hosts / OAuth endpoints come from `config/trypost.php` (`platforms.<name>`), never hardcoded (e.g. `https://api.x.com`). Tests must `Http::fake` the same `config(...)` value, not a literal URL. Only the host is config; protocol path segments (`/oauth2/token`) stay inline.
+- Third-party API hosts / OAuth endpoints come from `config/postastudios.php` (`platforms.<name>`), never hardcoded (e.g. `https://api.x.com`). Tests must `Http::fake` the same `config(...)` value, not a literal URL. Only the host is config; protocol path segments (`/oauth2/token`) stay inline.
 
 ## AI agents (`app/Ai/Agents`)
 - Never embed prompts in PHP (heredocs / long string literals in `instructions()`). Instruction text lives in Blade under `resources/views/prompts/`; return `view('prompts....', [...])->render()` passing only needed vars.

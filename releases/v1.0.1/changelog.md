@@ -1,6 +1,6 @@
 ## What's Changed
-* docs: add Star History section to README by @paulocastellano in https://github.com/trypostit/trypost/pull/63
-* feat(docker): publish multi-arch image to GHCR + self-host compose by @paulocastellano in https://github.com/trypostit/trypost/pull/65
+* docs: add Star History section to README by @paulocastellano in https://github.com/executiveusa/postastudios/pull/63
+* feat(docker): publish multi-arch image to GHCR + self-host compose by @paulocastellano in https://github.com/executiveusa/postastudios/pull/65
 
 
-**Full Changelog**: https://github.com/trypostit/trypost/compare/v1.0.0...v1.0.1
+**Full Changelog**: https://github.com/executiveusa/postastudios/compare/v1.0.0...v1.0.1

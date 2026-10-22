@@ -175,17 +175,17 @@ const workspaceNavItems = computed<NavItem[]>(() => [
 const bottomNavItems = computed(() => [
     {
         title: trans('sidebar.support.referral'),
-        href: 'https://affiliates.trypost.it/',
+        href: 'https://affiliates.postastudios.com/',
         icon: IconGift,
     },
     {
         title: trans('sidebar.support.discord'),
-        href: 'https://trypost.it/discord',
+        href: 'https://postastudios.com/discord',
         icon: IconBrandDiscord,
     },
     {
         title: trans('sidebar.support.docs'),
-        href: 'https://docs.trypost.it',
+        href: 'https://docs.postastudios.com',
         icon: IconLifebuoy,
     },
 ]);

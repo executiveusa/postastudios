@@ -4,11 +4,11 @@ subject: "Changelog v1.0.6 — Your language, mobile, and per-image alt text"
 
 # Changelog v1.0.6 — Your language, mobile, and per-image alt text
 
-By TryPost Product Team • [Release v1.0.6](https://github.com/trypostit/trypost/releases/tag/v1.0.6)
+By PostaStudios Product Team • [Release v1.0.6](https://github.com/executiveusa/postastudios/releases/tag/v1.0.6)
 
-Hello! Welcome to this week's update. Here's what's new in TryPost.
+Hello! Welcome to this week's update. Here's what's new in PostaStudios.
 
-## TryPost now speaks your language
+## PostaStudios now speaks your language
 
 The whole interface is now translated into 12 new languages, with full right-to-left support for languages like Arabic and Hebrew. You can also write content in more languages than before, and when you create a workspace your content language now follows the language you're already using the app in, instead of defaulting to English. Pick your language once and the rest just follows.
 
@@ -37,7 +37,7 @@ You can now add alt text to each image, and we publish it everywhere it belongs 
 - New workspaces now default to your app language instead of always English
 
 Cheers,
-Paulo from TryPost.it
+Paulo from PostaStudios
 
 ---
 

@@ -3,12 +3,12 @@ description: Friday release ritual — create git tag, GitHub release (auto-gene
 allowed-tools: Bash, Write, Read, Skill
 ---
 
-You are running the Friday release ritual for TryPost. Four artifacts are produced:
+You are running the Friday release ritual for PostaStudios. Four artifacts are produced:
 
 1. A git tag (semver)
 2. A GitHub release with the **auto-generated** changelog (PR list + authors via GitHub's native generator — flat, technical, for developers)
 3. A **customer-facing email draft** in Cal.com style (themed prose, end-user voice, no commit/PR references)
-4. A **changelog thumbnail** (1200×630 PNG) rendered from the email's headline and themes, using the TryPost brand template
+4. A **changelog thumbnail** (1200×630 PNG) rendered from the email's headline and themes, using the PostaStudios brand template
 
 Plus local mirrors in `releases/<version>/` (changelog, email, and thumbnail), versioned via the artifacts PR.
 
@@ -36,7 +36,7 @@ Stop and tell the user if any of these fail:
 
 ### Step 2 — Determine next version
 
-TryPost uses **sequential numbering with rollover at 9** — not standard semver. Do not parse conventional commits to choose the bump. Every release is the next sequential number, whatever the commits look like.
+PostaStudios uses **sequential numbering with rollover at 9** — not standard semver. Do not parse conventional commits to choose the bump. Every release is the next sequential number, whatever the commits look like.
 
 1. If no previous tag exists → next version = **`v1.0.0`** (first release ever).
 2. Otherwise, parse the latest tag as `vMAJOR.MINOR.PATCH` and increment by these rules:
@@ -82,7 +82,7 @@ The body already contains:
 
 ### Step 4 — Draft the customer email (Cal.com style)
 
-This email is for **end users of TryPost** — non-developers, paying customers, trial users. It must **NOT** reference: commits, PRs, authors, SHAs, conventional commit scopes, version control concepts, internal class names, file paths.
+This email is for **end users of PostaStudios** — non-developers, paying customers, trial users. It must **NOT** reference: commits, PRs, authors, SHAs, conventional commit scopes, version control concepts, internal class names, file paths.
 
 Read the commits only as **internal source material**. Translate to user-facing language.
 
@@ -95,9 +95,9 @@ subject: "Changelog <version> — <theme 1>, <theme 2>, <theme 3>..."
 
 # Changelog <version> — <theme 1>, <theme 2>, <theme 3>...
 
-By TryPost Product Team • [Release <version>](https://github.com/<OWNER>/<REPO>/releases/tag/<version>)
+By PostaStudios Product Team • [Release <version>](https://github.com/<OWNER>/<REPO>/releases/tag/<version>)
 
-Hello! Welcome to this week's update. Here's what's new in TryPost.
+Hello! Welcome to this week's update. Here's what's new in PostaStudios.
 
 ## <Theme 1>
 
@@ -122,7 +122,7 @@ Hello! Welcome to this week's update. Here's what's new in TryPost.
 - <...>
 
 Cheers,
-Paulo from TryPost.it
+Paulo from PostaStudios
 
 ---
 
@@ -171,7 +171,7 @@ If a commit has no user-visible effect, **omit it**. Don't pad the email.
 
 Pattern: `Changelog <version> — <theme 1>, <theme 2>, <theme 3>...`
 
-Don't put "TryPost" in the subject — the email already comes from the TryPost sender, so it's redundant.
+Don't put "PostaStudios" in the subject — the email already comes from the PostaStudios sender, so it's redundant.
 
 Cap around 80 chars. If themes don't fit, shorten to the 2 most impactful + "and more...".
 
@@ -179,13 +179,13 @@ Cap around 80 chars. If themes don't fit, shorten to the 2 most impactful + "and
 
 Run the email body through the `humanizer` skill before previewing:
 
-1. Invoke the `Skill` tool with `skill: humanizer` and pass the draft email body plus this context: *"This is a customer-facing changelog email for TryPost (social media scheduler SaaS). Tone: developer founder writing to early users on a Friday — warm, specific, no marketing puffery. Cal.com style. Keep the existing structure (subject frontmatter, section headers, bullets, signature, unsubscribe footer). Do not strip section headers, the 'Cheers, Paulo from TryPost.it' signature, or the unsubscribe footer."*
+1. Invoke the `Skill` tool with `skill: humanizer` and pass the draft email body plus this context: *"This is a customer-facing changelog email for PostaStudios (social media scheduler SaaS). Tone: developer founder writing to early users on a Friday — warm, specific, no marketing puffery. Cal.com style. Keep the existing structure (subject frontmatter, section headers, bullets, signature, unsubscribe footer). Do not strip section headers, the 'Cheers, Paulo from PostaStudios' signature, or the unsubscribe footer."*
 2. Replace the draft email body with the humanized version.
 
 **Do NOT humanize:**
 - The changelog from Step 3 (flat commit list, no prose).
 - The subject line frontmatter.
-- The literal signature `Cheers,\nPaulo from TryPost.it` — keep it exact.
+- The literal signature `Cheers,\nPaulo from PostaStudios` — keep it exact.
 - The unsubscribe footer (`---`, "You're receiving this because you subscribed.", `[Unsubscribe]({{unsubscribe_url}})`) — keep it exact, below the signature.
 
 The humanizer skill itself covers all patterns. Trust it.
@@ -213,7 +213,7 @@ node .claude/release-assets/render-thumbnail.mjs \
   --out releases/<version>/thumbnail.png
 ```
 
-This uses the shared brand template (`.claude/release-assets/thumbnail.template.html`) + TryPost logo. It mirrors the marketing-site hero / OG image: a warm cream→lavender wash, an ink dot-grid, an Instrument Serif headline with a hand-drawn violet squiggle under the emphasis phrase, an amber "Changelog" sticker badge with the version stamped in mono, and colored ink-bordered theme chips with solid offset shadows. 1200×630. It needs Playwright + chromium (already installed for browser tests). If the render fails, report and stop before tagging.
+This uses the shared brand template (`.claude/release-assets/thumbnail.template.html`) + PostaStudios logo. It mirrors the marketing-site hero / OG image: a warm cream→lavender wash, an ink dot-grid, an Instrument Serif headline with a hand-drawn violet squiggle under the emphasis phrase, an amber "Changelog" sticker badge with the version stamped in mono, and colored ink-bordered theme chips with solid offset shadows. 1200×630. It needs Playwright + chromium (already installed for browser tests). If the render fails, report and stop before tagging.
 
 ### Step 6 — Confirm with the user
 
