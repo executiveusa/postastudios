@@ -162,7 +162,7 @@ jobs:
             echo "::error::Could not determine loaded image id"
             exit 1
           fi
-          OUT=$(docker run --rm             -e APP_ENV=production             -e SELF_HOSTED=true             -e APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=             --entrypoint php "$IMAGE_ID"             /var/www/html/artisan tinker --execute='
+          OUT=$(docker run --rm             -e APP_ENV=production -e APP_URL=https://postastudios.test             -e SELF_HOSTED=true             -e APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=             --entrypoint php "$IMAGE_ID"             /var/www/html/artisan tinker --execute='
               $d = config("horizon.defaults");
               $e = config("horizon.environments.production");
               echo "PLAN=" . json_encode([
