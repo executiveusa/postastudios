@@ -191,7 +191,7 @@ jobs:
           sleep 35
           docker exec horizon-verify-app ps || true
           WORKERS=$(docker exec horizon-verify-app ps | grep -c "[q]ueue:work" || true)
-          MASTERS=$(docker exec horizon-verify-app ps | grep -c "[a]rtisan horizon " || true)
+          MASTERS=$(docker exec horizon-verify-app ps | grep -cE "[a]rtisan horizon( |$)" || true)
           WORKER_QUEUES=$(docker exec horizon-verify-app ps | grep "[q]ueue:work" | head -1 || true)
           echo "masters=$MASTERS workers=$WORKERS"
           docker rm -f horizon-verify-app horizon-verify-redis >/dev/null || true
