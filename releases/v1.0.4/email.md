@@ -4,7 +4,7 @@ subject: "Changelog v1.0.4 — Team roles & client review, AI templates, smoothe
 
 # Changelog v1.0.4 — Team roles & client review, AI templates, smoother onboarding
 
-By TryPost Product Team • [Release v1.0.4](https://github.com/trypostit/trypost/releases/tag/v1.0.4)
+By PostaStudios Product Team • [Release v1.0.4](https://github.com/executiveusa/postastudios/releases/tag/v1.0.4)
 
 Hey — here's what shipped this week.
 
@@ -35,4 +35,4 @@ Signing up is quicker — Google and GitHub are front and center, and your first
 - Post status labels (like "Pending") show correctly everywhere now.
 
 Cheers,
-Paulo from TryPost.it
+Paulo from PostaStudios

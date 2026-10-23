@@ -66,7 +66,7 @@ enum Type: string
 
     public function maxSizeInMb(): int
     {
-        return (int) config("trypost.media.max_size_mb.{$this->value}");
+        return (int) config("postastudios.media.max_size_mb.{$this->value}");
     }
 
     public function maxSizeInBytes(): int

@@ -19,6 +19,6 @@ enum SocialAuthProvider: string
 
     public function isEnabled(): bool
     {
-        return (bool) config("trypost.{$this->value}_auth_enabled");
+        return (bool) config("postastudios.{$this->value}_auth_enabled");
     }
 }

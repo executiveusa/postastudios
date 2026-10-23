@@ -4,21 +4,21 @@ subject: "Changelog v1.0.2 — We're on Discord, plus Automations & Telegram"
 
 # Changelog v1.0.2 — We're on Discord, plus Automations & Telegram
 
-By TryPost Product Team • [Release v1.0.2](https://github.com/trypostit/trypost/releases/tag/v1.0.2)
+By PostaStudios Product Team • [Release v1.0.2](https://github.com/executiveusa/postastudios/releases/tag/v1.0.2)
 
 Hey — quick rundown of what shipped this week. But first, the thing I'm most excited about:
 
 ## We have a Discord now
 
-We just opened the TryPost community on Discord. It's where we'll share what we're building, take your feature requests, and help each other get more out of the tool. I'll be in there myself, so come say hi and tell me what you want us to build next.
+We just opened the PostaStudios community on Discord. It's where we'll share what we're building, take your feature requests, and help each other get more out of the tool. I'll be in there myself, so come say hi and tell me what you want us to build next.
 
-**[Join us on Discord →](https://trypost.it/discord)**
+**[Join us on Discord →](https://postastudios.com/discord)**
 
-Or just head to [trypost.it/discord](https://trypost.it/discord)
+Or just head to [postastudios.com/discord](https://postastudios.com/discord)
 
 ## Automations
 
-You can now hand the posting off to TryPost. Point an automation at a source like an RSS feed, and it'll draft a post in your brand voice and schedule it to your channels on whatever cadence you set. There's a visual editor where you wire up the trigger, conditions, and steps, and tabs to watch each run and see what it actually did.
+You can now hand the posting off to PostaStudios. Point an automation at a source like an RSS feed, and it'll draft a post in your brand voice and schedule it to your channels on whatever cadence you set. There's a visual editor where you wire up the trigger, conditions, and steps, and tabs to watch each run and see what it actually did.
 
 ## Telegram
 
@@ -44,4 +44,4 @@ Facebook posts let you pick an aspect ratio now, the same way Instagram does, so
 - A handful of TikTok and Instagram posting fixes
 
 Cheers,
-Paulo from TryPost.it
+Paulo from PostaStudios

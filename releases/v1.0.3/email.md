@@ -4,9 +4,9 @@ subject: "Changelog v1.0.3 — Discord posting, smarter RSS automations, API par
 
 # Changelog v1.0.3 — Discord posting, smarter RSS automations, API parity
 
-By TryPost Product Team • [Release v1.0.3](https://github.com/trypostit/trypost/releases/tag/v1.0.3)
+By PostaStudios Product Team • [Release v1.0.3](https://github.com/executiveusa/postastudios/releases/tag/v1.0.3)
 
-Hello! Welcome to this week's update. Here's what's new in TryPost.
+Hello! Welcome to this week's update. Here's what's new in PostaStudios.
 
 ## Discord is now a channel
 
@@ -25,4 +25,4 @@ Per-platform settings like aspect ratio, TikTok privacy, Pinterest boards, and t
 - Resolved npm and composer security vulnerabilities
 
 Cheers,
-Paulo from TryPost.it
+Paulo from PostaStudios

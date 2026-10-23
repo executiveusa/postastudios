@@ -1,8 +1,8 @@
 ---
-subject: "Changelog: TryPost v1.0.0 — Facebook fixes, AI brand colors, and weekly updates"
+subject: "Changelog: PostaStudios v1.0.0 — Facebook fixes, AI brand colors, and weekly updates"
 ---
 
-# Changelog: TryPost v1.0.0 — Facebook fixes, AI brand colors, and weekly updates
+# Changelog: PostaStudios v1.0.0 — Facebook fixes, AI brand colors, and weekly updates
 
 By Paulo Castellano • Release v1.0.0
 
@@ -14,11 +14,11 @@ We fixed two issues affecting Facebook this week. Multi-image posts were sometim
 
 ## AI image generation with your brand colors
 
-When you regenerate an AI-generated post image, TryPost now uses your brand palette to keep the look consistent across your posts. Previously each regenerated image picked colors from scratch, which made the gallery feel disconnected. If you've set up brand colors in Settings, regenerations respect them automatically.
+When you regenerate an AI-generated post image, PostaStudios now uses your brand palette to keep the look consistent across your posts. Previously each regenerated image picked colors from scratch, which made the gallery feel disconnected. If you've set up brand colors in Settings, regenerations respect them automatically.
 
 ## Self-hosting improvements
 
-For anyone running TryPost on their own infrastructure: we added a DigitalOcean Spaces disk driver (an alternative to S3 for media storage) and a self-hosted registration gate that closes signups by default and lets the first admin seed itself. Both are documented in the env reference.
+For anyone running PostaStudios on their own infrastructure: we added a DigitalOcean Spaces disk driver (an alternative to S3 for media storage) and a self-hosted registration gate that closes signups by default and lets the first admin seed itself. Both are documented in the env reference.
 
 ## Fixes
 
@@ -26,4 +26,4 @@ For anyone running TryPost on their own infrastructure: we added a DigitalOcean 
 - Better error messages when a social platform is temporarily down vs. when your connected account's token has expired.
 
 Cheers,
-Paulo Castellano from TryPost.it
+Paulo Castellano from PostaStudios

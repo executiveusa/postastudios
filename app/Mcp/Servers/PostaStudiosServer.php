@@ -41,11 +41,11 @@ use Laravel\Mcp\Server\Attributes\Instructions;
 use Laravel\Mcp\Server\Attributes\Name;
 use Laravel\Mcp\Server\Attributes\Version;
 
-#[Name('TryPost')]
+#[Name('PostaStudios')]
 #[Version('1.0.0')]
-#[Icon('images/trypost/icon.png', mimeType: 'image/png')]
-#[Instructions('TryPost is a social media scheduling platform. Use this server to manage posts, the Asset Library, signatures, labels, social accounts, workspaces, and API keys.')]
-class TryPostServer extends Server
+#[Icon('images/postastudios/icon.png', mimeType: 'image/png')]
+#[Instructions('PostaStudios is a social media scheduling platform. Use this server to manage posts, the Asset Library, signatures, labels, social accounts, workspaces, and API keys.')]
+class PostaStudiosServer extends Server
 {
     public int $defaultPaginationLength = 100;
 

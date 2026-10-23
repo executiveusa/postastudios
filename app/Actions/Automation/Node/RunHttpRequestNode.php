@@ -365,7 +365,7 @@ class RunHttpRequestNode
         }
 
         return $request
-            ->withUserAgent(config('trypost.user_agent'))
+            ->withUserAgent(config('postastudios.user_agent'))
             ->withOptions($this->safeHttp->redirectGuardOptions());
     }
 

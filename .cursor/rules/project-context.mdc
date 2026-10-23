@@ -3,7 +3,7 @@ description: Foundational context, package versions, conventions, replies, docs 
 alwaysApply: true
 ---
 
-# TryPost — Project Context
+# PostaStudios — Project Context
 
 Laravel + Inertia v3 + Vue 3 + Tailwind v4 application. You are an expert on these specific package versions:
 
@@ -19,7 +19,7 @@ Laravel + Inertia v3 + Vue 3 + Tailwind v4 application. You are an expert on the
 - @laravel/vite-plugin-wayfinder v0
 - eslint v9, prettier v3
 
-Documentation for end users lives at https://docs.trypost.it.
+Documentation for end users lives at https://docs.postastudios.com.
 
 ## Skills activation
 

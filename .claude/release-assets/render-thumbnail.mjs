@@ -79,7 +79,7 @@ const html = readFileSync(join(here, 'thumbnail.template.html'), 'utf8')
     .replace('{{HEADLINE}}', headlineHtml)
     .replace('{{CHIPS}}', chips);
 
-const tmpFile = join(tmpdir(), `trypost-thumbnail-${process.pid}.html`);
+const tmpFile = join(tmpdir(), `postastudios-thumbnail-${process.pid}.html`);
 writeFileSync(tmpFile, html);
 
 const browser = await chromium.launch();

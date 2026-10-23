@@ -27,7 +27,7 @@ defineProps<{
     connectedClients: ConnectedClient[];
 }>();
 
-const docsUrl = 'https://docs.trypost.it/ai/introduction';
+const docsUrl = 'https://docs.postastudios.com/ai/introduction';
 const tabs = useWorkspaceSettingsTabs();
 const deleteModal = ref<InstanceType<typeof ConfirmDeleteModal> | null>(null);
 

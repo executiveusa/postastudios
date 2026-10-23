@@ -14,7 +14,7 @@ const currentYear = dayjs().year();
         <header class="border-b">
             <div class="mx-auto max-w-5xl px-6 py-4 flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <img src="/images/posta/wordmark.svg" alt="Posta Studio" class="h-7 w-auto" />
+                    <img src="/images/postastudios/wordmark.svg" alt="PostaStudios" class="h-7 w-auto" />
                 </div>
             </div>
         </header>
@@ -29,7 +29,7 @@ const currentYear = dayjs().year();
         <footer class="border-t mt-auto">
             <div class="mx-auto max-w-5xl px-6 py-8">
                 <p class="text-sm text-muted-foreground text-center">
-                    &copy; {{ currentYear }} Posta Studio. All rights reserved.
+                    &copy; {{ currentYear }} PostaStudios. All rights reserved.
                 </p>
             </div>
         </footer>

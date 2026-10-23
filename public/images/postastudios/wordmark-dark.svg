@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 372 72" role="img" aria-labelledby="title desc">
+  <title id="title">PostaStudios</title>
+  <desc id="desc">PostaStudios logo</desc>
+  <defs>
+    <linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6B6DF0"/>
+      <stop offset="1" stop-color="#4648C9"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(4,4) scale(1.0)">
+    <rect x="0" y="0" width="64" height="64" rx="16" fill="url(#pg)"/>
+    <path d="M13 31.5 L51 14.5 L36.5 51 L30.5 38.5 Z" fill="#FFFFFF"/>
+    <path d="M30.5 38.5 L51 14.5" stroke="#4648C9" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+    <circle cx="50" cy="47" r="4.5" fill="#FFFFFF" opacity="0.9"/>
+  </g>
+  <text x="88" y="47" fill="#FFFFFF" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="34" font-weight="700" letter-spacing="-0.8">Posta<tspan font-weight="500">Studios</tspan></text>
+</svg>

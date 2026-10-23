@@ -172,23 +172,29 @@ const workspaceNavItems = computed<NavItem[]>(() => [
     },
 ]);
 
-const bottomNavItems = computed(() => [
-    {
-        title: trans('sidebar.support.referral'),
-        href: 'https://affiliates.trypost.it/',
-        icon: IconGift,
-    },
-    {
-        title: trans('sidebar.support.discord'),
-        href: 'https://trypost.it/discord',
-        icon: IconBrandDiscord,
-    },
-    {
-        title: trans('sidebar.support.docs'),
-        href: 'https://docs.trypost.it',
-        icon: IconLifebuoy,
-    },
-]);
+// Cloud-only support links (affiliate program, hosted docs, hosted Discord).
+// Hidden on self-hosted installs where those destinations do not exist.
+const bottomNavItems = computed(() =>
+    page.props.selfHosted
+        ? []
+        : [
+              {
+                  title: trans('sidebar.support.referral'),
+                  href: 'https://affiliates.postastudios.com/',
+                  icon: IconGift,
+              },
+              {
+                  title: trans('sidebar.support.discord'),
+                  href: 'https://postastudios.com/discord',
+                  icon: IconBrandDiscord,
+              },
+              {
+                  title: trans('sidebar.support.docs'),
+                  href: 'https://docs.postastudios.com',
+                  icon: IconLifebuoy,
+              },
+          ],
+);
 </script>
 
 <template>
@@ -275,7 +281,7 @@ const bottomNavItems = computed(() => [
 
             <div class="mt-auto">
                 <NavSupport
-                    v-if="currentWorkspace"
+                    v-if="currentWorkspace && bottomNavItems.length"
                     :items="bottomNavItems"
                     :label="$t('sidebar.groups.others')"
                 />

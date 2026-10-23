@@ -25,10 +25,10 @@ return [
         'other' => 'その他',
     ],
     'goals_title' => '目標は何ですか？',
-    'goals_description' => '当てはまるものをすべて選んでください。TryPost をあなた向けに設定します。',
+    'goals_description' => '当てはまるものをすべて選んでください。PostaStudios をあなた向けに設定します。',
     'goals' => [
         'save_time' => 'すべての場所へ一度に投稿して時間を節約する',
-        'ai_content' => 'TryPost AI で投稿を生成する',
+        'ai_content' => 'PostaStudios AI で投稿を生成する',
         'use_mcp' => 'Claude・ChatGPT・Cursor から投稿を作成する',
         'plan_calendar' => 'カレンダーで投稿を計画する',
         'stay_on_brand' => 'すべての投稿をブランドに沿ったものにする',
@@ -39,7 +39,7 @@ return [
         'other' => 'その他',
     ],
     'referral_source_title' => 'どこで私たちを知りましたか？',
-    'referral_source_description' => 'これは、人々がどのように TryPost を見つけるかを理解するのに役立ちます。',
+    'referral_source_description' => 'これは、人々がどのように PostaStudios を見つけるかを理解するのに役立ちます。',
     'referral_source' => [
         'google' => 'Google',
         'x' => 'X (Twitter)',
@@ -61,7 +61,7 @@ return [
     ],
     'connect' => [
         'title' => 'SNSアカウントを接続',
-        'description' => 'TryPostが投稿できるネットワークを少なくとも1つ選んでください。',
+        'description' => 'PostaStudiosが投稿できるネットワークを少なくとも1つ選んでください。',
         'required' => '続けるには、少なくとも1つのSNSアカウントを接続してください。',
     ],
 ];

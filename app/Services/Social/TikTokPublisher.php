@@ -38,7 +38,7 @@ class TikTokPublisher
 
     public function __construct()
     {
-        $this->baseUrl = config('trypost.platforms.tiktok.api');
+        $this->baseUrl = config('postastudios.platforms.tiktok.api');
     }
 
     public function publish(PostPlatform $postPlatform): array

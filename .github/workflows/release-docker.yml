@@ -64,7 +64,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            VITE_REVERB_APP_KEY=trypost-reverb-key
+            VITE_REVERB_APP_KEY=postastudios-reverb-key
           cache-from: type=gha,scope=${{ env.PLATFORM_PAIR }}
           cache-to: type=gha,mode=max,scope=${{ env.PLATFORM_PAIR }}
           outputs: type=image,name=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true
@@ -128,3 +128,89 @@ jobs:
 
       - name: Inspect published image
         run: docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
+
+  export-tar:
+    name: Build amd64 and export docker tar artifact
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image and export docker tar
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          target: production
+          platforms: linux/amd64
+          build-args: |
+            VITE_REVERB_APP_KEY=postastudios-reverb-key
+          cache-from: type=gha,scope=linux-amd64
+          cache-to: type=gha,mode=max,scope=linux-amd64
+          outputs: type=docker,dest=/tmp/postastudios-amd64.tar
+
+      - name: Verify self-hosted queue workers in built image (live smoke)
+        run: |
+          set -euo pipefail
+          LOAD_OUT=$(docker load -i /tmp/postastudios-amd64.tar)
+          echo "$LOAD_OUT"
+          IMAGE_ID=$(echo "$LOAD_OUT" | sed -n 's/^Loaded image ID: //p; s/^Loaded image: //p' | head -1)
+          if [ -z "$IMAGE_ID" ]; then
+            echo "::error::Could not determine loaded image id"
+            exit 1
+          fi
+
+          # Static: the self-hosted supervisord conf and worker script must
+          # be in the image, and the worker must derive its queue list from
+          # the Platform enum (never a hardcoded drift-prone copy).
+          docker run --rm --entrypoint sh "$IMAGE_ID" -c \
+            'grep -q "program:queue-worker" /etc/supervisor/conf.d/supervisord.selfhosted.conf \
+             && grep -q "Platform::allQueues" /usr/local/bin/queue-worker.sh \
+             && grep -q "supervisord.selfhosted.conf" /usr/local/bin/entrypoint.sh' \
+            || { echo "::error::self-hosted queue-worker wiring missing from image"; exit 1; }
+          echo "Static wiring verified"
+
+          # Live: run the real self-hosted supervisord config against a
+          # throwaway redis and count actual worker processes. This is the
+          # exact failure mode that OOMed 209 twice: more workers than
+          # expected. Fail unless exactly 2 queue:work and 0 horizon masters.
+          docker network create horizon-verify
+          docker run -d --rm --name horizon-verify-redis --network horizon-verify redis:7-alpine
+          docker run -d --name horizon-verify-app --network horizon-verify \
+            -e APP_ENV=production \
+            -e APP_URL=https://postastudios.test \
+            -e SELF_HOSTED=true \
+            -e HORIZON_MAX_PROCESSES=2 \
+            -e APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= \
+            -e REDIS_HOST=horizon-verify-redis \
+            --entrypoint sh "$IMAGE_ID" -c \
+            'cp /etc/supervisor/conf.d/supervisord.selfhosted.conf /etc/supervisor/conf.d/supervisord.conf && exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf'
+          sleep 35
+          docker exec horizon-verify-app ps || true
+          WORKERS=$(docker exec horizon-verify-app ps | grep -c "[q]ueue:work" || true)
+          MASTERS=$(docker exec horizon-verify-app ps | grep -cE "[a]rtisan horizon( |$)" || true)
+          WORKER_QUEUES=$(docker exec horizon-verify-app ps | grep "[q]ueue:work" | head -1 || true)
+          echo "masters=$MASTERS workers=$WORKERS"
+          docker rm -f horizon-verify-app horizon-verify-redis >/dev/null || true
+          docker network rm horizon-verify >/dev/null || true
+          if [ "$MASTERS" -ne 0 ]; then
+            echo "::error::self-hosted must not run a Horizon master, got $MASTERS"
+            exit 1
+          fi
+          if [ "$WORKERS" -ne 2 ]; then
+            echo "::error::expected exactly 2 queue:work workers, got $WORKERS"
+            exit 1
+          fi
+          echo "$WORKER_QUEUES" | grep -q 'social-discord' || { echo "::error::worker queue list missing social platform queues"; exit 1; }
+          echo "Live smoke verified: 0 horizon masters, exactly 2 queue:work workers covering all 19 queues"
+
+      - name: Upload image tar artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: postastudios-image-amd64
+          path: /tmp/postastudios-amd64.tar
+          retention-days: 7
+          compression-level: 0
